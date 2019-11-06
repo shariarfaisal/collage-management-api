@@ -6,13 +6,13 @@ type Institute{
   email: String! @unique
   username: String!
   password: String!
-  departments: [Department!]! @relation(name: "InstituteToDepartment",onDelete: CASCADE)
-  students: [Student!]! @relation(name: "InstituteToStudent",onDelete: CASCADE)
-  sessions: [Session!]! @relation(name: "InstituteToSession",onDelete: CASCADE)
-  teachers: [Teacher!]! @relation(name: "InstituteToTeacher",onDelete: CASCADE)
-  classes: [Classes!]! @relation(name: "InstituteToClass",onDelete: CASCADE)
-  routines: [Routine!]! @relation(name: "InstituteToRoutine",onDelete: CASCADE)
-  periods: [Period!]! @relation(name: "InstituteToPeriod",onDelete: CASCADE)
+  departments: [Department!]! @relation(link: INLINE,name: "InstituteToDepartment")
+  students: [Student!]! @relation(link: INLINE,name: "InstituteToStudent")
+  sessions: [Session!]! @relation(link: INLINE,name: "InstituteToSession")
+  teachers: [Teacher!]! @relation(link: INLINE,name: "InstituteToTeacher")
+  classes: [Class!]! @relation(link: INLINE,name: "InstituteToClass")
+  routines: [Routine!]! @relation(link: INLINE,name: "InstituteToRoutine")
+  periods: [Period!]! @relation(link: INLINE,name: "InstituteToPeriod")
 }
 
 enum ShiftTypes{
@@ -23,32 +23,33 @@ enum ShiftTypes{
 type Department{
   id: ID! @id
   name: String!
-  institute: Institute! @relation(name: "InstituteToDepartment",onDelete: SET_NULL)
-  students: [Student!]! @relation(name: "DepartmentToStudent",onDelete: CASCADE)
-  semesters: [Semester!]! @relation(name: "DepartmentToSemester",onDelete: CASCADE)
-  bookLists: [BookList!]! @relation(name: "DepartmentToBookList",onDelete: CASCADE)
-  routines: [Routine!]! @relation(name: "DepartmentToRoutine",onDelete: CASCADE)
+  institute: Institute! @relation(name: "InstituteToDepartment")
+  students: [Student!]! @relation(link: INLINE,name: "DepartmentToStudent")
+  semesters: [Semester!]! @relation(link: INLINE,name: "DepartmentToSemester")
+  bookLists: [BookList!]! @relation(link: INLINE,name: "DepartmentToBookList")
+  routines: [Routine!]! @relation(link: INLINE,name: "DepartmentToRoutine")
+  classes: [Class!]! @relation(link: INLINE,name: "DepartmentToClass")
 }
 
 type Session{
   id: ID! @id
   year: String! @unique
-  students: [Student!]! @relation(name: "SessionToStudent",onDelete: CASCADE)
-  routines: [Routine!]! @relation(name: "SessionToRoutine",onDelete: CASCADE)
+  students: [Student!]! @relation(link: INLINE,name: "SessionToStudent")
+  routines: [Routine!]! @relation(link: INLINE,name: "SessionToRoutine")
 }
 
 type Student{
   id: ID! @id
-  institute: Institute! @relation(name: "InstituteToStudent",onDelete: SET_NULL)
+  institute: Institute! @relation(name: "InstituteToStudent")
   name: String!
   email: String! @unique
   roll: Int! @unique
   reg: Int! @unique
-  session: Session! @relation(name: "SessionToStudent",onDelete: SET_NULL)
+  session: Session! @relation(name: "SessionToStudent")
   phone: String!
   shift: ShiftTypes!
-  department: Department! @relation(name: "DepartmentToStudent",onDelete: SET_NULL)
-  semester: Semester! @relation(name: "SemesterToStudent",onDelete: SET_NULL)
+  department: Department! @relation(name: "DepartmentToStudent")
+  semester: Semester! @relation(name: "SemesterToStudent")
   password: String!
 }
 
@@ -65,76 +66,76 @@ enum SemesterTypes{
 
 type Semester{
   id: ID! @id
-  institute: Institute! @relation(name: "InstituteToSemester",onDelete: SET_NULL)
+  institute: Institute! @relation(link: INLINE,name: "InstituteToSemester")
   name: SemesterTypes! @unique
-  departments: [Department!]! @relation(name: "DepartmentToSemester",onDelete: SET_NULL)
-  students: [Student!] @relation(name: "SemesterToStudent",onDelete: CASCADE)
-  bookLists: [BookList!]! @relation(name: "SemesterToBookList",onDelete: CASCADE)
-  routines: [Routine!]! @relation(name: "SemesterToRoutine",onDelete: CASCADE)
-  classes:[Class!]!
+  departments: [Department!]! @relation(name: "DepartmentToSemester")
+  students: [Student!] @relation(link: INLINE,name: "SemesterToStudent")
+  bookLists: [BookList!]! @relation(link: INLINE,name: "SemesterToBookList")
+  routines: [Routine!]! @relation(link: INLINE,name: "SemesterToRoutine")
+  classes:[Class!]! @relation(link: INLINE,name: "SemesterToClass")
 }
 
 type BookList{
   id: ID! @id
-  department: Department! @relation(name: "DepartmentToBookList",onDelete: SET_NULL)
-  semester: Semester! @relation(name: "SemesterToBookList",onDelete: SET_NULL)
-  books:[Book!]! @relation(name: "BookListToBook",onDelete: SET_NULL)
+  department: Department! @relation(name: "DepartmentToBookList")
+  semester: Semester! @relation(name: "SemesterToBookList")
+  books:[Book!]! @relation(link: INLINE,name: "BookListToBook")
 }
 
 type Book{
   id: ID! @id
   name: String!
   code: String! @unique
-  listNo: BookList! @relation(name: "BookListToBook",onDelete: SET_NULL)
-  classes: [Class!]! @relation(name: "BookToClass",onDelete: CASCADE)
+  bookList: BookList! @relation(name: "BookListToBook")
+  classes: [Class!]! @relation(link: INLINE,name: "BookToClass")
 }
 
 type Teacher{
   id: ID! @id
-  institute: Institute! @relation(name: "InstituteToTeacher",onDelete: SET_NULL)
+  institute: Institute! @relation(name: "InstituteToTeacher")
   name: String!
   email: String!
   address: String!
   position: String!
   phone: String!
   password: String!
-  classes: [Class!]! @relation(name: "TeacherToClass",onDelete: CASCADE)
+  classes: [Class!]! @relation(link: INLINE,name: "TeacherToClass")
 }
 
 type Routine{
   id: ID! @id
   title: String!
-  institute: Institute! @relation(name: "InstituteToRoutine",onDelete: SET_NULL)
-  session: Session! @relation(name: "SessionToRoutine",onDelete: SET_NULL)
-  semester: Semester! @relation(name: "SemesterToRoutine",onDelete: SET_NULL)
-  department: Department! @relation(name: "DepartmentToRoutine",onDelete: SET_NULL)
-  days: [DayInWeek!]! @relation(name: "RoutineToDayInWeek",onDelete: CASCADE)
+  institute: Institute! @relation(name: "InstituteToRoutine")
+  session: Session! @relation(name: "SessionToRoutine")
+  semester: Semester! @relation(name: "SemesterToRoutine")
+  department: Department! @relation(name: "DepartmentToRoutine")
+  days: [DayInWeek!]! @relation(link: INLINE,name: "RoutineToDayInWeek")
 }
 
 type DayInWeek{
   id: ID! @id
-  routine: Routine! @relation(name: "RoutineToDayInWeek",onDelete: SET_NULL)
+  routine: Routine! @relation(name: "RoutineToDayInWeek")
   dayValue: Int!
   day: DayTypes! @unique
-  classes: [Class!]! @relation(name: "DayInWeekToClass",onDelete: CASCADE)
+  classes: [Class!]! @relation(link: INLINE,name: "DayInWeekToClass")
 }
 
 
 type Class{
   id: ID! @id
-  day: DayInWeek! @relation(name: "DayInWeekToClass",onDelete: SET_NULL)
-  institute: Institute! @relation(name: "InstituteToClass",onDelete: SET_NULL)
-  semester: Semester! @relation(name: "SemesterToClass",onDelete: SET_NULL)
-  period: Period! @relation(name: "ClassToPeriod",onDelete: CASCADE)
-  mentor: Teacher! @relation(name: "TeacherToClass",onDelete: SET_NULL)
-  department: Department! @relation(name: "DepartmentToClass",onDelete: SET_NULL)
-  subject: Book! @relation(name: "BookToClass",onDelete: SET_NULL)
+  day: DayInWeek! @relation(name: "DayInWeekToClass")
+  institute: Institute! @relation(name: "InstituteToClass")
+  semester: Semester! @relation(name: "SemesterToClass")
+  period: Period! @relation(link: INLINE,name: "ClassToPeriod")
+  mentor: Teacher! @relation(name: "TeacherToClass")
+  department: Department! @relation(name: "DepartmentToClass")
+  subject: Book! @relation(name: "BookToClass")
 }
 
 
 type Period{
   id: ID! @id
-  institute: Institute! @relation(name: "InstituteToPeriod",onDelete: SET_NULL)
+  institute: Institute! @relation(name: "InstituteToPeriod")
   time: Int!
   startedAt: String!
   endAt: String!
