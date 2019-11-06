@@ -1,0 +1,138 @@
+
+type Institute{
+  id: ID! @id
+  name: String! @unique
+  address: String!
+  email: String! @unique
+  username: String!
+  password: String!
+  departments: [Department!]!
+}
+
+enum ShiftTypes{
+  MORNING
+  EVENING
+}
+
+type Department{
+  id: ID! @id
+  name: String!
+  institute: Institute!
+  students: [Student!]!
+  semesters: [Semester!]!
+  bookLists: [BookList!]!
+  routines: [Routine!]!
+}
+
+type Session{
+  id: ID! @id
+  year: String! @unique
+}
+
+type Student{
+  id: ID! @id
+  institute: Institute!
+  name: String!
+  email: String! @unique
+  roll: Int! @unique
+  reg: Int! @unique
+  session: Session!
+  phone: String!
+  shift: ShiftTypes!
+  department: Department!
+  semester: Semester!
+  password: String!
+}
+
+enum SemesterTypes{
+  FIRST
+  SECOND
+  THIRD
+  FOURTH
+  FIFTH
+  SIXTH
+  SEVENTH
+  EIGHT
+}
+
+type Semester{
+  id: ID! @id
+  institute: Institute!
+  name: SemesterTypes! @unique
+  departments: [Department!]!
+  students: [Student!]
+}
+
+type BookList{
+  id: ID! @id
+  department: Department!
+  semester: Semester!
+  books:[Book!]!
+}
+
+type Book{
+  id: ID! @id
+  name: String!
+  code: String! @unique
+  listNo: BookList!
+}
+
+type Teacher{
+  id: ID! @id
+  institute: Institute!
+  name: String!
+  email: String!
+  address: String!
+  position: String!
+  phone: String!
+  password: String!
+}
+
+type Routine{
+  id: ID! @id
+  title: String!
+  institute: Institute!
+  session: Session!
+  semester: Semester!
+  department: Department!
+  days: [WeeklyDay!]!
+}
+
+type WeeklyDay{
+  id: ID! @id
+  routine: Routine!
+  dayValue: Int!
+  day: DayTypes! @unique
+  classes: [Class!]!
+}
+
+
+type Class{
+  id: ID! @id
+  day: WeeklyDay!
+  institute: Institute!
+  semester: Semester!
+  period: Period!
+  mentor: Teacher!
+  department: Department!
+  subject: Book!
+}
+
+
+type Period{
+  id: ID! @id
+  institute: Institute!
+  time: Int!
+  startedAt: String!
+  endAt: String!
+}
+
+enum DayTypes{
+  SATURDAY
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+}
