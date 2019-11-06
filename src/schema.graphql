@@ -1,0 +1,187 @@
+#import CreateInputInstitute, CreateInputDepartment, CreateInputTeacher, CreateInputStudent, CreateInputSession, CreateInputSemester, CreateInputBookList, CreateInputRoutine, CreateInputBook, CreateInputClass, CreateInputPeriod, createDayInWeek from './createInputs.graphql'
+
+
+type Query{
+  institutes: [Institute!]!
+  institute(id: ID!): Institute!
+  students: [Student!]!
+  semesters: [Semester!]!
+  sessions: [Session!]!
+  books: [Book!]!
+  teachers: [Teacher!]!
+  routines: [Routine!]!
+  dayInWeeks: [DayInWeek!]!
+  classes: [Class!]!
+  departments:[Department!]!
+  bookLists: [BookList!]!
+}
+
+type Mutation{
+  createInstitute(data: CreateInputInstitute): Institute!
+  createDepartment(data: CreateInputDepartment): Department!
+  createTeacher(data: CreateInputTeacher): Teacher!
+  createStudent(data: CreateInputStudent): Student!
+  createSession(data: CreateInputSession): Session!
+  createaSemester(data: CreateInputSemester): Semester!
+  createBookList(data: CreateInputBookList): BookList!
+  createRoutine(data: CreateInputRoutine): Routine!
+  createDayInWeek(data: CreateInputDayInWeek): DayInWeek!
+  createBook(data: CreateInputBook): Book!
+  createClass(data: CreateInputClass): Class!
+  createPeriod(data: CreateInputPeriod): Period!
+}
+
+
+
+type Institute{
+  id: ID!
+  name: String!
+  address: String!
+  email: String!
+  username: String!
+  password: String!
+  departments: [Department!]!
+  students: [Student!]!
+  sessions: [Session!]!
+  teachers: [Teacher!]!
+  classes: [Class!]!
+  routines: [Routine!]!
+  periods: [Period!]!
+}
+
+enum ShiftTypes{
+  MORNING
+  EVENING
+}
+
+type Department{
+  id: ID!
+  name: String!
+  institute: Institute!
+  students: [Student!]!
+  semesters: [Semester!]!
+  bookLists: [BookList!]!
+  routines: [Routine!]!
+  classes: [Class!]!
+}
+
+
+type Session{
+  id: ID!
+  year: String!
+  students: [Student!]!
+  routines: [Routine!]!
+}
+
+type Student{
+  id: ID!
+  institute: Institute!
+  name: String!
+  email: String!
+  roll: Int!
+  reg: Int!
+  session: Session!
+  phone: String!
+  shift: ShiftTypes!
+  department: Department!
+  semester: Semester!
+  password: String!
+}
+
+enum SemesterTypes{
+  FIRST
+  SECOND
+  THIRD
+  FOURTH
+  FIFTH
+  SIXTH
+  SEVENTH
+  EIGHT
+}
+
+type Semester{
+  id: ID!
+  institute: Institute!
+  name: SemesterTypes!
+  departments: [Department!]!
+  students: [Student!]
+  bookLists: [BookList!]!
+  routines: [Routine!]!
+  classes:[Class!]!
+}
+
+type BookList{
+  id: ID!
+  department: Department!
+  semester: Semester!
+  books:[Book!]!
+}
+
+type Book{
+  id: ID!
+  name: String!
+  code: String!
+  bookList: BookList!
+  classes: [Class!]!
+}
+
+type Teacher{
+  id: ID!
+  institute: Institute!
+  name: String!
+  email: String!
+  address: String!
+  position: String!
+  phone: String!
+  password: String!
+  classes: [Class!]!
+}
+
+type Routine{
+  id: ID!
+  title: String!
+  institute: Institute!
+  session: Session!
+  semester: Semester!
+  department: Department!
+  days: [DayInWeek!]!
+}
+
+type DayInWeek{
+  id: ID!
+  routine: Routine!
+  dayValue: Int!
+  day: DayTypes!
+  classes: [Class!]!
+}
+
+
+type Class{
+  id: ID!
+  day: DayInWeek!
+  institute: Institute!
+  semester: Semester!
+  period: Period!
+  mentor: Teacher!
+  department: Department!
+  subject: Book!
+}
+
+
+type Period{
+  id: ID!
+  institute: Institute!
+  time: Int!
+  startedAt: String!
+  endAt: String!
+}
+
+enum DayTypes{
+  SATURDAY
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+}

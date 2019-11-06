@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src/index.js --ext js,graphql --exec babel-node",
+    "getSchema": "graphql get-schema -p prisma"
   },
   "keywords": [],
   "author": "",

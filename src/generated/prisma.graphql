@@ -1,0 +1,6621 @@
+# source: http://localhost:4466
+# timestamp: Wed Nov 06 2019 18:55:16 GMT+0600 (+06)
+
+type AggregateBook {
+  count: Int!
+}
+
+type AggregateBookList {
+  count: Int!
+}
+
+type AggregateClass {
+  count: Int!
+}
+
+type AggregateDayInWeek {
+  count: Int!
+}
+
+type AggregateDepartment {
+  count: Int!
+}
+
+type AggregateInstitute {
+  count: Int!
+}
+
+type AggregatePeriod {
+  count: Int!
+}
+
+type AggregateRoutine {
+  count: Int!
+}
+
+type AggregateSemester {
+  count: Int!
+}
+
+type AggregateSession {
+  count: Int!
+}
+
+type AggregateStudent {
+  count: Int!
+}
+
+type AggregateTeacher {
+  count: Int!
+}
+
+type BatchPayload {
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
+}
+
+type Book implements Node {
+  id: ID!
+  name: String!
+  code: String!
+  listNo: BookList!
+  classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class!]
+}
+
+"""A connection to a list of items."""
+type BookConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [BookEdge]!
+  aggregate: AggregateBook!
+}
+
+input BookCreateInput {
+  id: ID
+  name: String!
+  code: String!
+  listNo: BookListCreateOneWithoutBooksInput!
+  classes: ClassCreateManyWithoutSubjectInput
+}
+
+input BookCreateManyWithoutListNoInput {
+  create: [BookCreateWithoutListNoInput!]
+  connect: [BookWhereUniqueInput!]
+}
+
+input BookCreateOneWithoutClassesInput {
+  create: BookCreateWithoutClassesInput
+  connect: BookWhereUniqueInput
+}
+
+input BookCreateWithoutClassesInput {
+  id: ID
+  name: String!
+  code: String!
+  listNo: BookListCreateOneWithoutBooksInput!
+}
+
+input BookCreateWithoutListNoInput {
+  id: ID
+  name: String!
+  code: String!
+  classes: ClassCreateManyWithoutSubjectInput
+}
+
+"""An edge in a connection."""
+type BookEdge {
+  """The item at the end of the edge."""
+  node: Book!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+type BookList implements Node {
+  id: ID!
+  department: Department!
+  semester: Semester!
+  books(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Book!]
+}
+
+"""A connection to a list of items."""
+type BookListConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [BookListEdge]!
+  aggregate: AggregateBookList!
+}
+
+input BookListCreateInput {
+  id: ID
+  department: DepartmentCreateOneWithoutBookListsInput!
+  semester: SemesterCreateOneWithoutBookListsInput!
+  books: BookCreateManyWithoutListNoInput
+}
+
+input BookListCreateManyWithoutDepartmentInput {
+  create: [BookListCreateWithoutDepartmentInput!]
+  connect: [BookListWhereUniqueInput!]
+}
+
+input BookListCreateManyWithoutSemesterInput {
+  create: [BookListCreateWithoutSemesterInput!]
+  connect: [BookListWhereUniqueInput!]
+}
+
+input BookListCreateOneWithoutBooksInput {
+  create: BookListCreateWithoutBooksInput
+  connect: BookListWhereUniqueInput
+}
+
+input BookListCreateWithoutBooksInput {
+  id: ID
+  department: DepartmentCreateOneWithoutBookListsInput!
+  semester: SemesterCreateOneWithoutBookListsInput!
+}
+
+input BookListCreateWithoutDepartmentInput {
+  id: ID
+  semester: SemesterCreateOneWithoutBookListsInput!
+  books: BookCreateManyWithoutListNoInput
+}
+
+input BookListCreateWithoutSemesterInput {
+  id: ID
+  department: DepartmentCreateOneWithoutBookListsInput!
+  books: BookCreateManyWithoutListNoInput
+}
+
+"""An edge in a connection."""
+type BookListEdge {
+  """The item at the end of the edge."""
+  node: BookList!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum BookListOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type BookListPreviousValues {
+  id: ID!
+}
+
+input BookListScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BookListScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BookListScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BookListScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+}
+
+type BookListSubscriptionPayload {
+  mutation: MutationType!
+  node: BookList
+  updatedFields: [String!]
+  previousValues: BookListPreviousValues
+}
+
+input BookListSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BookListSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BookListSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BookListSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: BookListWhereInput
+}
+
+input BookListUpdateInput {
+  department: DepartmentUpdateOneRequiredWithoutBookListsInput
+  semester: SemesterUpdateOneRequiredWithoutBookListsInput
+  books: BookUpdateManyWithoutListNoInput
+}
+
+input BookListUpdateManyWithoutDepartmentInput {
+  create: [BookListCreateWithoutDepartmentInput!]
+  connect: [BookListWhereUniqueInput!]
+  set: [BookListWhereUniqueInput!]
+  disconnect: [BookListWhereUniqueInput!]
+  delete: [BookListWhereUniqueInput!]
+  update: [BookListUpdateWithWhereUniqueWithoutDepartmentInput!]
+  deleteMany: [BookListScalarWhereInput!]
+  upsert: [BookListUpsertWithWhereUniqueWithoutDepartmentInput!]
+}
+
+input BookListUpdateManyWithoutSemesterInput {
+  create: [BookListCreateWithoutSemesterInput!]
+  connect: [BookListWhereUniqueInput!]
+  set: [BookListWhereUniqueInput!]
+  disconnect: [BookListWhereUniqueInput!]
+  delete: [BookListWhereUniqueInput!]
+  update: [BookListUpdateWithWhereUniqueWithoutSemesterInput!]
+  deleteMany: [BookListScalarWhereInput!]
+  upsert: [BookListUpsertWithWhereUniqueWithoutSemesterInput!]
+}
+
+input BookListUpdateOneRequiredWithoutBooksInput {
+  create: BookListCreateWithoutBooksInput
+  connect: BookListWhereUniqueInput
+  update: BookListUpdateWithoutBooksDataInput
+  upsert: BookListUpsertWithoutBooksInput
+}
+
+input BookListUpdateWithoutBooksDataInput {
+  department: DepartmentUpdateOneRequiredWithoutBookListsInput
+  semester: SemesterUpdateOneRequiredWithoutBookListsInput
+}
+
+input BookListUpdateWithoutDepartmentDataInput {
+  semester: SemesterUpdateOneRequiredWithoutBookListsInput
+  books: BookUpdateManyWithoutListNoInput
+}
+
+input BookListUpdateWithoutSemesterDataInput {
+  department: DepartmentUpdateOneRequiredWithoutBookListsInput
+  books: BookUpdateManyWithoutListNoInput
+}
+
+input BookListUpdateWithWhereUniqueWithoutDepartmentInput {
+  where: BookListWhereUniqueInput!
+  data: BookListUpdateWithoutDepartmentDataInput!
+}
+
+input BookListUpdateWithWhereUniqueWithoutSemesterInput {
+  where: BookListWhereUniqueInput!
+  data: BookListUpdateWithoutSemesterDataInput!
+}
+
+input BookListUpsertWithoutBooksInput {
+  update: BookListUpdateWithoutBooksDataInput!
+  create: BookListCreateWithoutBooksInput!
+}
+
+input BookListUpsertWithWhereUniqueWithoutDepartmentInput {
+  where: BookListWhereUniqueInput!
+  update: BookListUpdateWithoutDepartmentDataInput!
+  create: BookListCreateWithoutDepartmentInput!
+}
+
+input BookListUpsertWithWhereUniqueWithoutSemesterInput {
+  where: BookListWhereUniqueInput!
+  update: BookListUpdateWithoutSemesterDataInput!
+  create: BookListCreateWithoutSemesterInput!
+}
+
+input BookListWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BookListWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BookListWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BookListWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  department: DepartmentWhereInput
+  semester: SemesterWhereInput
+  books_every: BookWhereInput
+  books_some: BookWhereInput
+  books_none: BookWhereInput
+}
+
+input BookListWhereUniqueInput {
+  id: ID
+}
+
+enum BookOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  code_ASC
+  code_DESC
+}
+
+type BookPreviousValues {
+  id: ID!
+  name: String!
+  code: String!
+}
+
+input BookScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BookScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BookScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BookScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  code: String
+
+  """All values that are not equal to given value."""
+  code_not: String
+
+  """All values that are contained in given list."""
+  code_in: [String!]
+
+  """All values that are not contained in given list."""
+  code_not_in: [String!]
+
+  """All values less than the given value."""
+  code_lt: String
+
+  """All values less than or equal the given value."""
+  code_lte: String
+
+  """All values greater than the given value."""
+  code_gt: String
+
+  """All values greater than or equal the given value."""
+  code_gte: String
+
+  """All values containing the given string."""
+  code_contains: String
+
+  """All values not containing the given string."""
+  code_not_contains: String
+
+  """All values starting with the given string."""
+  code_starts_with: String
+
+  """All values not starting with the given string."""
+  code_not_starts_with: String
+
+  """All values ending with the given string."""
+  code_ends_with: String
+
+  """All values not ending with the given string."""
+  code_not_ends_with: String
+}
+
+type BookSubscriptionPayload {
+  mutation: MutationType!
+  node: Book
+  updatedFields: [String!]
+  previousValues: BookPreviousValues
+}
+
+input BookSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BookSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BookSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BookSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: BookWhereInput
+}
+
+input BookUpdateInput {
+  name: String
+  code: String
+  listNo: BookListUpdateOneRequiredWithoutBooksInput
+  classes: ClassUpdateManyWithoutSubjectInput
+}
+
+input BookUpdateManyDataInput {
+  name: String
+  code: String
+}
+
+input BookUpdateManyMutationInput {
+  name: String
+  code: String
+}
+
+input BookUpdateManyWithoutListNoInput {
+  create: [BookCreateWithoutListNoInput!]
+  connect: [BookWhereUniqueInput!]
+  set: [BookWhereUniqueInput!]
+  disconnect: [BookWhereUniqueInput!]
+  delete: [BookWhereUniqueInput!]
+  update: [BookUpdateWithWhereUniqueWithoutListNoInput!]
+  updateMany: [BookUpdateManyWithWhereNestedInput!]
+  deleteMany: [BookScalarWhereInput!]
+  upsert: [BookUpsertWithWhereUniqueWithoutListNoInput!]
+}
+
+input BookUpdateManyWithWhereNestedInput {
+  where: BookScalarWhereInput!
+  data: BookUpdateManyDataInput!
+}
+
+input BookUpdateOneRequiredWithoutClassesInput {
+  create: BookCreateWithoutClassesInput
+  connect: BookWhereUniqueInput
+  update: BookUpdateWithoutClassesDataInput
+  upsert: BookUpsertWithoutClassesInput
+}
+
+input BookUpdateWithoutClassesDataInput {
+  name: String
+  code: String
+  listNo: BookListUpdateOneRequiredWithoutBooksInput
+}
+
+input BookUpdateWithoutListNoDataInput {
+  name: String
+  code: String
+  classes: ClassUpdateManyWithoutSubjectInput
+}
+
+input BookUpdateWithWhereUniqueWithoutListNoInput {
+  where: BookWhereUniqueInput!
+  data: BookUpdateWithoutListNoDataInput!
+}
+
+input BookUpsertWithoutClassesInput {
+  update: BookUpdateWithoutClassesDataInput!
+  create: BookCreateWithoutClassesInput!
+}
+
+input BookUpsertWithWhereUniqueWithoutListNoInput {
+  where: BookWhereUniqueInput!
+  update: BookUpdateWithoutListNoDataInput!
+  create: BookCreateWithoutListNoInput!
+}
+
+input BookWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BookWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BookWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BookWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  code: String
+
+  """All values that are not equal to given value."""
+  code_not: String
+
+  """All values that are contained in given list."""
+  code_in: [String!]
+
+  """All values that are not contained in given list."""
+  code_not_in: [String!]
+
+  """All values less than the given value."""
+  code_lt: String
+
+  """All values less than or equal the given value."""
+  code_lte: String
+
+  """All values greater than the given value."""
+  code_gt: String
+
+  """All values greater than or equal the given value."""
+  code_gte: String
+
+  """All values containing the given string."""
+  code_contains: String
+
+  """All values not containing the given string."""
+  code_not_contains: String
+
+  """All values starting with the given string."""
+  code_starts_with: String
+
+  """All values not starting with the given string."""
+  code_not_starts_with: String
+
+  """All values ending with the given string."""
+  code_ends_with: String
+
+  """All values not ending with the given string."""
+  code_not_ends_with: String
+  listNo: BookListWhereInput
+  classes_every: ClassWhereInput
+  classes_some: ClassWhereInput
+  classes_none: ClassWhereInput
+}
+
+input BookWhereUniqueInput {
+  id: ID
+  code: String
+}
+
+type Class implements Node {
+  id: ID!
+  day: DayInWeek!
+  institute: Institute!
+  semester: Semester!
+  period: Period!
+  mentor: Teacher!
+  department: Department!
+  subject: Book!
+}
+
+"""A connection to a list of items."""
+type ClassConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ClassEdge]!
+  aggregate: AggregateClass!
+}
+
+input ClassCreateInput {
+  id: ID
+  day: DayInWeekCreateOneWithoutClassesInput!
+  institute: InstituteCreateOneWithoutClassesInput!
+  semester: SemesterCreateOneWithoutClassesInput!
+  period: PeriodCreateOneInput!
+  mentor: TeacherCreateOneWithoutClassesInput!
+  department: DepartmentCreateOneInput!
+  subject: BookCreateOneWithoutClassesInput!
+}
+
+input ClassCreateManyWithoutDayInput {
+  create: [ClassCreateWithoutDayInput!]
+  connect: [ClassWhereUniqueInput!]
+}
+
+input ClassCreateManyWithoutInstituteInput {
+  create: [ClassCreateWithoutInstituteInput!]
+  connect: [ClassWhereUniqueInput!]
+}
+
+input ClassCreateManyWithoutMentorInput {
+  create: [ClassCreateWithoutMentorInput!]
+  connect: [ClassWhereUniqueInput!]
+}
+
+input ClassCreateManyWithoutSemesterInput {
+  create: [ClassCreateWithoutSemesterInput!]
+  connect: [ClassWhereUniqueInput!]
+}
+
+input ClassCreateManyWithoutSubjectInput {
+  create: [ClassCreateWithoutSubjectInput!]
+  connect: [ClassWhereUniqueInput!]
+}
+
+input ClassCreateWithoutDayInput {
+  id: ID
+  institute: InstituteCreateOneWithoutClassesInput!
+  semester: SemesterCreateOneWithoutClassesInput!
+  period: PeriodCreateOneInput!
+  mentor: TeacherCreateOneWithoutClassesInput!
+  department: DepartmentCreateOneInput!
+  subject: BookCreateOneWithoutClassesInput!
+}
+
+input ClassCreateWithoutInstituteInput {
+  id: ID
+  day: DayInWeekCreateOneWithoutClassesInput!
+  semester: SemesterCreateOneWithoutClassesInput!
+  period: PeriodCreateOneInput!
+  mentor: TeacherCreateOneWithoutClassesInput!
+  department: DepartmentCreateOneInput!
+  subject: BookCreateOneWithoutClassesInput!
+}
+
+input ClassCreateWithoutMentorInput {
+  id: ID
+  day: DayInWeekCreateOneWithoutClassesInput!
+  institute: InstituteCreateOneWithoutClassesInput!
+  semester: SemesterCreateOneWithoutClassesInput!
+  period: PeriodCreateOneInput!
+  department: DepartmentCreateOneInput!
+  subject: BookCreateOneWithoutClassesInput!
+}
+
+input ClassCreateWithoutSemesterInput {
+  id: ID
+  day: DayInWeekCreateOneWithoutClassesInput!
+  institute: InstituteCreateOneWithoutClassesInput!
+  period: PeriodCreateOneInput!
+  mentor: TeacherCreateOneWithoutClassesInput!
+  department: DepartmentCreateOneInput!
+  subject: BookCreateOneWithoutClassesInput!
+}
+
+input ClassCreateWithoutSubjectInput {
+  id: ID
+  day: DayInWeekCreateOneWithoutClassesInput!
+  institute: InstituteCreateOneWithoutClassesInput!
+  semester: SemesterCreateOneWithoutClassesInput!
+  period: PeriodCreateOneInput!
+  mentor: TeacherCreateOneWithoutClassesInput!
+  department: DepartmentCreateOneInput!
+}
+
+"""An edge in a connection."""
+type ClassEdge {
+  """The item at the end of the edge."""
+  node: Class!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ClassOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type ClassPreviousValues {
+  id: ID!
+}
+
+input ClassScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ClassScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ClassScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ClassScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+}
+
+type ClassSubscriptionPayload {
+  mutation: MutationType!
+  node: Class
+  updatedFields: [String!]
+  previousValues: ClassPreviousValues
+}
+
+input ClassSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ClassSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ClassSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ClassSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ClassWhereInput
+}
+
+input ClassUpdateInput {
+  day: DayInWeekUpdateOneRequiredWithoutClassesInput
+  institute: InstituteUpdateOneRequiredWithoutClassesInput
+  semester: SemesterUpdateOneRequiredWithoutClassesInput
+  period: PeriodUpdateOneRequiredInput
+  mentor: TeacherUpdateOneRequiredWithoutClassesInput
+  department: DepartmentUpdateOneRequiredInput
+  subject: BookUpdateOneRequiredWithoutClassesInput
+}
+
+input ClassUpdateManyWithoutDayInput {
+  create: [ClassCreateWithoutDayInput!]
+  connect: [ClassWhereUniqueInput!]
+  set: [ClassWhereUniqueInput!]
+  disconnect: [ClassWhereUniqueInput!]
+  delete: [ClassWhereUniqueInput!]
+  update: [ClassUpdateWithWhereUniqueWithoutDayInput!]
+  deleteMany: [ClassScalarWhereInput!]
+  upsert: [ClassUpsertWithWhereUniqueWithoutDayInput!]
+}
+
+input ClassUpdateManyWithoutInstituteInput {
+  create: [ClassCreateWithoutInstituteInput!]
+  connect: [ClassWhereUniqueInput!]
+  set: [ClassWhereUniqueInput!]
+  disconnect: [ClassWhereUniqueInput!]
+  delete: [ClassWhereUniqueInput!]
+  update: [ClassUpdateWithWhereUniqueWithoutInstituteInput!]
+  deleteMany: [ClassScalarWhereInput!]
+  upsert: [ClassUpsertWithWhereUniqueWithoutInstituteInput!]
+}
+
+input ClassUpdateManyWithoutMentorInput {
+  create: [ClassCreateWithoutMentorInput!]
+  connect: [ClassWhereUniqueInput!]
+  set: [ClassWhereUniqueInput!]
+  disconnect: [ClassWhereUniqueInput!]
+  delete: [ClassWhereUniqueInput!]
+  update: [ClassUpdateWithWhereUniqueWithoutMentorInput!]
+  deleteMany: [ClassScalarWhereInput!]
+  upsert: [ClassUpsertWithWhereUniqueWithoutMentorInput!]
+}
+
+input ClassUpdateManyWithoutSemesterInput {
+  create: [ClassCreateWithoutSemesterInput!]
+  connect: [ClassWhereUniqueInput!]
+  set: [ClassWhereUniqueInput!]
+  disconnect: [ClassWhereUniqueInput!]
+  delete: [ClassWhereUniqueInput!]
+  update: [ClassUpdateWithWhereUniqueWithoutSemesterInput!]
+  deleteMany: [ClassScalarWhereInput!]
+  upsert: [ClassUpsertWithWhereUniqueWithoutSemesterInput!]
+}
+
+input ClassUpdateManyWithoutSubjectInput {
+  create: [ClassCreateWithoutSubjectInput!]
+  connect: [ClassWhereUniqueInput!]
+  set: [ClassWhereUniqueInput!]
+  disconnect: [ClassWhereUniqueInput!]
+  delete: [ClassWhereUniqueInput!]
+  update: [ClassUpdateWithWhereUniqueWithoutSubjectInput!]
+  deleteMany: [ClassScalarWhereInput!]
+  upsert: [ClassUpsertWithWhereUniqueWithoutSubjectInput!]
+}
+
+input ClassUpdateWithoutDayDataInput {
+  institute: InstituteUpdateOneRequiredWithoutClassesInput
+  semester: SemesterUpdateOneRequiredWithoutClassesInput
+  period: PeriodUpdateOneRequiredInput
+  mentor: TeacherUpdateOneRequiredWithoutClassesInput
+  department: DepartmentUpdateOneRequiredInput
+  subject: BookUpdateOneRequiredWithoutClassesInput
+}
+
+input ClassUpdateWithoutInstituteDataInput {
+  day: DayInWeekUpdateOneRequiredWithoutClassesInput
+  semester: SemesterUpdateOneRequiredWithoutClassesInput
+  period: PeriodUpdateOneRequiredInput
+  mentor: TeacherUpdateOneRequiredWithoutClassesInput
+  department: DepartmentUpdateOneRequiredInput
+  subject: BookUpdateOneRequiredWithoutClassesInput
+}
+
+input ClassUpdateWithoutMentorDataInput {
+  day: DayInWeekUpdateOneRequiredWithoutClassesInput
+  institute: InstituteUpdateOneRequiredWithoutClassesInput
+  semester: SemesterUpdateOneRequiredWithoutClassesInput
+  period: PeriodUpdateOneRequiredInput
+  department: DepartmentUpdateOneRequiredInput
+  subject: BookUpdateOneRequiredWithoutClassesInput
+}
+
+input ClassUpdateWithoutSemesterDataInput {
+  day: DayInWeekUpdateOneRequiredWithoutClassesInput
+  institute: InstituteUpdateOneRequiredWithoutClassesInput
+  period: PeriodUpdateOneRequiredInput
+  mentor: TeacherUpdateOneRequiredWithoutClassesInput
+  department: DepartmentUpdateOneRequiredInput
+  subject: BookUpdateOneRequiredWithoutClassesInput
+}
+
+input ClassUpdateWithoutSubjectDataInput {
+  day: DayInWeekUpdateOneRequiredWithoutClassesInput
+  institute: InstituteUpdateOneRequiredWithoutClassesInput
+  semester: SemesterUpdateOneRequiredWithoutClassesInput
+  period: PeriodUpdateOneRequiredInput
+  mentor: TeacherUpdateOneRequiredWithoutClassesInput
+  department: DepartmentUpdateOneRequiredInput
+}
+
+input ClassUpdateWithWhereUniqueWithoutDayInput {
+  where: ClassWhereUniqueInput!
+  data: ClassUpdateWithoutDayDataInput!
+}
+
+input ClassUpdateWithWhereUniqueWithoutInstituteInput {
+  where: ClassWhereUniqueInput!
+  data: ClassUpdateWithoutInstituteDataInput!
+}
+
+input ClassUpdateWithWhereUniqueWithoutMentorInput {
+  where: ClassWhereUniqueInput!
+  data: ClassUpdateWithoutMentorDataInput!
+}
+
+input ClassUpdateWithWhereUniqueWithoutSemesterInput {
+  where: ClassWhereUniqueInput!
+  data: ClassUpdateWithoutSemesterDataInput!
+}
+
+input ClassUpdateWithWhereUniqueWithoutSubjectInput {
+  where: ClassWhereUniqueInput!
+  data: ClassUpdateWithoutSubjectDataInput!
+}
+
+input ClassUpsertWithWhereUniqueWithoutDayInput {
+  where: ClassWhereUniqueInput!
+  update: ClassUpdateWithoutDayDataInput!
+  create: ClassCreateWithoutDayInput!
+}
+
+input ClassUpsertWithWhereUniqueWithoutInstituteInput {
+  where: ClassWhereUniqueInput!
+  update: ClassUpdateWithoutInstituteDataInput!
+  create: ClassCreateWithoutInstituteInput!
+}
+
+input ClassUpsertWithWhereUniqueWithoutMentorInput {
+  where: ClassWhereUniqueInput!
+  update: ClassUpdateWithoutMentorDataInput!
+  create: ClassCreateWithoutMentorInput!
+}
+
+input ClassUpsertWithWhereUniqueWithoutSemesterInput {
+  where: ClassWhereUniqueInput!
+  update: ClassUpdateWithoutSemesterDataInput!
+  create: ClassCreateWithoutSemesterInput!
+}
+
+input ClassUpsertWithWhereUniqueWithoutSubjectInput {
+  where: ClassWhereUniqueInput!
+  update: ClassUpdateWithoutSubjectDataInput!
+  create: ClassCreateWithoutSubjectInput!
+}
+
+input ClassWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ClassWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ClassWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ClassWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  day: DayInWeekWhereInput
+  institute: InstituteWhereInput
+  semester: SemesterWhereInput
+  period: PeriodWhereInput
+  mentor: TeacherWhereInput
+  department: DepartmentWhereInput
+  subject: BookWhereInput
+}
+
+input ClassWhereUniqueInput {
+  id: ID
+}
+
+type DayInWeek implements Node {
+  id: ID!
+  routine: Routine!
+  dayValue: Int!
+  day: DayTypes!
+  classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class!]
+}
+
+"""A connection to a list of items."""
+type DayInWeekConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [DayInWeekEdge]!
+  aggregate: AggregateDayInWeek!
+}
+
+input DayInWeekCreateInput {
+  id: ID
+  dayValue: Int!
+  day: DayTypes!
+  routine: RoutineCreateOneWithoutDaysInput!
+  classes: ClassCreateManyWithoutDayInput
+}
+
+input DayInWeekCreateManyWithoutRoutineInput {
+  create: [DayInWeekCreateWithoutRoutineInput!]
+  connect: [DayInWeekWhereUniqueInput!]
+}
+
+input DayInWeekCreateOneWithoutClassesInput {
+  create: DayInWeekCreateWithoutClassesInput
+  connect: DayInWeekWhereUniqueInput
+}
+
+input DayInWeekCreateWithoutClassesInput {
+  id: ID
+  dayValue: Int!
+  day: DayTypes!
+  routine: RoutineCreateOneWithoutDaysInput!
+}
+
+input DayInWeekCreateWithoutRoutineInput {
+  id: ID
+  dayValue: Int!
+  day: DayTypes!
+  classes: ClassCreateManyWithoutDayInput
+}
+
+"""An edge in a connection."""
+type DayInWeekEdge {
+  """The item at the end of the edge."""
+  node: DayInWeek!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum DayInWeekOrderByInput {
+  id_ASC
+  id_DESC
+  dayValue_ASC
+  dayValue_DESC
+  day_ASC
+  day_DESC
+}
+
+type DayInWeekPreviousValues {
+  id: ID!
+  dayValue: Int!
+  day: DayTypes!
+}
+
+input DayInWeekScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DayInWeekScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DayInWeekScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DayInWeekScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  dayValue: Int
+
+  """All values that are not equal to given value."""
+  dayValue_not: Int
+
+  """All values that are contained in given list."""
+  dayValue_in: [Int!]
+
+  """All values that are not contained in given list."""
+  dayValue_not_in: [Int!]
+
+  """All values less than the given value."""
+  dayValue_lt: Int
+
+  """All values less than or equal the given value."""
+  dayValue_lte: Int
+
+  """All values greater than the given value."""
+  dayValue_gt: Int
+
+  """All values greater than or equal the given value."""
+  dayValue_gte: Int
+  day: DayTypes
+
+  """All values that are not equal to given value."""
+  day_not: DayTypes
+
+  """All values that are contained in given list."""
+  day_in: [DayTypes!]
+
+  """All values that are not contained in given list."""
+  day_not_in: [DayTypes!]
+}
+
+type DayInWeekSubscriptionPayload {
+  mutation: MutationType!
+  node: DayInWeek
+  updatedFields: [String!]
+  previousValues: DayInWeekPreviousValues
+}
+
+input DayInWeekSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DayInWeekSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DayInWeekSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DayInWeekSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: DayInWeekWhereInput
+}
+
+input DayInWeekUpdateInput {
+  dayValue: Int
+  day: DayTypes
+  routine: RoutineUpdateOneRequiredWithoutDaysInput
+  classes: ClassUpdateManyWithoutDayInput
+}
+
+input DayInWeekUpdateManyDataInput {
+  dayValue: Int
+  day: DayTypes
+}
+
+input DayInWeekUpdateManyMutationInput {
+  dayValue: Int
+  day: DayTypes
+}
+
+input DayInWeekUpdateManyWithoutRoutineInput {
+  create: [DayInWeekCreateWithoutRoutineInput!]
+  connect: [DayInWeekWhereUniqueInput!]
+  set: [DayInWeekWhereUniqueInput!]
+  disconnect: [DayInWeekWhereUniqueInput!]
+  delete: [DayInWeekWhereUniqueInput!]
+  update: [DayInWeekUpdateWithWhereUniqueWithoutRoutineInput!]
+  updateMany: [DayInWeekUpdateManyWithWhereNestedInput!]
+  deleteMany: [DayInWeekScalarWhereInput!]
+  upsert: [DayInWeekUpsertWithWhereUniqueWithoutRoutineInput!]
+}
+
+input DayInWeekUpdateManyWithWhereNestedInput {
+  where: DayInWeekScalarWhereInput!
+  data: DayInWeekUpdateManyDataInput!
+}
+
+input DayInWeekUpdateOneRequiredWithoutClassesInput {
+  create: DayInWeekCreateWithoutClassesInput
+  connect: DayInWeekWhereUniqueInput
+  update: DayInWeekUpdateWithoutClassesDataInput
+  upsert: DayInWeekUpsertWithoutClassesInput
+}
+
+input DayInWeekUpdateWithoutClassesDataInput {
+  dayValue: Int
+  day: DayTypes
+  routine: RoutineUpdateOneRequiredWithoutDaysInput
+}
+
+input DayInWeekUpdateWithoutRoutineDataInput {
+  dayValue: Int
+  day: DayTypes
+  classes: ClassUpdateManyWithoutDayInput
+}
+
+input DayInWeekUpdateWithWhereUniqueWithoutRoutineInput {
+  where: DayInWeekWhereUniqueInput!
+  data: DayInWeekUpdateWithoutRoutineDataInput!
+}
+
+input DayInWeekUpsertWithoutClassesInput {
+  update: DayInWeekUpdateWithoutClassesDataInput!
+  create: DayInWeekCreateWithoutClassesInput!
+}
+
+input DayInWeekUpsertWithWhereUniqueWithoutRoutineInput {
+  where: DayInWeekWhereUniqueInput!
+  update: DayInWeekUpdateWithoutRoutineDataInput!
+  create: DayInWeekCreateWithoutRoutineInput!
+}
+
+input DayInWeekWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DayInWeekWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DayInWeekWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DayInWeekWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  dayValue: Int
+
+  """All values that are not equal to given value."""
+  dayValue_not: Int
+
+  """All values that are contained in given list."""
+  dayValue_in: [Int!]
+
+  """All values that are not contained in given list."""
+  dayValue_not_in: [Int!]
+
+  """All values less than the given value."""
+  dayValue_lt: Int
+
+  """All values less than or equal the given value."""
+  dayValue_lte: Int
+
+  """All values greater than the given value."""
+  dayValue_gt: Int
+
+  """All values greater than or equal the given value."""
+  dayValue_gte: Int
+  day: DayTypes
+
+  """All values that are not equal to given value."""
+  day_not: DayTypes
+
+  """All values that are contained in given list."""
+  day_in: [DayTypes!]
+
+  """All values that are not contained in given list."""
+  day_not_in: [DayTypes!]
+  routine: RoutineWhereInput
+  classes_every: ClassWhereInput
+  classes_some: ClassWhereInput
+  classes_none: ClassWhereInput
+}
+
+input DayInWeekWhereUniqueInput {
+  id: ID
+  day: DayTypes
+}
+
+enum DayTypes {
+  SATURDAY
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+}
+
+type Department implements Node {
+  id: ID!
+  name: String!
+  institute: Institute!
+  students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student!]
+  semesters(where: SemesterWhereInput, orderBy: SemesterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Semester!]
+  bookLists(where: BookListWhereInput, orderBy: BookListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BookList!]
+  routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine!]
+}
+
+"""A connection to a list of items."""
+type DepartmentConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [DepartmentEdge]!
+  aggregate: AggregateDepartment!
+}
+
+input DepartmentCreateInput {
+  id: ID
+  name: String!
+  institute: InstituteCreateOneWithoutDepartmentsInput!
+  students: StudentCreateManyWithoutDepartmentInput
+  semesters: SemesterCreateManyWithoutDepartmentsInput
+  bookLists: BookListCreateManyWithoutDepartmentInput
+  routines: RoutineCreateManyWithoutDepartmentInput
+}
+
+input DepartmentCreateManyWithoutInstituteInput {
+  create: [DepartmentCreateWithoutInstituteInput!]
+  connect: [DepartmentWhereUniqueInput!]
+}
+
+input DepartmentCreateManyWithoutSemestersInput {
+  create: [DepartmentCreateWithoutSemestersInput!]
+  connect: [DepartmentWhereUniqueInput!]
+}
+
+input DepartmentCreateOneInput {
+  create: DepartmentCreateInput
+  connect: DepartmentWhereUniqueInput
+}
+
+input DepartmentCreateOneWithoutBookListsInput {
+  create: DepartmentCreateWithoutBookListsInput
+  connect: DepartmentWhereUniqueInput
+}
+
+input DepartmentCreateOneWithoutRoutinesInput {
+  create: DepartmentCreateWithoutRoutinesInput
+  connect: DepartmentWhereUniqueInput
+}
+
+input DepartmentCreateOneWithoutStudentsInput {
+  create: DepartmentCreateWithoutStudentsInput
+  connect: DepartmentWhereUniqueInput
+}
+
+input DepartmentCreateWithoutBookListsInput {
+  id: ID
+  name: String!
+  institute: InstituteCreateOneWithoutDepartmentsInput!
+  students: StudentCreateManyWithoutDepartmentInput
+  semesters: SemesterCreateManyWithoutDepartmentsInput
+  routines: RoutineCreateManyWithoutDepartmentInput
+}
+
+input DepartmentCreateWithoutInstituteInput {
+  id: ID
+  name: String!
+  students: StudentCreateManyWithoutDepartmentInput
+  semesters: SemesterCreateManyWithoutDepartmentsInput
+  bookLists: BookListCreateManyWithoutDepartmentInput
+  routines: RoutineCreateManyWithoutDepartmentInput
+}
+
+input DepartmentCreateWithoutRoutinesInput {
+  id: ID
+  name: String!
+  institute: InstituteCreateOneWithoutDepartmentsInput!
+  students: StudentCreateManyWithoutDepartmentInput
+  semesters: SemesterCreateManyWithoutDepartmentsInput
+  bookLists: BookListCreateManyWithoutDepartmentInput
+}
+
+input DepartmentCreateWithoutSemestersInput {
+  id: ID
+  name: String!
+  institute: InstituteCreateOneWithoutDepartmentsInput!
+  students: StudentCreateManyWithoutDepartmentInput
+  bookLists: BookListCreateManyWithoutDepartmentInput
+  routines: RoutineCreateManyWithoutDepartmentInput
+}
+
+input DepartmentCreateWithoutStudentsInput {
+  id: ID
+  name: String!
+  institute: InstituteCreateOneWithoutDepartmentsInput!
+  semesters: SemesterCreateManyWithoutDepartmentsInput
+  bookLists: BookListCreateManyWithoutDepartmentInput
+  routines: RoutineCreateManyWithoutDepartmentInput
+}
+
+"""An edge in a connection."""
+type DepartmentEdge {
+  """The item at the end of the edge."""
+  node: Department!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum DepartmentOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type DepartmentPreviousValues {
+  id: ID!
+  name: String!
+}
+
+input DepartmentScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DepartmentScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DepartmentScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DepartmentScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+}
+
+type DepartmentSubscriptionPayload {
+  mutation: MutationType!
+  node: Department
+  updatedFields: [String!]
+  previousValues: DepartmentPreviousValues
+}
+
+input DepartmentSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DepartmentSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DepartmentSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DepartmentSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: DepartmentWhereInput
+}
+
+input DepartmentUpdateDataInput {
+  name: String
+  institute: InstituteUpdateOneRequiredWithoutDepartmentsInput
+  students: StudentUpdateManyWithoutDepartmentInput
+  semesters: SemesterUpdateManyWithoutDepartmentsInput
+  bookLists: BookListUpdateManyWithoutDepartmentInput
+  routines: RoutineUpdateManyWithoutDepartmentInput
+}
+
+input DepartmentUpdateInput {
+  name: String
+  institute: InstituteUpdateOneRequiredWithoutDepartmentsInput
+  students: StudentUpdateManyWithoutDepartmentInput
+  semesters: SemesterUpdateManyWithoutDepartmentsInput
+  bookLists: BookListUpdateManyWithoutDepartmentInput
+  routines: RoutineUpdateManyWithoutDepartmentInput
+}
+
+input DepartmentUpdateManyDataInput {
+  name: String
+}
+
+input DepartmentUpdateManyMutationInput {
+  name: String
+}
+
+input DepartmentUpdateManyWithoutInstituteInput {
+  create: [DepartmentCreateWithoutInstituteInput!]
+  connect: [DepartmentWhereUniqueInput!]
+  set: [DepartmentWhereUniqueInput!]
+  disconnect: [DepartmentWhereUniqueInput!]
+  delete: [DepartmentWhereUniqueInput!]
+  update: [DepartmentUpdateWithWhereUniqueWithoutInstituteInput!]
+  updateMany: [DepartmentUpdateManyWithWhereNestedInput!]
+  deleteMany: [DepartmentScalarWhereInput!]
+  upsert: [DepartmentUpsertWithWhereUniqueWithoutInstituteInput!]
+}
+
+input DepartmentUpdateManyWithoutSemestersInput {
+  create: [DepartmentCreateWithoutSemestersInput!]
+  connect: [DepartmentWhereUniqueInput!]
+  set: [DepartmentWhereUniqueInput!]
+  disconnect: [DepartmentWhereUniqueInput!]
+  delete: [DepartmentWhereUniqueInput!]
+  update: [DepartmentUpdateWithWhereUniqueWithoutSemestersInput!]
+  updateMany: [DepartmentUpdateManyWithWhereNestedInput!]
+  deleteMany: [DepartmentScalarWhereInput!]
+  upsert: [DepartmentUpsertWithWhereUniqueWithoutSemestersInput!]
+}
+
+input DepartmentUpdateManyWithWhereNestedInput {
+  where: DepartmentScalarWhereInput!
+  data: DepartmentUpdateManyDataInput!
+}
+
+input DepartmentUpdateOneRequiredInput {
+  create: DepartmentCreateInput
+  connect: DepartmentWhereUniqueInput
+  update: DepartmentUpdateDataInput
+  upsert: DepartmentUpsertNestedInput
+}
+
+input DepartmentUpdateOneRequiredWithoutBookListsInput {
+  create: DepartmentCreateWithoutBookListsInput
+  connect: DepartmentWhereUniqueInput
+  update: DepartmentUpdateWithoutBookListsDataInput
+  upsert: DepartmentUpsertWithoutBookListsInput
+}
+
+input DepartmentUpdateOneRequiredWithoutRoutinesInput {
+  create: DepartmentCreateWithoutRoutinesInput
+  connect: DepartmentWhereUniqueInput
+  update: DepartmentUpdateWithoutRoutinesDataInput
+  upsert: DepartmentUpsertWithoutRoutinesInput
+}
+
+input DepartmentUpdateOneRequiredWithoutStudentsInput {
+  create: DepartmentCreateWithoutStudentsInput
+  connect: DepartmentWhereUniqueInput
+  update: DepartmentUpdateWithoutStudentsDataInput
+  upsert: DepartmentUpsertWithoutStudentsInput
+}
+
+input DepartmentUpdateWithoutBookListsDataInput {
+  name: String
+  institute: InstituteUpdateOneRequiredWithoutDepartmentsInput
+  students: StudentUpdateManyWithoutDepartmentInput
+  semesters: SemesterUpdateManyWithoutDepartmentsInput
+  routines: RoutineUpdateManyWithoutDepartmentInput
+}
+
+input DepartmentUpdateWithoutInstituteDataInput {
+  name: String
+  students: StudentUpdateManyWithoutDepartmentInput
+  semesters: SemesterUpdateManyWithoutDepartmentsInput
+  bookLists: BookListUpdateManyWithoutDepartmentInput
+  routines: RoutineUpdateManyWithoutDepartmentInput
+}
+
+input DepartmentUpdateWithoutRoutinesDataInput {
+  name: String
+  institute: InstituteUpdateOneRequiredWithoutDepartmentsInput
+  students: StudentUpdateManyWithoutDepartmentInput
+  semesters: SemesterUpdateManyWithoutDepartmentsInput
+  bookLists: BookListUpdateManyWithoutDepartmentInput
+}
+
+input DepartmentUpdateWithoutSemestersDataInput {
+  name: String
+  institute: InstituteUpdateOneRequiredWithoutDepartmentsInput
+  students: StudentUpdateManyWithoutDepartmentInput
+  bookLists: BookListUpdateManyWithoutDepartmentInput
+  routines: RoutineUpdateManyWithoutDepartmentInput
+}
+
+input DepartmentUpdateWithoutStudentsDataInput {
+  name: String
+  institute: InstituteUpdateOneRequiredWithoutDepartmentsInput
+  semesters: SemesterUpdateManyWithoutDepartmentsInput
+  bookLists: BookListUpdateManyWithoutDepartmentInput
+  routines: RoutineUpdateManyWithoutDepartmentInput
+}
+
+input DepartmentUpdateWithWhereUniqueWithoutInstituteInput {
+  where: DepartmentWhereUniqueInput!
+  data: DepartmentUpdateWithoutInstituteDataInput!
+}
+
+input DepartmentUpdateWithWhereUniqueWithoutSemestersInput {
+  where: DepartmentWhereUniqueInput!
+  data: DepartmentUpdateWithoutSemestersDataInput!
+}
+
+input DepartmentUpsertNestedInput {
+  update: DepartmentUpdateDataInput!
+  create: DepartmentCreateInput!
+}
+
+input DepartmentUpsertWithoutBookListsInput {
+  update: DepartmentUpdateWithoutBookListsDataInput!
+  create: DepartmentCreateWithoutBookListsInput!
+}
+
+input DepartmentUpsertWithoutRoutinesInput {
+  update: DepartmentUpdateWithoutRoutinesDataInput!
+  create: DepartmentCreateWithoutRoutinesInput!
+}
+
+input DepartmentUpsertWithoutStudentsInput {
+  update: DepartmentUpdateWithoutStudentsDataInput!
+  create: DepartmentCreateWithoutStudentsInput!
+}
+
+input DepartmentUpsertWithWhereUniqueWithoutInstituteInput {
+  where: DepartmentWhereUniqueInput!
+  update: DepartmentUpdateWithoutInstituteDataInput!
+  create: DepartmentCreateWithoutInstituteInput!
+}
+
+input DepartmentUpsertWithWhereUniqueWithoutSemestersInput {
+  where: DepartmentWhereUniqueInput!
+  update: DepartmentUpdateWithoutSemestersDataInput!
+  create: DepartmentCreateWithoutSemestersInput!
+}
+
+input DepartmentWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DepartmentWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DepartmentWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DepartmentWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  institute: InstituteWhereInput
+  students_every: StudentWhereInput
+  students_some: StudentWhereInput
+  students_none: StudentWhereInput
+  semesters_every: SemesterWhereInput
+  semesters_some: SemesterWhereInput
+  semesters_none: SemesterWhereInput
+  bookLists_every: BookListWhereInput
+  bookLists_some: BookListWhereInput
+  bookLists_none: BookListWhereInput
+  routines_every: RoutineWhereInput
+  routines_some: RoutineWhereInput
+  routines_none: RoutineWhereInput
+}
+
+input DepartmentWhereUniqueInput {
+  id: ID
+}
+
+type Institute implements Node {
+  id: ID!
+  name: String!
+  address: String!
+  email: String!
+  username: String!
+  password: String!
+  departments(where: DepartmentWhereInput, orderBy: DepartmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Department!]
+  students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student!]
+  sessions(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Session!]
+  teachers(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Teacher!]
+  classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class!]
+  routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine!]
+  periods(where: PeriodWhereInput, orderBy: PeriodOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Period!]
+}
+
+"""A connection to a list of items."""
+type InstituteConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [InstituteEdge]!
+  aggregate: AggregateInstitute!
+}
+
+input InstituteCreateInput {
+  id: ID
+  name: String!
+  address: String!
+  email: String!
+  username: String!
+  password: String!
+  departments: DepartmentCreateManyWithoutInstituteInput
+  students: StudentCreateManyWithoutInstituteInput
+  sessions: SessionCreateManyInput
+  teachers: TeacherCreateManyWithoutInstituteInput
+  classes: ClassCreateManyWithoutInstituteInput
+  routines: RoutineCreateManyWithoutInstituteInput
+  periods: PeriodCreateManyWithoutInstituteInput
+}
+
+input InstituteCreateOneInput {
+  create: InstituteCreateInput
+  connect: InstituteWhereUniqueInput
+}
+
+input InstituteCreateOneWithoutClassesInput {
+  create: InstituteCreateWithoutClassesInput
+  connect: InstituteWhereUniqueInput
+}
+
+input InstituteCreateOneWithoutDepartmentsInput {
+  create: InstituteCreateWithoutDepartmentsInput
+  connect: InstituteWhereUniqueInput
+}
+
+input InstituteCreateOneWithoutPeriodsInput {
+  create: InstituteCreateWithoutPeriodsInput
+  connect: InstituteWhereUniqueInput
+}
+
+input InstituteCreateOneWithoutRoutinesInput {
+  create: InstituteCreateWithoutRoutinesInput
+  connect: InstituteWhereUniqueInput
+}
+
+input InstituteCreateOneWithoutStudentsInput {
+  create: InstituteCreateWithoutStudentsInput
+  connect: InstituteWhereUniqueInput
+}
+
+input InstituteCreateOneWithoutTeachersInput {
+  create: InstituteCreateWithoutTeachersInput
+  connect: InstituteWhereUniqueInput
+}
+
+input InstituteCreateWithoutClassesInput {
+  id: ID
+  name: String!
+  address: String!
+  email: String!
+  username: String!
+  password: String!
+  departments: DepartmentCreateManyWithoutInstituteInput
+  students: StudentCreateManyWithoutInstituteInput
+  sessions: SessionCreateManyInput
+  teachers: TeacherCreateManyWithoutInstituteInput
+  routines: RoutineCreateManyWithoutInstituteInput
+  periods: PeriodCreateManyWithoutInstituteInput
+}
+
+input InstituteCreateWithoutDepartmentsInput {
+  id: ID
+  name: String!
+  address: String!
+  email: String!
+  username: String!
+  password: String!
+  students: StudentCreateManyWithoutInstituteInput
+  sessions: SessionCreateManyInput
+  teachers: TeacherCreateManyWithoutInstituteInput
+  classes: ClassCreateManyWithoutInstituteInput
+  routines: RoutineCreateManyWithoutInstituteInput
+  periods: PeriodCreateManyWithoutInstituteInput
+}
+
+input InstituteCreateWithoutPeriodsInput {
+  id: ID
+  name: String!
+  address: String!
+  email: String!
+  username: String!
+  password: String!
+  departments: DepartmentCreateManyWithoutInstituteInput
+  students: StudentCreateManyWithoutInstituteInput
+  sessions: SessionCreateManyInput
+  teachers: TeacherCreateManyWithoutInstituteInput
+  classes: ClassCreateManyWithoutInstituteInput
+  routines: RoutineCreateManyWithoutInstituteInput
+}
+
+input InstituteCreateWithoutRoutinesInput {
+  id: ID
+  name: String!
+  address: String!
+  email: String!
+  username: String!
+  password: String!
+  departments: DepartmentCreateManyWithoutInstituteInput
+  students: StudentCreateManyWithoutInstituteInput
+  sessions: SessionCreateManyInput
+  teachers: TeacherCreateManyWithoutInstituteInput
+  classes: ClassCreateManyWithoutInstituteInput
+  periods: PeriodCreateManyWithoutInstituteInput
+}
+
+input InstituteCreateWithoutStudentsInput {
+  id: ID
+  name: String!
+  address: String!
+  email: String!
+  username: String!
+  password: String!
+  departments: DepartmentCreateManyWithoutInstituteInput
+  sessions: SessionCreateManyInput
+  teachers: TeacherCreateManyWithoutInstituteInput
+  classes: ClassCreateManyWithoutInstituteInput
+  routines: RoutineCreateManyWithoutInstituteInput
+  periods: PeriodCreateManyWithoutInstituteInput
+}
+
+input InstituteCreateWithoutTeachersInput {
+  id: ID
+  name: String!
+  address: String!
+  email: String!
+  username: String!
+  password: String!
+  departments: DepartmentCreateManyWithoutInstituteInput
+  students: StudentCreateManyWithoutInstituteInput
+  sessions: SessionCreateManyInput
+  classes: ClassCreateManyWithoutInstituteInput
+  routines: RoutineCreateManyWithoutInstituteInput
+  periods: PeriodCreateManyWithoutInstituteInput
+}
+
+"""An edge in a connection."""
+type InstituteEdge {
+  """The item at the end of the edge."""
+  node: Institute!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum InstituteOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  address_ASC
+  address_DESC
+  email_ASC
+  email_DESC
+  username_ASC
+  username_DESC
+  password_ASC
+  password_DESC
+}
+
+type InstitutePreviousValues {
+  id: ID!
+  name: String!
+  address: String!
+  email: String!
+  username: String!
+  password: String!
+}
+
+type InstituteSubscriptionPayload {
+  mutation: MutationType!
+  node: Institute
+  updatedFields: [String!]
+  previousValues: InstitutePreviousValues
+}
+
+input InstituteSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [InstituteSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [InstituteSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [InstituteSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: InstituteWhereInput
+}
+
+input InstituteUpdateDataInput {
+  name: String
+  address: String
+  email: String
+  username: String
+  password: String
+  departments: DepartmentUpdateManyWithoutInstituteInput
+  students: StudentUpdateManyWithoutInstituteInput
+  sessions: SessionUpdateManyInput
+  teachers: TeacherUpdateManyWithoutInstituteInput
+  classes: ClassUpdateManyWithoutInstituteInput
+  routines: RoutineUpdateManyWithoutInstituteInput
+  periods: PeriodUpdateManyWithoutInstituteInput
+}
+
+input InstituteUpdateInput {
+  name: String
+  address: String
+  email: String
+  username: String
+  password: String
+  departments: DepartmentUpdateManyWithoutInstituteInput
+  students: StudentUpdateManyWithoutInstituteInput
+  sessions: SessionUpdateManyInput
+  teachers: TeacherUpdateManyWithoutInstituteInput
+  classes: ClassUpdateManyWithoutInstituteInput
+  routines: RoutineUpdateManyWithoutInstituteInput
+  periods: PeriodUpdateManyWithoutInstituteInput
+}
+
+input InstituteUpdateManyMutationInput {
+  name: String
+  address: String
+  email: String
+  username: String
+  password: String
+}
+
+input InstituteUpdateOneRequiredInput {
+  create: InstituteCreateInput
+  connect: InstituteWhereUniqueInput
+  update: InstituteUpdateDataInput
+  upsert: InstituteUpsertNestedInput
+}
+
+input InstituteUpdateOneRequiredWithoutClassesInput {
+  create: InstituteCreateWithoutClassesInput
+  connect: InstituteWhereUniqueInput
+  update: InstituteUpdateWithoutClassesDataInput
+  upsert: InstituteUpsertWithoutClassesInput
+}
+
+input InstituteUpdateOneRequiredWithoutDepartmentsInput {
+  create: InstituteCreateWithoutDepartmentsInput
+  connect: InstituteWhereUniqueInput
+  update: InstituteUpdateWithoutDepartmentsDataInput
+  upsert: InstituteUpsertWithoutDepartmentsInput
+}
+
+input InstituteUpdateOneRequiredWithoutPeriodsInput {
+  create: InstituteCreateWithoutPeriodsInput
+  connect: InstituteWhereUniqueInput
+  update: InstituteUpdateWithoutPeriodsDataInput
+  upsert: InstituteUpsertWithoutPeriodsInput
+}
+
+input InstituteUpdateOneRequiredWithoutRoutinesInput {
+  create: InstituteCreateWithoutRoutinesInput
+  connect: InstituteWhereUniqueInput
+  update: InstituteUpdateWithoutRoutinesDataInput
+  upsert: InstituteUpsertWithoutRoutinesInput
+}
+
+input InstituteUpdateOneRequiredWithoutStudentsInput {
+  create: InstituteCreateWithoutStudentsInput
+  connect: InstituteWhereUniqueInput
+  update: InstituteUpdateWithoutStudentsDataInput
+  upsert: InstituteUpsertWithoutStudentsInput
+}
+
+input InstituteUpdateOneRequiredWithoutTeachersInput {
+  create: InstituteCreateWithoutTeachersInput
+  connect: InstituteWhereUniqueInput
+  update: InstituteUpdateWithoutTeachersDataInput
+  upsert: InstituteUpsertWithoutTeachersInput
+}
+
+input InstituteUpdateWithoutClassesDataInput {
+  name: String
+  address: String
+  email: String
+  username: String
+  password: String
+  departments: DepartmentUpdateManyWithoutInstituteInput
+  students: StudentUpdateManyWithoutInstituteInput
+  sessions: SessionUpdateManyInput
+  teachers: TeacherUpdateManyWithoutInstituteInput
+  routines: RoutineUpdateManyWithoutInstituteInput
+  periods: PeriodUpdateManyWithoutInstituteInput
+}
+
+input InstituteUpdateWithoutDepartmentsDataInput {
+  name: String
+  address: String
+  email: String
+  username: String
+  password: String
+  students: StudentUpdateManyWithoutInstituteInput
+  sessions: SessionUpdateManyInput
+  teachers: TeacherUpdateManyWithoutInstituteInput
+  classes: ClassUpdateManyWithoutInstituteInput
+  routines: RoutineUpdateManyWithoutInstituteInput
+  periods: PeriodUpdateManyWithoutInstituteInput
+}
+
+input InstituteUpdateWithoutPeriodsDataInput {
+  name: String
+  address: String
+  email: String
+  username: String
+  password: String
+  departments: DepartmentUpdateManyWithoutInstituteInput
+  students: StudentUpdateManyWithoutInstituteInput
+  sessions: SessionUpdateManyInput
+  teachers: TeacherUpdateManyWithoutInstituteInput
+  classes: ClassUpdateManyWithoutInstituteInput
+  routines: RoutineUpdateManyWithoutInstituteInput
+}
+
+input InstituteUpdateWithoutRoutinesDataInput {
+  name: String
+  address: String
+  email: String
+  username: String
+  password: String
+  departments: DepartmentUpdateManyWithoutInstituteInput
+  students: StudentUpdateManyWithoutInstituteInput
+  sessions: SessionUpdateManyInput
+  teachers: TeacherUpdateManyWithoutInstituteInput
+  classes: ClassUpdateManyWithoutInstituteInput
+  periods: PeriodUpdateManyWithoutInstituteInput
+}
+
+input InstituteUpdateWithoutStudentsDataInput {
+  name: String
+  address: String
+  email: String
+  username: String
+  password: String
+  departments: DepartmentUpdateManyWithoutInstituteInput
+  sessions: SessionUpdateManyInput
+  teachers: TeacherUpdateManyWithoutInstituteInput
+  classes: ClassUpdateManyWithoutInstituteInput
+  routines: RoutineUpdateManyWithoutInstituteInput
+  periods: PeriodUpdateManyWithoutInstituteInput
+}
+
+input InstituteUpdateWithoutTeachersDataInput {
+  name: String
+  address: String
+  email: String
+  username: String
+  password: String
+  departments: DepartmentUpdateManyWithoutInstituteInput
+  students: StudentUpdateManyWithoutInstituteInput
+  sessions: SessionUpdateManyInput
+  classes: ClassUpdateManyWithoutInstituteInput
+  routines: RoutineUpdateManyWithoutInstituteInput
+  periods: PeriodUpdateManyWithoutInstituteInput
+}
+
+input InstituteUpsertNestedInput {
+  update: InstituteUpdateDataInput!
+  create: InstituteCreateInput!
+}
+
+input InstituteUpsertWithoutClassesInput {
+  update: InstituteUpdateWithoutClassesDataInput!
+  create: InstituteCreateWithoutClassesInput!
+}
+
+input InstituteUpsertWithoutDepartmentsInput {
+  update: InstituteUpdateWithoutDepartmentsDataInput!
+  create: InstituteCreateWithoutDepartmentsInput!
+}
+
+input InstituteUpsertWithoutPeriodsInput {
+  update: InstituteUpdateWithoutPeriodsDataInput!
+  create: InstituteCreateWithoutPeriodsInput!
+}
+
+input InstituteUpsertWithoutRoutinesInput {
+  update: InstituteUpdateWithoutRoutinesDataInput!
+  create: InstituteCreateWithoutRoutinesInput!
+}
+
+input InstituteUpsertWithoutStudentsInput {
+  update: InstituteUpdateWithoutStudentsDataInput!
+  create: InstituteCreateWithoutStudentsInput!
+}
+
+input InstituteUpsertWithoutTeachersInput {
+  update: InstituteUpdateWithoutTeachersDataInput!
+  create: InstituteCreateWithoutTeachersInput!
+}
+
+input InstituteWhereInput {
+  """Logical AND on all given filters."""
+  AND: [InstituteWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [InstituteWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [InstituteWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  address: String
+
+  """All values that are not equal to given value."""
+  address_not: String
+
+  """All values that are contained in given list."""
+  address_in: [String!]
+
+  """All values that are not contained in given list."""
+  address_not_in: [String!]
+
+  """All values less than the given value."""
+  address_lt: String
+
+  """All values less than or equal the given value."""
+  address_lte: String
+
+  """All values greater than the given value."""
+  address_gt: String
+
+  """All values greater than or equal the given value."""
+  address_gte: String
+
+  """All values containing the given string."""
+  address_contains: String
+
+  """All values not containing the given string."""
+  address_not_contains: String
+
+  """All values starting with the given string."""
+  address_starts_with: String
+
+  """All values not starting with the given string."""
+  address_not_starts_with: String
+
+  """All values ending with the given string."""
+  address_ends_with: String
+
+  """All values not ending with the given string."""
+  address_not_ends_with: String
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  username: String
+
+  """All values that are not equal to given value."""
+  username_not: String
+
+  """All values that are contained in given list."""
+  username_in: [String!]
+
+  """All values that are not contained in given list."""
+  username_not_in: [String!]
+
+  """All values less than the given value."""
+  username_lt: String
+
+  """All values less than or equal the given value."""
+  username_lte: String
+
+  """All values greater than the given value."""
+  username_gt: String
+
+  """All values greater than or equal the given value."""
+  username_gte: String
+
+  """All values containing the given string."""
+  username_contains: String
+
+  """All values not containing the given string."""
+  username_not_contains: String
+
+  """All values starting with the given string."""
+  username_starts_with: String
+
+  """All values not starting with the given string."""
+  username_not_starts_with: String
+
+  """All values ending with the given string."""
+  username_ends_with: String
+
+  """All values not ending with the given string."""
+  username_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  departments_every: DepartmentWhereInput
+  departments_some: DepartmentWhereInput
+  departments_none: DepartmentWhereInput
+  students_every: StudentWhereInput
+  students_some: StudentWhereInput
+  students_none: StudentWhereInput
+  sessions_every: SessionWhereInput
+  sessions_some: SessionWhereInput
+  sessions_none: SessionWhereInput
+  teachers_every: TeacherWhereInput
+  teachers_some: TeacherWhereInput
+  teachers_none: TeacherWhereInput
+  classes_every: ClassWhereInput
+  classes_some: ClassWhereInput
+  classes_none: ClassWhereInput
+  routines_every: RoutineWhereInput
+  routines_some: RoutineWhereInput
+  routines_none: RoutineWhereInput
+  periods_every: PeriodWhereInput
+  periods_some: PeriodWhereInput
+  periods_none: PeriodWhereInput
+}
+
+input InstituteWhereUniqueInput {
+  id: ID
+  name: String
+  email: String
+}
+
+"""Raw JSON value"""
+scalar Json
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createStudent(data: StudentCreateInput!): Student!
+  createSemester(data: SemesterCreateInput!): Semester!
+  createBookList(data: BookListCreateInput!): BookList!
+  createBook(data: BookCreateInput!): Book!
+  createTeacher(data: TeacherCreateInput!): Teacher!
+  createRoutine(data: RoutineCreateInput!): Routine!
+  createDayInWeek(data: DayInWeekCreateInput!): DayInWeek!
+  createClass(data: ClassCreateInput!): Class!
+  createDepartment(data: DepartmentCreateInput!): Department!
+  createPeriod(data: PeriodCreateInput!): Period!
+  createInstitute(data: InstituteCreateInput!): Institute!
+  createSession(data: SessionCreateInput!): Session!
+  updateStudent(data: StudentUpdateInput!, where: StudentWhereUniqueInput!): Student
+  updateSemester(data: SemesterUpdateInput!, where: SemesterWhereUniqueInput!): Semester
+  updateBookList(data: BookListUpdateInput!, where: BookListWhereUniqueInput!): BookList
+  updateBook(data: BookUpdateInput!, where: BookWhereUniqueInput!): Book
+  updateTeacher(data: TeacherUpdateInput!, where: TeacherWhereUniqueInput!): Teacher
+  updateRoutine(data: RoutineUpdateInput!, where: RoutineWhereUniqueInput!): Routine
+  updateDayInWeek(data: DayInWeekUpdateInput!, where: DayInWeekWhereUniqueInput!): DayInWeek
+  updateClass(data: ClassUpdateInput!, where: ClassWhereUniqueInput!): Class
+  updateDepartment(data: DepartmentUpdateInput!, where: DepartmentWhereUniqueInput!): Department
+  updatePeriod(data: PeriodUpdateInput!, where: PeriodWhereUniqueInput!): Period
+  updateInstitute(data: InstituteUpdateInput!, where: InstituteWhereUniqueInput!): Institute
+  updateSession(data: SessionUpdateInput!, where: SessionWhereUniqueInput!): Session
+  deleteStudent(where: StudentWhereUniqueInput!): Student
+  deleteSemester(where: SemesterWhereUniqueInput!): Semester
+  deleteBookList(where: BookListWhereUniqueInput!): BookList
+  deleteBook(where: BookWhereUniqueInput!): Book
+  deleteTeacher(where: TeacherWhereUniqueInput!): Teacher
+  deleteRoutine(where: RoutineWhereUniqueInput!): Routine
+  deleteDayInWeek(where: DayInWeekWhereUniqueInput!): DayInWeek
+  deleteClass(where: ClassWhereUniqueInput!): Class
+  deleteDepartment(where: DepartmentWhereUniqueInput!): Department
+  deletePeriod(where: PeriodWhereUniqueInput!): Period
+  deleteInstitute(where: InstituteWhereUniqueInput!): Institute
+  deleteSession(where: SessionWhereUniqueInput!): Session
+  upsertStudent(where: StudentWhereUniqueInput!, create: StudentCreateInput!, update: StudentUpdateInput!): Student!
+  upsertSemester(where: SemesterWhereUniqueInput!, create: SemesterCreateInput!, update: SemesterUpdateInput!): Semester!
+  upsertBookList(where: BookListWhereUniqueInput!, create: BookListCreateInput!, update: BookListUpdateInput!): BookList!
+  upsertBook(where: BookWhereUniqueInput!, create: BookCreateInput!, update: BookUpdateInput!): Book!
+  upsertTeacher(where: TeacherWhereUniqueInput!, create: TeacherCreateInput!, update: TeacherUpdateInput!): Teacher!
+  upsertRoutine(where: RoutineWhereUniqueInput!, create: RoutineCreateInput!, update: RoutineUpdateInput!): Routine!
+  upsertDayInWeek(where: DayInWeekWhereUniqueInput!, create: DayInWeekCreateInput!, update: DayInWeekUpdateInput!): DayInWeek!
+  upsertClass(where: ClassWhereUniqueInput!, create: ClassCreateInput!, update: ClassUpdateInput!): Class!
+  upsertDepartment(where: DepartmentWhereUniqueInput!, create: DepartmentCreateInput!, update: DepartmentUpdateInput!): Department!
+  upsertPeriod(where: PeriodWhereUniqueInput!, create: PeriodCreateInput!, update: PeriodUpdateInput!): Period!
+  upsertInstitute(where: InstituteWhereUniqueInput!, create: InstituteCreateInput!, update: InstituteUpdateInput!): Institute!
+  upsertSession(where: SessionWhereUniqueInput!, create: SessionCreateInput!, update: SessionUpdateInput!): Session!
+  updateManyStudents(data: StudentUpdateManyMutationInput!, where: StudentWhereInput): BatchPayload!
+  updateManySemesters(data: SemesterUpdateManyMutationInput!, where: SemesterWhereInput): BatchPayload!
+  updateManyBooks(data: BookUpdateManyMutationInput!, where: BookWhereInput): BatchPayload!
+  updateManyTeachers(data: TeacherUpdateManyMutationInput!, where: TeacherWhereInput): BatchPayload!
+  updateManyRoutines(data: RoutineUpdateManyMutationInput!, where: RoutineWhereInput): BatchPayload!
+  updateManyDayInWeeks(data: DayInWeekUpdateManyMutationInput!, where: DayInWeekWhereInput): BatchPayload!
+  updateManyDepartments(data: DepartmentUpdateManyMutationInput!, where: DepartmentWhereInput): BatchPayload!
+  updateManyPeriods(data: PeriodUpdateManyMutationInput!, where: PeriodWhereInput): BatchPayload!
+  updateManyInstitutes(data: InstituteUpdateManyMutationInput!, where: InstituteWhereInput): BatchPayload!
+  updateManySessions(data: SessionUpdateManyMutationInput!, where: SessionWhereInput): BatchPayload!
+  deleteManyStudents(where: StudentWhereInput): BatchPayload!
+  deleteManySemesters(where: SemesterWhereInput): BatchPayload!
+  deleteManyBookLists(where: BookListWhereInput): BatchPayload!
+  deleteManyBooks(where: BookWhereInput): BatchPayload!
+  deleteManyTeachers(where: TeacherWhereInput): BatchPayload!
+  deleteManyRoutines(where: RoutineWhereInput): BatchPayload!
+  deleteManyDayInWeeks(where: DayInWeekWhereInput): BatchPayload!
+  deleteManyClasses(where: ClassWhereInput): BatchPayload!
+  deleteManyDepartments(where: DepartmentWhereInput): BatchPayload!
+  deleteManyPeriods(where: PeriodWhereInput): BatchPayload!
+  deleteManyInstitutes(where: InstituteWhereInput): BatchPayload!
+  deleteManySessions(where: SessionWhereInput): BatchPayload!
+  executeRaw(database: PrismaDatabase, query: String!): Json!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Period implements Node {
+  id: ID!
+  institute: Institute!
+  time: Int!
+  startedAt: String!
+  endAt: String!
+}
+
+"""A connection to a list of items."""
+type PeriodConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PeriodEdge]!
+  aggregate: AggregatePeriod!
+}
+
+input PeriodCreateInput {
+  id: ID
+  time: Int!
+  startedAt: String!
+  endAt: String!
+  institute: InstituteCreateOneWithoutPeriodsInput!
+}
+
+input PeriodCreateManyWithoutInstituteInput {
+  create: [PeriodCreateWithoutInstituteInput!]
+  connect: [PeriodWhereUniqueInput!]
+}
+
+input PeriodCreateOneInput {
+  create: PeriodCreateInput
+  connect: PeriodWhereUniqueInput
+}
+
+input PeriodCreateWithoutInstituteInput {
+  id: ID
+  time: Int!
+  startedAt: String!
+  endAt: String!
+}
+
+"""An edge in a connection."""
+type PeriodEdge {
+  """The item at the end of the edge."""
+  node: Period!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum PeriodOrderByInput {
+  id_ASC
+  id_DESC
+  time_ASC
+  time_DESC
+  startedAt_ASC
+  startedAt_DESC
+  endAt_ASC
+  endAt_DESC
+}
+
+type PeriodPreviousValues {
+  id: ID!
+  time: Int!
+  startedAt: String!
+  endAt: String!
+}
+
+input PeriodScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PeriodScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PeriodScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PeriodScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  time: Int
+
+  """All values that are not equal to given value."""
+  time_not: Int
+
+  """All values that are contained in given list."""
+  time_in: [Int!]
+
+  """All values that are not contained in given list."""
+  time_not_in: [Int!]
+
+  """All values less than the given value."""
+  time_lt: Int
+
+  """All values less than or equal the given value."""
+  time_lte: Int
+
+  """All values greater than the given value."""
+  time_gt: Int
+
+  """All values greater than or equal the given value."""
+  time_gte: Int
+  startedAt: String
+
+  """All values that are not equal to given value."""
+  startedAt_not: String
+
+  """All values that are contained in given list."""
+  startedAt_in: [String!]
+
+  """All values that are not contained in given list."""
+  startedAt_not_in: [String!]
+
+  """All values less than the given value."""
+  startedAt_lt: String
+
+  """All values less than or equal the given value."""
+  startedAt_lte: String
+
+  """All values greater than the given value."""
+  startedAt_gt: String
+
+  """All values greater than or equal the given value."""
+  startedAt_gte: String
+
+  """All values containing the given string."""
+  startedAt_contains: String
+
+  """All values not containing the given string."""
+  startedAt_not_contains: String
+
+  """All values starting with the given string."""
+  startedAt_starts_with: String
+
+  """All values not starting with the given string."""
+  startedAt_not_starts_with: String
+
+  """All values ending with the given string."""
+  startedAt_ends_with: String
+
+  """All values not ending with the given string."""
+  startedAt_not_ends_with: String
+  endAt: String
+
+  """All values that are not equal to given value."""
+  endAt_not: String
+
+  """All values that are contained in given list."""
+  endAt_in: [String!]
+
+  """All values that are not contained in given list."""
+  endAt_not_in: [String!]
+
+  """All values less than the given value."""
+  endAt_lt: String
+
+  """All values less than or equal the given value."""
+  endAt_lte: String
+
+  """All values greater than the given value."""
+  endAt_gt: String
+
+  """All values greater than or equal the given value."""
+  endAt_gte: String
+
+  """All values containing the given string."""
+  endAt_contains: String
+
+  """All values not containing the given string."""
+  endAt_not_contains: String
+
+  """All values starting with the given string."""
+  endAt_starts_with: String
+
+  """All values not starting with the given string."""
+  endAt_not_starts_with: String
+
+  """All values ending with the given string."""
+  endAt_ends_with: String
+
+  """All values not ending with the given string."""
+  endAt_not_ends_with: String
+}
+
+type PeriodSubscriptionPayload {
+  mutation: MutationType!
+  node: Period
+  updatedFields: [String!]
+  previousValues: PeriodPreviousValues
+}
+
+input PeriodSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PeriodSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PeriodSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PeriodSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: PeriodWhereInput
+}
+
+input PeriodUpdateDataInput {
+  time: Int
+  startedAt: String
+  endAt: String
+  institute: InstituteUpdateOneRequiredWithoutPeriodsInput
+}
+
+input PeriodUpdateInput {
+  time: Int
+  startedAt: String
+  endAt: String
+  institute: InstituteUpdateOneRequiredWithoutPeriodsInput
+}
+
+input PeriodUpdateManyDataInput {
+  time: Int
+  startedAt: String
+  endAt: String
+}
+
+input PeriodUpdateManyMutationInput {
+  time: Int
+  startedAt: String
+  endAt: String
+}
+
+input PeriodUpdateManyWithoutInstituteInput {
+  create: [PeriodCreateWithoutInstituteInput!]
+  connect: [PeriodWhereUniqueInput!]
+  set: [PeriodWhereUniqueInput!]
+  disconnect: [PeriodWhereUniqueInput!]
+  delete: [PeriodWhereUniqueInput!]
+  update: [PeriodUpdateWithWhereUniqueWithoutInstituteInput!]
+  updateMany: [PeriodUpdateManyWithWhereNestedInput!]
+  deleteMany: [PeriodScalarWhereInput!]
+  upsert: [PeriodUpsertWithWhereUniqueWithoutInstituteInput!]
+}
+
+input PeriodUpdateManyWithWhereNestedInput {
+  where: PeriodScalarWhereInput!
+  data: PeriodUpdateManyDataInput!
+}
+
+input PeriodUpdateOneRequiredInput {
+  create: PeriodCreateInput
+  connect: PeriodWhereUniqueInput
+  update: PeriodUpdateDataInput
+  upsert: PeriodUpsertNestedInput
+}
+
+input PeriodUpdateWithoutInstituteDataInput {
+  time: Int
+  startedAt: String
+  endAt: String
+}
+
+input PeriodUpdateWithWhereUniqueWithoutInstituteInput {
+  where: PeriodWhereUniqueInput!
+  data: PeriodUpdateWithoutInstituteDataInput!
+}
+
+input PeriodUpsertNestedInput {
+  update: PeriodUpdateDataInput!
+  create: PeriodCreateInput!
+}
+
+input PeriodUpsertWithWhereUniqueWithoutInstituteInput {
+  where: PeriodWhereUniqueInput!
+  update: PeriodUpdateWithoutInstituteDataInput!
+  create: PeriodCreateWithoutInstituteInput!
+}
+
+input PeriodWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PeriodWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PeriodWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PeriodWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  time: Int
+
+  """All values that are not equal to given value."""
+  time_not: Int
+
+  """All values that are contained in given list."""
+  time_in: [Int!]
+
+  """All values that are not contained in given list."""
+  time_not_in: [Int!]
+
+  """All values less than the given value."""
+  time_lt: Int
+
+  """All values less than or equal the given value."""
+  time_lte: Int
+
+  """All values greater than the given value."""
+  time_gt: Int
+
+  """All values greater than or equal the given value."""
+  time_gte: Int
+  startedAt: String
+
+  """All values that are not equal to given value."""
+  startedAt_not: String
+
+  """All values that are contained in given list."""
+  startedAt_in: [String!]
+
+  """All values that are not contained in given list."""
+  startedAt_not_in: [String!]
+
+  """All values less than the given value."""
+  startedAt_lt: String
+
+  """All values less than or equal the given value."""
+  startedAt_lte: String
+
+  """All values greater than the given value."""
+  startedAt_gt: String
+
+  """All values greater than or equal the given value."""
+  startedAt_gte: String
+
+  """All values containing the given string."""
+  startedAt_contains: String
+
+  """All values not containing the given string."""
+  startedAt_not_contains: String
+
+  """All values starting with the given string."""
+  startedAt_starts_with: String
+
+  """All values not starting with the given string."""
+  startedAt_not_starts_with: String
+
+  """All values ending with the given string."""
+  startedAt_ends_with: String
+
+  """All values not ending with the given string."""
+  startedAt_not_ends_with: String
+  endAt: String
+
+  """All values that are not equal to given value."""
+  endAt_not: String
+
+  """All values that are contained in given list."""
+  endAt_in: [String!]
+
+  """All values that are not contained in given list."""
+  endAt_not_in: [String!]
+
+  """All values less than the given value."""
+  endAt_lt: String
+
+  """All values less than or equal the given value."""
+  endAt_lte: String
+
+  """All values greater than the given value."""
+  endAt_gt: String
+
+  """All values greater than or equal the given value."""
+  endAt_gte: String
+
+  """All values containing the given string."""
+  endAt_contains: String
+
+  """All values not containing the given string."""
+  endAt_not_contains: String
+
+  """All values starting with the given string."""
+  endAt_starts_with: String
+
+  """All values not starting with the given string."""
+  endAt_not_starts_with: String
+
+  """All values ending with the given string."""
+  endAt_ends_with: String
+
+  """All values not ending with the given string."""
+  endAt_not_ends_with: String
+  institute: InstituteWhereInput
+}
+
+input PeriodWhereUniqueInput {
+  id: ID
+}
+
+enum PrismaDatabase {
+  default
+}
+
+type Query {
+  students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student]!
+  semesters(where: SemesterWhereInput, orderBy: SemesterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Semester]!
+  bookLists(where: BookListWhereInput, orderBy: BookListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BookList]!
+  books(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Book]!
+  teachers(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Teacher]!
+  routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine]!
+  dayInWeeks(where: DayInWeekWhereInput, orderBy: DayInWeekOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DayInWeek]!
+  classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class]!
+  departments(where: DepartmentWhereInput, orderBy: DepartmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Department]!
+  periods(where: PeriodWhereInput, orderBy: PeriodOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Period]!
+  institutes(where: InstituteWhereInput, orderBy: InstituteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Institute]!
+  sessions(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Session]!
+  student(where: StudentWhereUniqueInput!): Student
+  semester(where: SemesterWhereUniqueInput!): Semester
+  bookList(where: BookListWhereUniqueInput!): BookList
+  book(where: BookWhereUniqueInput!): Book
+  teacher(where: TeacherWhereUniqueInput!): Teacher
+  routine(where: RoutineWhereUniqueInput!): Routine
+  dayInWeek(where: DayInWeekWhereUniqueInput!): DayInWeek
+  class(where: ClassWhereUniqueInput!): Class
+  department(where: DepartmentWhereUniqueInput!): Department
+  period(where: PeriodWhereUniqueInput!): Period
+  institute(where: InstituteWhereUniqueInput!): Institute
+  session(where: SessionWhereUniqueInput!): Session
+  studentsConnection(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StudentConnection!
+  semestersConnection(where: SemesterWhereInput, orderBy: SemesterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SemesterConnection!
+  bookListsConnection(where: BookListWhereInput, orderBy: BookListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BookListConnection!
+  booksConnection(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BookConnection!
+  teachersConnection(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeacherConnection!
+  routinesConnection(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoutineConnection!
+  dayInWeeksConnection(where: DayInWeekWhereInput, orderBy: DayInWeekOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DayInWeekConnection!
+  classesConnection(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ClassConnection!
+  departmentsConnection(where: DepartmentWhereInput, orderBy: DepartmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DepartmentConnection!
+  periodsConnection(where: PeriodWhereInput, orderBy: PeriodOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PeriodConnection!
+  institutesConnection(where: InstituteWhereInput, orderBy: InstituteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InstituteConnection!
+  sessionsConnection(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SessionConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type Routine implements Node {
+  id: ID!
+  title: String!
+  institute: Institute!
+  session: Session!
+  semester: Semester!
+  department: Department!
+  days(where: DayInWeekWhereInput, orderBy: DayInWeekOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DayInWeek!]
+}
+
+"""A connection to a list of items."""
+type RoutineConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [RoutineEdge]!
+  aggregate: AggregateRoutine!
+}
+
+input RoutineCreateInput {
+  id: ID
+  title: String!
+  institute: InstituteCreateOneWithoutRoutinesInput!
+  session: SessionCreateOneWithoutRoutinesInput!
+  semester: SemesterCreateOneWithoutRoutinesInput!
+  department: DepartmentCreateOneWithoutRoutinesInput!
+  days: DayInWeekCreateManyWithoutRoutineInput
+}
+
+input RoutineCreateManyWithoutDepartmentInput {
+  create: [RoutineCreateWithoutDepartmentInput!]
+  connect: [RoutineWhereUniqueInput!]
+}
+
+input RoutineCreateManyWithoutInstituteInput {
+  create: [RoutineCreateWithoutInstituteInput!]
+  connect: [RoutineWhereUniqueInput!]
+}
+
+input RoutineCreateManyWithoutSemesterInput {
+  create: [RoutineCreateWithoutSemesterInput!]
+  connect: [RoutineWhereUniqueInput!]
+}
+
+input RoutineCreateManyWithoutSessionInput {
+  create: [RoutineCreateWithoutSessionInput!]
+  connect: [RoutineWhereUniqueInput!]
+}
+
+input RoutineCreateOneWithoutDaysInput {
+  create: RoutineCreateWithoutDaysInput
+  connect: RoutineWhereUniqueInput
+}
+
+input RoutineCreateWithoutDaysInput {
+  id: ID
+  title: String!
+  institute: InstituteCreateOneWithoutRoutinesInput!
+  session: SessionCreateOneWithoutRoutinesInput!
+  semester: SemesterCreateOneWithoutRoutinesInput!
+  department: DepartmentCreateOneWithoutRoutinesInput!
+}
+
+input RoutineCreateWithoutDepartmentInput {
+  id: ID
+  title: String!
+  institute: InstituteCreateOneWithoutRoutinesInput!
+  session: SessionCreateOneWithoutRoutinesInput!
+  semester: SemesterCreateOneWithoutRoutinesInput!
+  days: DayInWeekCreateManyWithoutRoutineInput
+}
+
+input RoutineCreateWithoutInstituteInput {
+  id: ID
+  title: String!
+  session: SessionCreateOneWithoutRoutinesInput!
+  semester: SemesterCreateOneWithoutRoutinesInput!
+  department: DepartmentCreateOneWithoutRoutinesInput!
+  days: DayInWeekCreateManyWithoutRoutineInput
+}
+
+input RoutineCreateWithoutSemesterInput {
+  id: ID
+  title: String!
+  institute: InstituteCreateOneWithoutRoutinesInput!
+  session: SessionCreateOneWithoutRoutinesInput!
+  department: DepartmentCreateOneWithoutRoutinesInput!
+  days: DayInWeekCreateManyWithoutRoutineInput
+}
+
+input RoutineCreateWithoutSessionInput {
+  id: ID
+  title: String!
+  institute: InstituteCreateOneWithoutRoutinesInput!
+  semester: SemesterCreateOneWithoutRoutinesInput!
+  department: DepartmentCreateOneWithoutRoutinesInput!
+  days: DayInWeekCreateManyWithoutRoutineInput
+}
+
+"""An edge in a connection."""
+type RoutineEdge {
+  """The item at the end of the edge."""
+  node: Routine!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum RoutineOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+}
+
+type RoutinePreviousValues {
+  id: ID!
+  title: String!
+}
+
+input RoutineScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RoutineScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RoutineScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RoutineScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+}
+
+type RoutineSubscriptionPayload {
+  mutation: MutationType!
+  node: Routine
+  updatedFields: [String!]
+  previousValues: RoutinePreviousValues
+}
+
+input RoutineSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RoutineSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RoutineSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RoutineSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: RoutineWhereInput
+}
+
+input RoutineUpdateInput {
+  title: String
+  institute: InstituteUpdateOneRequiredWithoutRoutinesInput
+  session: SessionUpdateOneRequiredWithoutRoutinesInput
+  semester: SemesterUpdateOneRequiredWithoutRoutinesInput
+  department: DepartmentUpdateOneRequiredWithoutRoutinesInput
+  days: DayInWeekUpdateManyWithoutRoutineInput
+}
+
+input RoutineUpdateManyDataInput {
+  title: String
+}
+
+input RoutineUpdateManyMutationInput {
+  title: String
+}
+
+input RoutineUpdateManyWithoutDepartmentInput {
+  create: [RoutineCreateWithoutDepartmentInput!]
+  connect: [RoutineWhereUniqueInput!]
+  set: [RoutineWhereUniqueInput!]
+  disconnect: [RoutineWhereUniqueInput!]
+  delete: [RoutineWhereUniqueInput!]
+  update: [RoutineUpdateWithWhereUniqueWithoutDepartmentInput!]
+  updateMany: [RoutineUpdateManyWithWhereNestedInput!]
+  deleteMany: [RoutineScalarWhereInput!]
+  upsert: [RoutineUpsertWithWhereUniqueWithoutDepartmentInput!]
+}
+
+input RoutineUpdateManyWithoutInstituteInput {
+  create: [RoutineCreateWithoutInstituteInput!]
+  connect: [RoutineWhereUniqueInput!]
+  set: [RoutineWhereUniqueInput!]
+  disconnect: [RoutineWhereUniqueInput!]
+  delete: [RoutineWhereUniqueInput!]
+  update: [RoutineUpdateWithWhereUniqueWithoutInstituteInput!]
+  updateMany: [RoutineUpdateManyWithWhereNestedInput!]
+  deleteMany: [RoutineScalarWhereInput!]
+  upsert: [RoutineUpsertWithWhereUniqueWithoutInstituteInput!]
+}
+
+input RoutineUpdateManyWithoutSemesterInput {
+  create: [RoutineCreateWithoutSemesterInput!]
+  connect: [RoutineWhereUniqueInput!]
+  set: [RoutineWhereUniqueInput!]
+  disconnect: [RoutineWhereUniqueInput!]
+  delete: [RoutineWhereUniqueInput!]
+  update: [RoutineUpdateWithWhereUniqueWithoutSemesterInput!]
+  updateMany: [RoutineUpdateManyWithWhereNestedInput!]
+  deleteMany: [RoutineScalarWhereInput!]
+  upsert: [RoutineUpsertWithWhereUniqueWithoutSemesterInput!]
+}
+
+input RoutineUpdateManyWithoutSessionInput {
+  create: [RoutineCreateWithoutSessionInput!]
+  connect: [RoutineWhereUniqueInput!]
+  set: [RoutineWhereUniqueInput!]
+  disconnect: [RoutineWhereUniqueInput!]
+  delete: [RoutineWhereUniqueInput!]
+  update: [RoutineUpdateWithWhereUniqueWithoutSessionInput!]
+  updateMany: [RoutineUpdateManyWithWhereNestedInput!]
+  deleteMany: [RoutineScalarWhereInput!]
+  upsert: [RoutineUpsertWithWhereUniqueWithoutSessionInput!]
+}
+
+input RoutineUpdateManyWithWhereNestedInput {
+  where: RoutineScalarWhereInput!
+  data: RoutineUpdateManyDataInput!
+}
+
+input RoutineUpdateOneRequiredWithoutDaysInput {
+  create: RoutineCreateWithoutDaysInput
+  connect: RoutineWhereUniqueInput
+  update: RoutineUpdateWithoutDaysDataInput
+  upsert: RoutineUpsertWithoutDaysInput
+}
+
+input RoutineUpdateWithoutDaysDataInput {
+  title: String
+  institute: InstituteUpdateOneRequiredWithoutRoutinesInput
+  session: SessionUpdateOneRequiredWithoutRoutinesInput
+  semester: SemesterUpdateOneRequiredWithoutRoutinesInput
+  department: DepartmentUpdateOneRequiredWithoutRoutinesInput
+}
+
+input RoutineUpdateWithoutDepartmentDataInput {
+  title: String
+  institute: InstituteUpdateOneRequiredWithoutRoutinesInput
+  session: SessionUpdateOneRequiredWithoutRoutinesInput
+  semester: SemesterUpdateOneRequiredWithoutRoutinesInput
+  days: DayInWeekUpdateManyWithoutRoutineInput
+}
+
+input RoutineUpdateWithoutInstituteDataInput {
+  title: String
+  session: SessionUpdateOneRequiredWithoutRoutinesInput
+  semester: SemesterUpdateOneRequiredWithoutRoutinesInput
+  department: DepartmentUpdateOneRequiredWithoutRoutinesInput
+  days: DayInWeekUpdateManyWithoutRoutineInput
+}
+
+input RoutineUpdateWithoutSemesterDataInput {
+  title: String
+  institute: InstituteUpdateOneRequiredWithoutRoutinesInput
+  session: SessionUpdateOneRequiredWithoutRoutinesInput
+  department: DepartmentUpdateOneRequiredWithoutRoutinesInput
+  days: DayInWeekUpdateManyWithoutRoutineInput
+}
+
+input RoutineUpdateWithoutSessionDataInput {
+  title: String
+  institute: InstituteUpdateOneRequiredWithoutRoutinesInput
+  semester: SemesterUpdateOneRequiredWithoutRoutinesInput
+  department: DepartmentUpdateOneRequiredWithoutRoutinesInput
+  days: DayInWeekUpdateManyWithoutRoutineInput
+}
+
+input RoutineUpdateWithWhereUniqueWithoutDepartmentInput {
+  where: RoutineWhereUniqueInput!
+  data: RoutineUpdateWithoutDepartmentDataInput!
+}
+
+input RoutineUpdateWithWhereUniqueWithoutInstituteInput {
+  where: RoutineWhereUniqueInput!
+  data: RoutineUpdateWithoutInstituteDataInput!
+}
+
+input RoutineUpdateWithWhereUniqueWithoutSemesterInput {
+  where: RoutineWhereUniqueInput!
+  data: RoutineUpdateWithoutSemesterDataInput!
+}
+
+input RoutineUpdateWithWhereUniqueWithoutSessionInput {
+  where: RoutineWhereUniqueInput!
+  data: RoutineUpdateWithoutSessionDataInput!
+}
+
+input RoutineUpsertWithoutDaysInput {
+  update: RoutineUpdateWithoutDaysDataInput!
+  create: RoutineCreateWithoutDaysInput!
+}
+
+input RoutineUpsertWithWhereUniqueWithoutDepartmentInput {
+  where: RoutineWhereUniqueInput!
+  update: RoutineUpdateWithoutDepartmentDataInput!
+  create: RoutineCreateWithoutDepartmentInput!
+}
+
+input RoutineUpsertWithWhereUniqueWithoutInstituteInput {
+  where: RoutineWhereUniqueInput!
+  update: RoutineUpdateWithoutInstituteDataInput!
+  create: RoutineCreateWithoutInstituteInput!
+}
+
+input RoutineUpsertWithWhereUniqueWithoutSemesterInput {
+  where: RoutineWhereUniqueInput!
+  update: RoutineUpdateWithoutSemesterDataInput!
+  create: RoutineCreateWithoutSemesterInput!
+}
+
+input RoutineUpsertWithWhereUniqueWithoutSessionInput {
+  where: RoutineWhereUniqueInput!
+  update: RoutineUpdateWithoutSessionDataInput!
+  create: RoutineCreateWithoutSessionInput!
+}
+
+input RoutineWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RoutineWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RoutineWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RoutineWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  institute: InstituteWhereInput
+  session: SessionWhereInput
+  semester: SemesterWhereInput
+  department: DepartmentWhereInput
+  days_every: DayInWeekWhereInput
+  days_some: DayInWeekWhereInput
+  days_none: DayInWeekWhereInput
+}
+
+input RoutineWhereUniqueInput {
+  id: ID
+}
+
+type Semester implements Node {
+  id: ID!
+  institute: Institute!
+  name: SemesterTypes!
+  departments(where: DepartmentWhereInput, orderBy: DepartmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Department!]
+  students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student!]
+  bookLists(where: BookListWhereInput, orderBy: BookListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BookList!]
+  routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine!]
+  classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class!]
+}
+
+"""A connection to a list of items."""
+type SemesterConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SemesterEdge]!
+  aggregate: AggregateSemester!
+}
+
+input SemesterCreateInput {
+  id: ID
+  name: SemesterTypes!
+  institute: InstituteCreateOneInput!
+  departments: DepartmentCreateManyWithoutSemestersInput
+  students: StudentCreateManyWithoutSemesterInput
+  bookLists: BookListCreateManyWithoutSemesterInput
+  routines: RoutineCreateManyWithoutSemesterInput
+  classes: ClassCreateManyWithoutSemesterInput
+}
+
+input SemesterCreateManyWithoutDepartmentsInput {
+  create: [SemesterCreateWithoutDepartmentsInput!]
+  connect: [SemesterWhereUniqueInput!]
+}
+
+input SemesterCreateOneWithoutBookListsInput {
+  create: SemesterCreateWithoutBookListsInput
+  connect: SemesterWhereUniqueInput
+}
+
+input SemesterCreateOneWithoutClassesInput {
+  create: SemesterCreateWithoutClassesInput
+  connect: SemesterWhereUniqueInput
+}
+
+input SemesterCreateOneWithoutRoutinesInput {
+  create: SemesterCreateWithoutRoutinesInput
+  connect: SemesterWhereUniqueInput
+}
+
+input SemesterCreateOneWithoutStudentsInput {
+  create: SemesterCreateWithoutStudentsInput
+  connect: SemesterWhereUniqueInput
+}
+
+input SemesterCreateWithoutBookListsInput {
+  id: ID
+  name: SemesterTypes!
+  institute: InstituteCreateOneInput!
+  departments: DepartmentCreateManyWithoutSemestersInput
+  students: StudentCreateManyWithoutSemesterInput
+  routines: RoutineCreateManyWithoutSemesterInput
+  classes: ClassCreateManyWithoutSemesterInput
+}
+
+input SemesterCreateWithoutClassesInput {
+  id: ID
+  name: SemesterTypes!
+  institute: InstituteCreateOneInput!
+  departments: DepartmentCreateManyWithoutSemestersInput
+  students: StudentCreateManyWithoutSemesterInput
+  bookLists: BookListCreateManyWithoutSemesterInput
+  routines: RoutineCreateManyWithoutSemesterInput
+}
+
+input SemesterCreateWithoutDepartmentsInput {
+  id: ID
+  name: SemesterTypes!
+  institute: InstituteCreateOneInput!
+  students: StudentCreateManyWithoutSemesterInput
+  bookLists: BookListCreateManyWithoutSemesterInput
+  routines: RoutineCreateManyWithoutSemesterInput
+  classes: ClassCreateManyWithoutSemesterInput
+}
+
+input SemesterCreateWithoutRoutinesInput {
+  id: ID
+  name: SemesterTypes!
+  institute: InstituteCreateOneInput!
+  departments: DepartmentCreateManyWithoutSemestersInput
+  students: StudentCreateManyWithoutSemesterInput
+  bookLists: BookListCreateManyWithoutSemesterInput
+  classes: ClassCreateManyWithoutSemesterInput
+}
+
+input SemesterCreateWithoutStudentsInput {
+  id: ID
+  name: SemesterTypes!
+  institute: InstituteCreateOneInput!
+  departments: DepartmentCreateManyWithoutSemestersInput
+  bookLists: BookListCreateManyWithoutSemesterInput
+  routines: RoutineCreateManyWithoutSemesterInput
+  classes: ClassCreateManyWithoutSemesterInput
+}
+
+"""An edge in a connection."""
+type SemesterEdge {
+  """The item at the end of the edge."""
+  node: Semester!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SemesterOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type SemesterPreviousValues {
+  id: ID!
+  name: SemesterTypes!
+}
+
+input SemesterScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SemesterScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SemesterScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SemesterScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: SemesterTypes
+
+  """All values that are not equal to given value."""
+  name_not: SemesterTypes
+
+  """All values that are contained in given list."""
+  name_in: [SemesterTypes!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [SemesterTypes!]
+}
+
+type SemesterSubscriptionPayload {
+  mutation: MutationType!
+  node: Semester
+  updatedFields: [String!]
+  previousValues: SemesterPreviousValues
+}
+
+input SemesterSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SemesterSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SemesterSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SemesterSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: SemesterWhereInput
+}
+
+enum SemesterTypes {
+  FIRST
+  SECOND
+  THIRD
+  FOURTH
+  FIFTH
+  SIXTH
+  SEVENTH
+  EIGHT
+}
+
+input SemesterUpdateInput {
+  name: SemesterTypes
+  institute: InstituteUpdateOneRequiredInput
+  departments: DepartmentUpdateManyWithoutSemestersInput
+  students: StudentUpdateManyWithoutSemesterInput
+  bookLists: BookListUpdateManyWithoutSemesterInput
+  routines: RoutineUpdateManyWithoutSemesterInput
+  classes: ClassUpdateManyWithoutSemesterInput
+}
+
+input SemesterUpdateManyDataInput {
+  name: SemesterTypes
+}
+
+input SemesterUpdateManyMutationInput {
+  name: SemesterTypes
+}
+
+input SemesterUpdateManyWithoutDepartmentsInput {
+  create: [SemesterCreateWithoutDepartmentsInput!]
+  connect: [SemesterWhereUniqueInput!]
+  set: [SemesterWhereUniqueInput!]
+  disconnect: [SemesterWhereUniqueInput!]
+  delete: [SemesterWhereUniqueInput!]
+  update: [SemesterUpdateWithWhereUniqueWithoutDepartmentsInput!]
+  updateMany: [SemesterUpdateManyWithWhereNestedInput!]
+  deleteMany: [SemesterScalarWhereInput!]
+  upsert: [SemesterUpsertWithWhereUniqueWithoutDepartmentsInput!]
+}
+
+input SemesterUpdateManyWithWhereNestedInput {
+  where: SemesterScalarWhereInput!
+  data: SemesterUpdateManyDataInput!
+}
+
+input SemesterUpdateOneRequiredWithoutBookListsInput {
+  create: SemesterCreateWithoutBookListsInput
+  connect: SemesterWhereUniqueInput
+  update: SemesterUpdateWithoutBookListsDataInput
+  upsert: SemesterUpsertWithoutBookListsInput
+}
+
+input SemesterUpdateOneRequiredWithoutClassesInput {
+  create: SemesterCreateWithoutClassesInput
+  connect: SemesterWhereUniqueInput
+  update: SemesterUpdateWithoutClassesDataInput
+  upsert: SemesterUpsertWithoutClassesInput
+}
+
+input SemesterUpdateOneRequiredWithoutRoutinesInput {
+  create: SemesterCreateWithoutRoutinesInput
+  connect: SemesterWhereUniqueInput
+  update: SemesterUpdateWithoutRoutinesDataInput
+  upsert: SemesterUpsertWithoutRoutinesInput
+}
+
+input SemesterUpdateOneRequiredWithoutStudentsInput {
+  create: SemesterCreateWithoutStudentsInput
+  connect: SemesterWhereUniqueInput
+  update: SemesterUpdateWithoutStudentsDataInput
+  upsert: SemesterUpsertWithoutStudentsInput
+}
+
+input SemesterUpdateWithoutBookListsDataInput {
+  name: SemesterTypes
+  institute: InstituteUpdateOneRequiredInput
+  departments: DepartmentUpdateManyWithoutSemestersInput
+  students: StudentUpdateManyWithoutSemesterInput
+  routines: RoutineUpdateManyWithoutSemesterInput
+  classes: ClassUpdateManyWithoutSemesterInput
+}
+
+input SemesterUpdateWithoutClassesDataInput {
+  name: SemesterTypes
+  institute: InstituteUpdateOneRequiredInput
+  departments: DepartmentUpdateManyWithoutSemestersInput
+  students: StudentUpdateManyWithoutSemesterInput
+  bookLists: BookListUpdateManyWithoutSemesterInput
+  routines: RoutineUpdateManyWithoutSemesterInput
+}
+
+input SemesterUpdateWithoutDepartmentsDataInput {
+  name: SemesterTypes
+  institute: InstituteUpdateOneRequiredInput
+  students: StudentUpdateManyWithoutSemesterInput
+  bookLists: BookListUpdateManyWithoutSemesterInput
+  routines: RoutineUpdateManyWithoutSemesterInput
+  classes: ClassUpdateManyWithoutSemesterInput
+}
+
+input SemesterUpdateWithoutRoutinesDataInput {
+  name: SemesterTypes
+  institute: InstituteUpdateOneRequiredInput
+  departments: DepartmentUpdateManyWithoutSemestersInput
+  students: StudentUpdateManyWithoutSemesterInput
+  bookLists: BookListUpdateManyWithoutSemesterInput
+  classes: ClassUpdateManyWithoutSemesterInput
+}
+
+input SemesterUpdateWithoutStudentsDataInput {
+  name: SemesterTypes
+  institute: InstituteUpdateOneRequiredInput
+  departments: DepartmentUpdateManyWithoutSemestersInput
+  bookLists: BookListUpdateManyWithoutSemesterInput
+  routines: RoutineUpdateManyWithoutSemesterInput
+  classes: ClassUpdateManyWithoutSemesterInput
+}
+
+input SemesterUpdateWithWhereUniqueWithoutDepartmentsInput {
+  where: SemesterWhereUniqueInput!
+  data: SemesterUpdateWithoutDepartmentsDataInput!
+}
+
+input SemesterUpsertWithoutBookListsInput {
+  update: SemesterUpdateWithoutBookListsDataInput!
+  create: SemesterCreateWithoutBookListsInput!
+}
+
+input SemesterUpsertWithoutClassesInput {
+  update: SemesterUpdateWithoutClassesDataInput!
+  create: SemesterCreateWithoutClassesInput!
+}
+
+input SemesterUpsertWithoutRoutinesInput {
+  update: SemesterUpdateWithoutRoutinesDataInput!
+  create: SemesterCreateWithoutRoutinesInput!
+}
+
+input SemesterUpsertWithoutStudentsInput {
+  update: SemesterUpdateWithoutStudentsDataInput!
+  create: SemesterCreateWithoutStudentsInput!
+}
+
+input SemesterUpsertWithWhereUniqueWithoutDepartmentsInput {
+  where: SemesterWhereUniqueInput!
+  update: SemesterUpdateWithoutDepartmentsDataInput!
+  create: SemesterCreateWithoutDepartmentsInput!
+}
+
+input SemesterWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SemesterWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SemesterWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SemesterWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: SemesterTypes
+
+  """All values that are not equal to given value."""
+  name_not: SemesterTypes
+
+  """All values that are contained in given list."""
+  name_in: [SemesterTypes!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [SemesterTypes!]
+  institute: InstituteWhereInput
+  departments_every: DepartmentWhereInput
+  departments_some: DepartmentWhereInput
+  departments_none: DepartmentWhereInput
+  students_every: StudentWhereInput
+  students_some: StudentWhereInput
+  students_none: StudentWhereInput
+  bookLists_every: BookListWhereInput
+  bookLists_some: BookListWhereInput
+  bookLists_none: BookListWhereInput
+  routines_every: RoutineWhereInput
+  routines_some: RoutineWhereInput
+  routines_none: RoutineWhereInput
+  classes_every: ClassWhereInput
+  classes_some: ClassWhereInput
+  classes_none: ClassWhereInput
+}
+
+input SemesterWhereUniqueInput {
+  id: ID
+  name: SemesterTypes
+}
+
+type Session implements Node {
+  id: ID!
+  year: String!
+  students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student!]
+  routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine!]
+}
+
+"""A connection to a list of items."""
+type SessionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SessionEdge]!
+  aggregate: AggregateSession!
+}
+
+input SessionCreateInput {
+  id: ID
+  year: String!
+  students: StudentCreateManyWithoutSessionInput
+  routines: RoutineCreateManyWithoutSessionInput
+}
+
+input SessionCreateManyInput {
+  create: [SessionCreateInput!]
+  connect: [SessionWhereUniqueInput!]
+}
+
+input SessionCreateOneWithoutRoutinesInput {
+  create: SessionCreateWithoutRoutinesInput
+  connect: SessionWhereUniqueInput
+}
+
+input SessionCreateOneWithoutStudentsInput {
+  create: SessionCreateWithoutStudentsInput
+  connect: SessionWhereUniqueInput
+}
+
+input SessionCreateWithoutRoutinesInput {
+  id: ID
+  year: String!
+  students: StudentCreateManyWithoutSessionInput
+}
+
+input SessionCreateWithoutStudentsInput {
+  id: ID
+  year: String!
+  routines: RoutineCreateManyWithoutSessionInput
+}
+
+"""An edge in a connection."""
+type SessionEdge {
+  """The item at the end of the edge."""
+  node: Session!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SessionOrderByInput {
+  id_ASC
+  id_DESC
+  year_ASC
+  year_DESC
+}
+
+type SessionPreviousValues {
+  id: ID!
+  year: String!
+}
+
+input SessionScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SessionScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SessionScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SessionScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  year: String
+
+  """All values that are not equal to given value."""
+  year_not: String
+
+  """All values that are contained in given list."""
+  year_in: [String!]
+
+  """All values that are not contained in given list."""
+  year_not_in: [String!]
+
+  """All values less than the given value."""
+  year_lt: String
+
+  """All values less than or equal the given value."""
+  year_lte: String
+
+  """All values greater than the given value."""
+  year_gt: String
+
+  """All values greater than or equal the given value."""
+  year_gte: String
+
+  """All values containing the given string."""
+  year_contains: String
+
+  """All values not containing the given string."""
+  year_not_contains: String
+
+  """All values starting with the given string."""
+  year_starts_with: String
+
+  """All values not starting with the given string."""
+  year_not_starts_with: String
+
+  """All values ending with the given string."""
+  year_ends_with: String
+
+  """All values not ending with the given string."""
+  year_not_ends_with: String
+}
+
+type SessionSubscriptionPayload {
+  mutation: MutationType!
+  node: Session
+  updatedFields: [String!]
+  previousValues: SessionPreviousValues
+}
+
+input SessionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SessionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SessionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SessionSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: SessionWhereInput
+}
+
+input SessionUpdateDataInput {
+  year: String
+  students: StudentUpdateManyWithoutSessionInput
+  routines: RoutineUpdateManyWithoutSessionInput
+}
+
+input SessionUpdateInput {
+  year: String
+  students: StudentUpdateManyWithoutSessionInput
+  routines: RoutineUpdateManyWithoutSessionInput
+}
+
+input SessionUpdateManyDataInput {
+  year: String
+}
+
+input SessionUpdateManyInput {
+  create: [SessionCreateInput!]
+  connect: [SessionWhereUniqueInput!]
+  set: [SessionWhereUniqueInput!]
+  disconnect: [SessionWhereUniqueInput!]
+  delete: [SessionWhereUniqueInput!]
+  update: [SessionUpdateWithWhereUniqueNestedInput!]
+  updateMany: [SessionUpdateManyWithWhereNestedInput!]
+  deleteMany: [SessionScalarWhereInput!]
+  upsert: [SessionUpsertWithWhereUniqueNestedInput!]
+}
+
+input SessionUpdateManyMutationInput {
+  year: String
+}
+
+input SessionUpdateManyWithWhereNestedInput {
+  where: SessionScalarWhereInput!
+  data: SessionUpdateManyDataInput!
+}
+
+input SessionUpdateOneRequiredWithoutRoutinesInput {
+  create: SessionCreateWithoutRoutinesInput
+  connect: SessionWhereUniqueInput
+  update: SessionUpdateWithoutRoutinesDataInput
+  upsert: SessionUpsertWithoutRoutinesInput
+}
+
+input SessionUpdateOneRequiredWithoutStudentsInput {
+  create: SessionCreateWithoutStudentsInput
+  connect: SessionWhereUniqueInput
+  update: SessionUpdateWithoutStudentsDataInput
+  upsert: SessionUpsertWithoutStudentsInput
+}
+
+input SessionUpdateWithoutRoutinesDataInput {
+  year: String
+  students: StudentUpdateManyWithoutSessionInput
+}
+
+input SessionUpdateWithoutStudentsDataInput {
+  year: String
+  routines: RoutineUpdateManyWithoutSessionInput
+}
+
+input SessionUpdateWithWhereUniqueNestedInput {
+  where: SessionWhereUniqueInput!
+  data: SessionUpdateDataInput!
+}
+
+input SessionUpsertWithoutRoutinesInput {
+  update: SessionUpdateWithoutRoutinesDataInput!
+  create: SessionCreateWithoutRoutinesInput!
+}
+
+input SessionUpsertWithoutStudentsInput {
+  update: SessionUpdateWithoutStudentsDataInput!
+  create: SessionCreateWithoutStudentsInput!
+}
+
+input SessionUpsertWithWhereUniqueNestedInput {
+  where: SessionWhereUniqueInput!
+  update: SessionUpdateDataInput!
+  create: SessionCreateInput!
+}
+
+input SessionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SessionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SessionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SessionWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  year: String
+
+  """All values that are not equal to given value."""
+  year_not: String
+
+  """All values that are contained in given list."""
+  year_in: [String!]
+
+  """All values that are not contained in given list."""
+  year_not_in: [String!]
+
+  """All values less than the given value."""
+  year_lt: String
+
+  """All values less than or equal the given value."""
+  year_lte: String
+
+  """All values greater than the given value."""
+  year_gt: String
+
+  """All values greater than or equal the given value."""
+  year_gte: String
+
+  """All values containing the given string."""
+  year_contains: String
+
+  """All values not containing the given string."""
+  year_not_contains: String
+
+  """All values starting with the given string."""
+  year_starts_with: String
+
+  """All values not starting with the given string."""
+  year_not_starts_with: String
+
+  """All values ending with the given string."""
+  year_ends_with: String
+
+  """All values not ending with the given string."""
+  year_not_ends_with: String
+  students_every: StudentWhereInput
+  students_some: StudentWhereInput
+  students_none: StudentWhereInput
+  routines_every: RoutineWhereInput
+  routines_some: RoutineWhereInput
+  routines_none: RoutineWhereInput
+}
+
+input SessionWhereUniqueInput {
+  id: ID
+  year: String
+}
+
+enum ShiftTypes {
+  MORNING
+  EVENING
+}
+
+type Student implements Node {
+  id: ID!
+  institute: Institute!
+  name: String!
+  email: String!
+  roll: Int!
+  reg: Int!
+  session: Session!
+  phone: String!
+  shift: ShiftTypes!
+  department: Department!
+  semester: Semester!
+  password: String!
+}
+
+"""A connection to a list of items."""
+type StudentConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [StudentEdge]!
+  aggregate: AggregateStudent!
+}
+
+input StudentCreateInput {
+  id: ID
+  name: String!
+  email: String!
+  roll: Int!
+  reg: Int!
+  phone: String!
+  shift: ShiftTypes!
+  password: String!
+  institute: InstituteCreateOneWithoutStudentsInput!
+  session: SessionCreateOneWithoutStudentsInput!
+  department: DepartmentCreateOneWithoutStudentsInput!
+  semester: SemesterCreateOneWithoutStudentsInput!
+}
+
+input StudentCreateManyWithoutDepartmentInput {
+  create: [StudentCreateWithoutDepartmentInput!]
+  connect: [StudentWhereUniqueInput!]
+}
+
+input StudentCreateManyWithoutInstituteInput {
+  create: [StudentCreateWithoutInstituteInput!]
+  connect: [StudentWhereUniqueInput!]
+}
+
+input StudentCreateManyWithoutSemesterInput {
+  create: [StudentCreateWithoutSemesterInput!]
+  connect: [StudentWhereUniqueInput!]
+}
+
+input StudentCreateManyWithoutSessionInput {
+  create: [StudentCreateWithoutSessionInput!]
+  connect: [StudentWhereUniqueInput!]
+}
+
+input StudentCreateWithoutDepartmentInput {
+  id: ID
+  name: String!
+  email: String!
+  roll: Int!
+  reg: Int!
+  phone: String!
+  shift: ShiftTypes!
+  password: String!
+  institute: InstituteCreateOneWithoutStudentsInput!
+  session: SessionCreateOneWithoutStudentsInput!
+  semester: SemesterCreateOneWithoutStudentsInput!
+}
+
+input StudentCreateWithoutInstituteInput {
+  id: ID
+  name: String!
+  email: String!
+  roll: Int!
+  reg: Int!
+  phone: String!
+  shift: ShiftTypes!
+  password: String!
+  session: SessionCreateOneWithoutStudentsInput!
+  department: DepartmentCreateOneWithoutStudentsInput!
+  semester: SemesterCreateOneWithoutStudentsInput!
+}
+
+input StudentCreateWithoutSemesterInput {
+  id: ID
+  name: String!
+  email: String!
+  roll: Int!
+  reg: Int!
+  phone: String!
+  shift: ShiftTypes!
+  password: String!
+  institute: InstituteCreateOneWithoutStudentsInput!
+  session: SessionCreateOneWithoutStudentsInput!
+  department: DepartmentCreateOneWithoutStudentsInput!
+}
+
+input StudentCreateWithoutSessionInput {
+  id: ID
+  name: String!
+  email: String!
+  roll: Int!
+  reg: Int!
+  phone: String!
+  shift: ShiftTypes!
+  password: String!
+  institute: InstituteCreateOneWithoutStudentsInput!
+  department: DepartmentCreateOneWithoutStudentsInput!
+  semester: SemesterCreateOneWithoutStudentsInput!
+}
+
+"""An edge in a connection."""
+type StudentEdge {
+  """The item at the end of the edge."""
+  node: Student!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum StudentOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  email_ASC
+  email_DESC
+  roll_ASC
+  roll_DESC
+  reg_ASC
+  reg_DESC
+  phone_ASC
+  phone_DESC
+  shift_ASC
+  shift_DESC
+  password_ASC
+  password_DESC
+}
+
+type StudentPreviousValues {
+  id: ID!
+  name: String!
+  email: String!
+  roll: Int!
+  reg: Int!
+  phone: String!
+  shift: ShiftTypes!
+  password: String!
+}
+
+input StudentScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [StudentScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [StudentScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [StudentScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  roll: Int
+
+  """All values that are not equal to given value."""
+  roll_not: Int
+
+  """All values that are contained in given list."""
+  roll_in: [Int!]
+
+  """All values that are not contained in given list."""
+  roll_not_in: [Int!]
+
+  """All values less than the given value."""
+  roll_lt: Int
+
+  """All values less than or equal the given value."""
+  roll_lte: Int
+
+  """All values greater than the given value."""
+  roll_gt: Int
+
+  """All values greater than or equal the given value."""
+  roll_gte: Int
+  reg: Int
+
+  """All values that are not equal to given value."""
+  reg_not: Int
+
+  """All values that are contained in given list."""
+  reg_in: [Int!]
+
+  """All values that are not contained in given list."""
+  reg_not_in: [Int!]
+
+  """All values less than the given value."""
+  reg_lt: Int
+
+  """All values less than or equal the given value."""
+  reg_lte: Int
+
+  """All values greater than the given value."""
+  reg_gt: Int
+
+  """All values greater than or equal the given value."""
+  reg_gte: Int
+  phone: String
+
+  """All values that are not equal to given value."""
+  phone_not: String
+
+  """All values that are contained in given list."""
+  phone_in: [String!]
+
+  """All values that are not contained in given list."""
+  phone_not_in: [String!]
+
+  """All values less than the given value."""
+  phone_lt: String
+
+  """All values less than or equal the given value."""
+  phone_lte: String
+
+  """All values greater than the given value."""
+  phone_gt: String
+
+  """All values greater than or equal the given value."""
+  phone_gte: String
+
+  """All values containing the given string."""
+  phone_contains: String
+
+  """All values not containing the given string."""
+  phone_not_contains: String
+
+  """All values starting with the given string."""
+  phone_starts_with: String
+
+  """All values not starting with the given string."""
+  phone_not_starts_with: String
+
+  """All values ending with the given string."""
+  phone_ends_with: String
+
+  """All values not ending with the given string."""
+  phone_not_ends_with: String
+  shift: ShiftTypes
+
+  """All values that are not equal to given value."""
+  shift_not: ShiftTypes
+
+  """All values that are contained in given list."""
+  shift_in: [ShiftTypes!]
+
+  """All values that are not contained in given list."""
+  shift_not_in: [ShiftTypes!]
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+}
+
+type StudentSubscriptionPayload {
+  mutation: MutationType!
+  node: Student
+  updatedFields: [String!]
+  previousValues: StudentPreviousValues
+}
+
+input StudentSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [StudentSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [StudentSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [StudentSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: StudentWhereInput
+}
+
+input StudentUpdateInput {
+  name: String
+  email: String
+  roll: Int
+  reg: Int
+  phone: String
+  shift: ShiftTypes
+  password: String
+  institute: InstituteUpdateOneRequiredWithoutStudentsInput
+  session: SessionUpdateOneRequiredWithoutStudentsInput
+  department: DepartmentUpdateOneRequiredWithoutStudentsInput
+  semester: SemesterUpdateOneRequiredWithoutStudentsInput
+}
+
+input StudentUpdateManyDataInput {
+  name: String
+  email: String
+  roll: Int
+  reg: Int
+  phone: String
+  shift: ShiftTypes
+  password: String
+}
+
+input StudentUpdateManyMutationInput {
+  name: String
+  email: String
+  roll: Int
+  reg: Int
+  phone: String
+  shift: ShiftTypes
+  password: String
+}
+
+input StudentUpdateManyWithoutDepartmentInput {
+  create: [StudentCreateWithoutDepartmentInput!]
+  connect: [StudentWhereUniqueInput!]
+  set: [StudentWhereUniqueInput!]
+  disconnect: [StudentWhereUniqueInput!]
+  delete: [StudentWhereUniqueInput!]
+  update: [StudentUpdateWithWhereUniqueWithoutDepartmentInput!]
+  updateMany: [StudentUpdateManyWithWhereNestedInput!]
+  deleteMany: [StudentScalarWhereInput!]
+  upsert: [StudentUpsertWithWhereUniqueWithoutDepartmentInput!]
+}
+
+input StudentUpdateManyWithoutInstituteInput {
+  create: [StudentCreateWithoutInstituteInput!]
+  connect: [StudentWhereUniqueInput!]
+  set: [StudentWhereUniqueInput!]
+  disconnect: [StudentWhereUniqueInput!]
+  delete: [StudentWhereUniqueInput!]
+  update: [StudentUpdateWithWhereUniqueWithoutInstituteInput!]
+  updateMany: [StudentUpdateManyWithWhereNestedInput!]
+  deleteMany: [StudentScalarWhereInput!]
+  upsert: [StudentUpsertWithWhereUniqueWithoutInstituteInput!]
+}
+
+input StudentUpdateManyWithoutSemesterInput {
+  create: [StudentCreateWithoutSemesterInput!]
+  connect: [StudentWhereUniqueInput!]
+  set: [StudentWhereUniqueInput!]
+  disconnect: [StudentWhereUniqueInput!]
+  delete: [StudentWhereUniqueInput!]
+  update: [StudentUpdateWithWhereUniqueWithoutSemesterInput!]
+  updateMany: [StudentUpdateManyWithWhereNestedInput!]
+  deleteMany: [StudentScalarWhereInput!]
+  upsert: [StudentUpsertWithWhereUniqueWithoutSemesterInput!]
+}
+
+input StudentUpdateManyWithoutSessionInput {
+  create: [StudentCreateWithoutSessionInput!]
+  connect: [StudentWhereUniqueInput!]
+  set: [StudentWhereUniqueInput!]
+  disconnect: [StudentWhereUniqueInput!]
+  delete: [StudentWhereUniqueInput!]
+  update: [StudentUpdateWithWhereUniqueWithoutSessionInput!]
+  updateMany: [StudentUpdateManyWithWhereNestedInput!]
+  deleteMany: [StudentScalarWhereInput!]
+  upsert: [StudentUpsertWithWhereUniqueWithoutSessionInput!]
+}
+
+input StudentUpdateManyWithWhereNestedInput {
+  where: StudentScalarWhereInput!
+  data: StudentUpdateManyDataInput!
+}
+
+input StudentUpdateWithoutDepartmentDataInput {
+  name: String
+  email: String
+  roll: Int
+  reg: Int
+  phone: String
+  shift: ShiftTypes
+  password: String
+  institute: InstituteUpdateOneRequiredWithoutStudentsInput
+  session: SessionUpdateOneRequiredWithoutStudentsInput
+  semester: SemesterUpdateOneRequiredWithoutStudentsInput
+}
+
+input StudentUpdateWithoutInstituteDataInput {
+  name: String
+  email: String
+  roll: Int
+  reg: Int
+  phone: String
+  shift: ShiftTypes
+  password: String
+  session: SessionUpdateOneRequiredWithoutStudentsInput
+  department: DepartmentUpdateOneRequiredWithoutStudentsInput
+  semester: SemesterUpdateOneRequiredWithoutStudentsInput
+}
+
+input StudentUpdateWithoutSemesterDataInput {
+  name: String
+  email: String
+  roll: Int
+  reg: Int
+  phone: String
+  shift: ShiftTypes
+  password: String
+  institute: InstituteUpdateOneRequiredWithoutStudentsInput
+  session: SessionUpdateOneRequiredWithoutStudentsInput
+  department: DepartmentUpdateOneRequiredWithoutStudentsInput
+}
+
+input StudentUpdateWithoutSessionDataInput {
+  name: String
+  email: String
+  roll: Int
+  reg: Int
+  phone: String
+  shift: ShiftTypes
+  password: String
+  institute: InstituteUpdateOneRequiredWithoutStudentsInput
+  department: DepartmentUpdateOneRequiredWithoutStudentsInput
+  semester: SemesterUpdateOneRequiredWithoutStudentsInput
+}
+
+input StudentUpdateWithWhereUniqueWithoutDepartmentInput {
+  where: StudentWhereUniqueInput!
+  data: StudentUpdateWithoutDepartmentDataInput!
+}
+
+input StudentUpdateWithWhereUniqueWithoutInstituteInput {
+  where: StudentWhereUniqueInput!
+  data: StudentUpdateWithoutInstituteDataInput!
+}
+
+input StudentUpdateWithWhereUniqueWithoutSemesterInput {
+  where: StudentWhereUniqueInput!
+  data: StudentUpdateWithoutSemesterDataInput!
+}
+
+input StudentUpdateWithWhereUniqueWithoutSessionInput {
+  where: StudentWhereUniqueInput!
+  data: StudentUpdateWithoutSessionDataInput!
+}
+
+input StudentUpsertWithWhereUniqueWithoutDepartmentInput {
+  where: StudentWhereUniqueInput!
+  update: StudentUpdateWithoutDepartmentDataInput!
+  create: StudentCreateWithoutDepartmentInput!
+}
+
+input StudentUpsertWithWhereUniqueWithoutInstituteInput {
+  where: StudentWhereUniqueInput!
+  update: StudentUpdateWithoutInstituteDataInput!
+  create: StudentCreateWithoutInstituteInput!
+}
+
+input StudentUpsertWithWhereUniqueWithoutSemesterInput {
+  where: StudentWhereUniqueInput!
+  update: StudentUpdateWithoutSemesterDataInput!
+  create: StudentCreateWithoutSemesterInput!
+}
+
+input StudentUpsertWithWhereUniqueWithoutSessionInput {
+  where: StudentWhereUniqueInput!
+  update: StudentUpdateWithoutSessionDataInput!
+  create: StudentCreateWithoutSessionInput!
+}
+
+input StudentWhereInput {
+  """Logical AND on all given filters."""
+  AND: [StudentWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [StudentWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [StudentWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  roll: Int
+
+  """All values that are not equal to given value."""
+  roll_not: Int
+
+  """All values that are contained in given list."""
+  roll_in: [Int!]
+
+  """All values that are not contained in given list."""
+  roll_not_in: [Int!]
+
+  """All values less than the given value."""
+  roll_lt: Int
+
+  """All values less than or equal the given value."""
+  roll_lte: Int
+
+  """All values greater than the given value."""
+  roll_gt: Int
+
+  """All values greater than or equal the given value."""
+  roll_gte: Int
+  reg: Int
+
+  """All values that are not equal to given value."""
+  reg_not: Int
+
+  """All values that are contained in given list."""
+  reg_in: [Int!]
+
+  """All values that are not contained in given list."""
+  reg_not_in: [Int!]
+
+  """All values less than the given value."""
+  reg_lt: Int
+
+  """All values less than or equal the given value."""
+  reg_lte: Int
+
+  """All values greater than the given value."""
+  reg_gt: Int
+
+  """All values greater than or equal the given value."""
+  reg_gte: Int
+  phone: String
+
+  """All values that are not equal to given value."""
+  phone_not: String
+
+  """All values that are contained in given list."""
+  phone_in: [String!]
+
+  """All values that are not contained in given list."""
+  phone_not_in: [String!]
+
+  """All values less than the given value."""
+  phone_lt: String
+
+  """All values less than or equal the given value."""
+  phone_lte: String
+
+  """All values greater than the given value."""
+  phone_gt: String
+
+  """All values greater than or equal the given value."""
+  phone_gte: String
+
+  """All values containing the given string."""
+  phone_contains: String
+
+  """All values not containing the given string."""
+  phone_not_contains: String
+
+  """All values starting with the given string."""
+  phone_starts_with: String
+
+  """All values not starting with the given string."""
+  phone_not_starts_with: String
+
+  """All values ending with the given string."""
+  phone_ends_with: String
+
+  """All values not ending with the given string."""
+  phone_not_ends_with: String
+  shift: ShiftTypes
+
+  """All values that are not equal to given value."""
+  shift_not: ShiftTypes
+
+  """All values that are contained in given list."""
+  shift_in: [ShiftTypes!]
+
+  """All values that are not contained in given list."""
+  shift_not_in: [ShiftTypes!]
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  institute: InstituteWhereInput
+  session: SessionWhereInput
+  department: DepartmentWhereInput
+  semester: SemesterWhereInput
+}
+
+input StudentWhereUniqueInput {
+  id: ID
+  email: String
+  roll: Int
+  reg: Int
+}
+
+type Subscription {
+  student(where: StudentSubscriptionWhereInput): StudentSubscriptionPayload
+  semester(where: SemesterSubscriptionWhereInput): SemesterSubscriptionPayload
+  bookList(where: BookListSubscriptionWhereInput): BookListSubscriptionPayload
+  book(where: BookSubscriptionWhereInput): BookSubscriptionPayload
+  teacher(where: TeacherSubscriptionWhereInput): TeacherSubscriptionPayload
+  routine(where: RoutineSubscriptionWhereInput): RoutineSubscriptionPayload
+  dayInWeek(where: DayInWeekSubscriptionWhereInput): DayInWeekSubscriptionPayload
+  class(where: ClassSubscriptionWhereInput): ClassSubscriptionPayload
+  department(where: DepartmentSubscriptionWhereInput): DepartmentSubscriptionPayload
+  period(where: PeriodSubscriptionWhereInput): PeriodSubscriptionPayload
+  institute(where: InstituteSubscriptionWhereInput): InstituteSubscriptionPayload
+  session(where: SessionSubscriptionWhereInput): SessionSubscriptionPayload
+}
+
+type Teacher implements Node {
+  id: ID!
+  institute: Institute!
+  name: String!
+  email: String!
+  address: String!
+  position: String!
+  phone: String!
+  password: String!
+  classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class!]
+}
+
+"""A connection to a list of items."""
+type TeacherConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TeacherEdge]!
+  aggregate: AggregateTeacher!
+}
+
+input TeacherCreateInput {
+  id: ID
+  name: String!
+  email: String!
+  address: String!
+  position: String!
+  phone: String!
+  password: String!
+  institute: InstituteCreateOneWithoutTeachersInput!
+  classes: ClassCreateManyWithoutMentorInput
+}
+
+input TeacherCreateManyWithoutInstituteInput {
+  create: [TeacherCreateWithoutInstituteInput!]
+  connect: [TeacherWhereUniqueInput!]
+}
+
+input TeacherCreateOneWithoutClassesInput {
+  create: TeacherCreateWithoutClassesInput
+  connect: TeacherWhereUniqueInput
+}
+
+input TeacherCreateWithoutClassesInput {
+  id: ID
+  name: String!
+  email: String!
+  address: String!
+  position: String!
+  phone: String!
+  password: String!
+  institute: InstituteCreateOneWithoutTeachersInput!
+}
+
+input TeacherCreateWithoutInstituteInput {
+  id: ID
+  name: String!
+  email: String!
+  address: String!
+  position: String!
+  phone: String!
+  password: String!
+  classes: ClassCreateManyWithoutMentorInput
+}
+
+"""An edge in a connection."""
+type TeacherEdge {
+  """The item at the end of the edge."""
+  node: Teacher!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TeacherOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  email_ASC
+  email_DESC
+  address_ASC
+  address_DESC
+  position_ASC
+  position_DESC
+  phone_ASC
+  phone_DESC
+  password_ASC
+  password_DESC
+}
+
+type TeacherPreviousValues {
+  id: ID!
+  name: String!
+  email: String!
+  address: String!
+  position: String!
+  phone: String!
+  password: String!
+}
+
+input TeacherScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TeacherScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TeacherScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TeacherScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  address: String
+
+  """All values that are not equal to given value."""
+  address_not: String
+
+  """All values that are contained in given list."""
+  address_in: [String!]
+
+  """All values that are not contained in given list."""
+  address_not_in: [String!]
+
+  """All values less than the given value."""
+  address_lt: String
+
+  """All values less than or equal the given value."""
+  address_lte: String
+
+  """All values greater than the given value."""
+  address_gt: String
+
+  """All values greater than or equal the given value."""
+  address_gte: String
+
+  """All values containing the given string."""
+  address_contains: String
+
+  """All values not containing the given string."""
+  address_not_contains: String
+
+  """All values starting with the given string."""
+  address_starts_with: String
+
+  """All values not starting with the given string."""
+  address_not_starts_with: String
+
+  """All values ending with the given string."""
+  address_ends_with: String
+
+  """All values not ending with the given string."""
+  address_not_ends_with: String
+  position: String
+
+  """All values that are not equal to given value."""
+  position_not: String
+
+  """All values that are contained in given list."""
+  position_in: [String!]
+
+  """All values that are not contained in given list."""
+  position_not_in: [String!]
+
+  """All values less than the given value."""
+  position_lt: String
+
+  """All values less than or equal the given value."""
+  position_lte: String
+
+  """All values greater than the given value."""
+  position_gt: String
+
+  """All values greater than or equal the given value."""
+  position_gte: String
+
+  """All values containing the given string."""
+  position_contains: String
+
+  """All values not containing the given string."""
+  position_not_contains: String
+
+  """All values starting with the given string."""
+  position_starts_with: String
+
+  """All values not starting with the given string."""
+  position_not_starts_with: String
+
+  """All values ending with the given string."""
+  position_ends_with: String
+
+  """All values not ending with the given string."""
+  position_not_ends_with: String
+  phone: String
+
+  """All values that are not equal to given value."""
+  phone_not: String
+
+  """All values that are contained in given list."""
+  phone_in: [String!]
+
+  """All values that are not contained in given list."""
+  phone_not_in: [String!]
+
+  """All values less than the given value."""
+  phone_lt: String
+
+  """All values less than or equal the given value."""
+  phone_lte: String
+
+  """All values greater than the given value."""
+  phone_gt: String
+
+  """All values greater than or equal the given value."""
+  phone_gte: String
+
+  """All values containing the given string."""
+  phone_contains: String
+
+  """All values not containing the given string."""
+  phone_not_contains: String
+
+  """All values starting with the given string."""
+  phone_starts_with: String
+
+  """All values not starting with the given string."""
+  phone_not_starts_with: String
+
+  """All values ending with the given string."""
+  phone_ends_with: String
+
+  """All values not ending with the given string."""
+  phone_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+}
+
+type TeacherSubscriptionPayload {
+  mutation: MutationType!
+  node: Teacher
+  updatedFields: [String!]
+  previousValues: TeacherPreviousValues
+}
+
+input TeacherSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TeacherSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TeacherSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TeacherSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TeacherWhereInput
+}
+
+input TeacherUpdateInput {
+  name: String
+  email: String
+  address: String
+  position: String
+  phone: String
+  password: String
+  institute: InstituteUpdateOneRequiredWithoutTeachersInput
+  classes: ClassUpdateManyWithoutMentorInput
+}
+
+input TeacherUpdateManyDataInput {
+  name: String
+  email: String
+  address: String
+  position: String
+  phone: String
+  password: String
+}
+
+input TeacherUpdateManyMutationInput {
+  name: String
+  email: String
+  address: String
+  position: String
+  phone: String
+  password: String
+}
+
+input TeacherUpdateManyWithoutInstituteInput {
+  create: [TeacherCreateWithoutInstituteInput!]
+  connect: [TeacherWhereUniqueInput!]
+  set: [TeacherWhereUniqueInput!]
+  disconnect: [TeacherWhereUniqueInput!]
+  delete: [TeacherWhereUniqueInput!]
+  update: [TeacherUpdateWithWhereUniqueWithoutInstituteInput!]
+  updateMany: [TeacherUpdateManyWithWhereNestedInput!]
+  deleteMany: [TeacherScalarWhereInput!]
+  upsert: [TeacherUpsertWithWhereUniqueWithoutInstituteInput!]
+}
+
+input TeacherUpdateManyWithWhereNestedInput {
+  where: TeacherScalarWhereInput!
+  data: TeacherUpdateManyDataInput!
+}
+
+input TeacherUpdateOneRequiredWithoutClassesInput {
+  create: TeacherCreateWithoutClassesInput
+  connect: TeacherWhereUniqueInput
+  update: TeacherUpdateWithoutClassesDataInput
+  upsert: TeacherUpsertWithoutClassesInput
+}
+
+input TeacherUpdateWithoutClassesDataInput {
+  name: String
+  email: String
+  address: String
+  position: String
+  phone: String
+  password: String
+  institute: InstituteUpdateOneRequiredWithoutTeachersInput
+}
+
+input TeacherUpdateWithoutInstituteDataInput {
+  name: String
+  email: String
+  address: String
+  position: String
+  phone: String
+  password: String
+  classes: ClassUpdateManyWithoutMentorInput
+}
+
+input TeacherUpdateWithWhereUniqueWithoutInstituteInput {
+  where: TeacherWhereUniqueInput!
+  data: TeacherUpdateWithoutInstituteDataInput!
+}
+
+input TeacherUpsertWithoutClassesInput {
+  update: TeacherUpdateWithoutClassesDataInput!
+  create: TeacherCreateWithoutClassesInput!
+}
+
+input TeacherUpsertWithWhereUniqueWithoutInstituteInput {
+  where: TeacherWhereUniqueInput!
+  update: TeacherUpdateWithoutInstituteDataInput!
+  create: TeacherCreateWithoutInstituteInput!
+}
+
+input TeacherWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TeacherWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TeacherWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TeacherWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  address: String
+
+  """All values that are not equal to given value."""
+  address_not: String
+
+  """All values that are contained in given list."""
+  address_in: [String!]
+
+  """All values that are not contained in given list."""
+  address_not_in: [String!]
+
+  """All values less than the given value."""
+  address_lt: String
+
+  """All values less than or equal the given value."""
+  address_lte: String
+
+  """All values greater than the given value."""
+  address_gt: String
+
+  """All values greater than or equal the given value."""
+  address_gte: String
+
+  """All values containing the given string."""
+  address_contains: String
+
+  """All values not containing the given string."""
+  address_not_contains: String
+
+  """All values starting with the given string."""
+  address_starts_with: String
+
+  """All values not starting with the given string."""
+  address_not_starts_with: String
+
+  """All values ending with the given string."""
+  address_ends_with: String
+
+  """All values not ending with the given string."""
+  address_not_ends_with: String
+  position: String
+
+  """All values that are not equal to given value."""
+  position_not: String
+
+  """All values that are contained in given list."""
+  position_in: [String!]
+
+  """All values that are not contained in given list."""
+  position_not_in: [String!]
+
+  """All values less than the given value."""
+  position_lt: String
+
+  """All values less than or equal the given value."""
+  position_lte: String
+
+  """All values greater than the given value."""
+  position_gt: String
+
+  """All values greater than or equal the given value."""
+  position_gte: String
+
+  """All values containing the given string."""
+  position_contains: String
+
+  """All values not containing the given string."""
+  position_not_contains: String
+
+  """All values starting with the given string."""
+  position_starts_with: String
+
+  """All values not starting with the given string."""
+  position_not_starts_with: String
+
+  """All values ending with the given string."""
+  position_ends_with: String
+
+  """All values not ending with the given string."""
+  position_not_ends_with: String
+  phone: String
+
+  """All values that are not equal to given value."""
+  phone_not: String
+
+  """All values that are contained in given list."""
+  phone_in: [String!]
+
+  """All values that are not contained in given list."""
+  phone_not_in: [String!]
+
+  """All values less than the given value."""
+  phone_lt: String
+
+  """All values less than or equal the given value."""
+  phone_lte: String
+
+  """All values greater than the given value."""
+  phone_gt: String
+
+  """All values greater than or equal the given value."""
+  phone_gte: String
+
+  """All values containing the given string."""
+  phone_contains: String
+
+  """All values not containing the given string."""
+  phone_not_contains: String
+
+  """All values starting with the given string."""
+  phone_starts_with: String
+
+  """All values not starting with the given string."""
+  phone_not_starts_with: String
+
+  """All values ending with the given string."""
+  phone_ends_with: String
+
+  """All values not ending with the given string."""
+  phone_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  institute: InstituteWhereInput
+  classes_every: ClassWhereInput
+  classes_some: ClassWhereInput
+  classes_none: ClassWhereInput
+}
+
+input TeacherWhereUniqueInput {
+  id: ID
+}

@@ -1,0 +1,151 @@
+
+type Institute{
+  id: ID! @id
+  name: String! @unique
+  address: String!
+  email: String! @unique
+  username: String!
+  password: String!
+  departments: [Department!]! @relation(name: "InstituteToDepartment",onDelete: CASCADE)
+  students: [Student!]! @relation(name: "InstituteToStudent",onDelete: CASCADE)
+  sessions: [Session!]! @relation(name: "InstituteToSession",onDelete: CASCADE)
+  teachers: [Teacher!]! @relation(name: "InstituteToTeacher",onDelete: CASCADE)
+  classes: [Class!]! @relation(name: "InstituteToClass",onDelete: CASCADE)
+  routines: [Routine!]! @relation(name: "InstituteToRoutine",onDelete: CASCADE)
+  periods: [Period!]! @relation(name: "InstituteToPeriod",onDelete: CASCADE)
+}
+
+enum ShiftTypes{
+  MORNING
+  EVENING
+}
+
+type Department{
+  id: ID! @id
+  name: String!
+  institute: Institute! @relation(name: "InstituteToDepartment",onDelete: SET_NULL)
+  students: [Student!]! @relation(name: "DepartmentToStudent",onDelete: CASCADE)
+  semesters: [Semester!]! @relation(name: "DepartmentToSemester",onDelete: CASCADE)
+  bookLists: [BookList!]! @relation(name: "DepartmentToBookList",onDelete: CASCADE)
+  routines: [Routine!]! @relation(name: "DepartmentToRoutine",onDelete: CASCADE)
+}
+
+type Session{
+  id: ID! @id
+  year: String! @unique
+  students: [Student!]! @relation(name: "SessionToStudent",onDelete: CASCADE)
+  routines: [Routine!]! @relation(name: "SessionToRoutine",onDelete: CASCADE)
+}
+
+type Student{
+  id: ID! @id
+  institute: Institute! @relation(name: "InstituteToStudent",onDelete: SET_NULL)
+  name: String!
+  email: String! @unique
+  roll: Int! @unique
+  reg: Int! @unique
+  session: Session! @relation(name: "SessionToStudent",onDelete: SET_NULL)
+  phone: String!
+  shift: ShiftTypes!
+  department: Department! @relation(name: "DepartmentToStudent",onDelete: SET_NULL)
+  semester: Semester! @relation(name: "SemesterToStudent",onDelete: SET_NULL)
+  password: String!
+}
+
+enum SemesterTypes{
+  FIRST
+  SECOND
+  THIRD
+  FOURTH
+  FIFTH
+  SIXTH
+  SEVENTH
+  EIGHT
+}
+
+type Semester{
+  id: ID! @id
+  institute: Institute! @relation(name: "InstituteToSemester",onDelete: SET_NULL)
+  name: SemesterTypes! @unique
+  departments: [Department!]! @relation(name: "DepartmentToSemester",onDelete: SET_NULL)
+  students: [Student!] @relation(name: "SemesterToStudent",onDelete: CASCADE)
+  bookLists: [BookList!]! @relation(name: "SemesterToBookList",onDelete: CASCADE)
+  routines: [Routine!]! @relation(name: "SemesterToRoutine",onDelete: CASCADE)
+  classes:[Class!]! @relation(name: "SemesterToClass",onDelete: CASCADE)
+}
+
+type BookList{
+  id: ID! @id
+  department: Department! @relation(name: "DepartmentToBookList",onDelete: SET_NULL)
+  semester: Semester! @relation(name: "SemesterToBookList",onDelete: SET_NULL)
+  books:[Book!]! @relation(name: "BookListToBook",onDelete: SET_NULL)
+}
+
+type Book{
+  id: ID! @id
+  name: String!
+  code: String! @unique
+  listNo: BookList! @relation(name: "BookListToBook",onDelete: SET_NULL)
+  classes: [Class!]! @relation(name: "BookToClass",onDelete: CASCADE)
+}
+
+type Teacher{
+  id: ID! @id
+  institute: Institute! @relation(name: "InstituteToTeacher",onDelete: SET_NULL)
+  name: String!
+  email: String!
+  address: String!
+  position: String!
+  phone: String!
+  password: String!
+  classes: [Class!]! @relation(name: "TeacherToClass",onDelete: CASCADE)
+}
+
+type Routine{
+  id: ID! @id
+  title: String!
+  institute: Institute! @relation(name: "InstituteToRoutine",onDelete: SET_NULL)
+  session: Session! @relation(name: "SessionToRoutine",onDelete: SET_NULL)
+  semester: Semester! @relation(name: "SemesterToRoutine",onDelete: SET_NULL)
+  department: Department! @relation(name: "DepartmentToRoutine",onDelete: SET_NULL)
+  days: [DayInWeek!]! @relation(name: "RoutineToDayInWeek",onDelete: CASCADE)
+}
+
+type DayInWeek{
+  id: ID! @id
+  routine: Routine! @relation(name: "RoutineToDayInWeek",onDelete: SET_NULL)
+  dayValue: Int!
+  day: DayTypes! @unique
+  classes: [Class!]! @relation(name: "DayInWeekToClass",onDelete: CASCADE)
+}
+
+
+type Class{
+  id: ID! @id
+  day: DayInWeek! @relation(name: "DayInWeekToClass",onDelete: SET_NULL)
+  institute: Institute! @relation(name: "InstituteToClass",onDelete: SET_NULL)
+  semester: Semester! @relation(name: "SemesterToClass",onDelete: SET_NULL)
+  period: Period! @relation(name: "ClassToPeriod",onDelete: CASCADE)
+  mentor: Teacher! @relation(name: "TeacherToClass",onDelete: SET_NULL)
+  department: Department! @relation(name: "DepartmentToClass",onDelete: SET_NULL)
+  subject: Book! @relation(name: "BookToClass",onDelete: SET_NULL)
+}
+
+
+type Period{
+  id: ID! @id
+  institute: Institute! @relation(name: "InstituteToPeriod",onDelete: SET_NULL)
+  time: Int!
+  startedAt: String!
+  endAt: String!
+}
+
+enum DayTypes{
+  SATURDAY
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+}

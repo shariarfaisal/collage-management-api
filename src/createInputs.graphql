@@ -1,0 +1,88 @@
+
+input CreateInputInstitute{
+  name: String!
+  email: String!
+  username: String!
+  address: String!
+  password: String!
+}
+
+input CreateInputDepartment{
+  name: String!
+  institute: ID!
+}
+
+input CreateInputTeacher{
+  name: String!
+  email: String!
+  address: String!
+  position: String!
+  phone: String!
+  password: String!
+  institute: ID!
+}
+
+input CreateInputStudent{
+  name: String!
+  email: String!
+  roll: Int!
+  reg: Int!
+  phone: String!
+  shift: String!
+  password: String!
+  institute: ID!
+  session: ID!
+  department: ID!
+  semester: ID!
+}
+
+input CreateInputSession{
+  year: String!
+}
+
+input CreateInputSemester{
+  name: String!
+  institute: ID!
+}
+
+input CreateInputBookList{
+  department: ID!
+  semester: ID!
+}
+
+input CreateInputRoutine{
+  title: String!
+  institute: ID!
+  session: ID!
+  semester: ID!
+  department: ID!
+}
+
+input CreateInputDayInWeek{
+  dayValue: Int!
+  day: String!
+  routine: ID!
+}
+
+input CreateInputBook{
+  name: String!
+  code: String!
+  listNo: ID!
+}
+
+input CreateInputPeriod{
+  time: Int!
+  startedAt: String!
+  endAt: String!
+  institute: ID!
+}
+
+input CreateInputClass{
+  day: ID!
+  institute: ID!
+  semester: ID!
+  period: ID!
+  mentor: ID!
+  department: ID!
+  subject: ID!
+}
