@@ -1,15 +1,13 @@
 
-input CreateInputInstitute{
+input CreateInputAdmin{
   name: String!
   email: String!
   username: String!
-  address: String!
   password: String!
 }
 
 input CreateInputDepartment{
   name: String!
-  institute: ID!
 }
 
 input CreateInputTeacher{
@@ -19,7 +17,6 @@ input CreateInputTeacher{
   position: String!
   phone: String!
   password: String!
-  institute: ID!
 }
 
 input CreateInputStudent{
@@ -29,8 +26,8 @@ input CreateInputStudent{
   reg: Int!
   phone: String!
   shift: String!
+  address: String!
   password: String!
-  institute: ID!
   session: ID!
   department: ID!
   semester: ID!
@@ -42,20 +39,20 @@ input CreateInputSession{
 
 input CreateInputSemester{
   name: String!
-  institute: ID!
 }
 
 input CreateInputBookList{
   department: ID!
+  probidan: String!
   semester: ID!
 }
 
 input CreateInputRoutine{
   title: String!
-  institute: ID!
   session: ID!
   semester: ID!
   department: ID!
+  shift: String!
 }
 
 input CreateInputDayInWeek{
@@ -67,22 +64,105 @@ input CreateInputDayInWeek{
 input CreateInputBook{
   name: String!
   code: String!
-  listNo: ID!
+  bookList: ID!
 }
 
 input CreateInputPeriod{
   time: Int!
   startedAt: String!
   endAt: String!
-  institute: ID!
 }
 
 input CreateInputClass{
   day: ID!
-  institute: ID!
   semester: ID!
   period: ID!
   mentor: ID!
   department: ID!
   subject: ID!
+}
+
+
+input UpdateInputAdmin{
+  name: String
+  email: String
+  username: String
+  password: String!
+}
+
+input UpdateInputDepartment{
+  name: String
+}
+
+input UpdateInputTeacher{
+  name: String
+  email: String
+  address: String
+  position: String
+  phone: String
+  password: String!
+}
+
+input UpdateInputStudent{
+  name: String
+  email: String
+  roll: Int
+  reg: Int
+  phone: String
+  address: String
+  shift: String
+  password: String!
+  session: ID
+  department: ID
+  semester: ID
+}
+
+input UpdateInputSession{
+  year: String
+}
+
+input UpdateInputSemester{
+  name: String
+  department: ID!
+}
+
+input UpdateInputBookList{
+  department: ID
+  semester: ID
+  probidan: String
+}
+
+input UpdateInputRoutine{
+  title: String
+  session: ID
+  semester: ID
+  department: ID
+  shift: String
+}
+
+input UpdateInputDayInWeek{
+  dayValue: Int
+  day: String
+  routine: ID
+}
+
+input UpdateInputBook{
+  name: String
+  code: String
+  listNo: ID!
+}
+
+input UpdateInputPeriod{
+  time: Int
+  startedAt: String
+  endAt: String
+}
+
+input UpdateInputClass{
+  day: ID
+  semester: ID
+  period: ID
+  mentor: ID
+  department: ID
+  subject: ID
 }

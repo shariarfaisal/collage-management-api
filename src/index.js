@@ -3,9 +3,16 @@ import resolvers, { fragmentReplacements } from './resolvers/index'
 import { prisma } from './prisma'
 
 
+
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
-  resolvers
+  resolvers,
+  context(req){
+    return {
+      prisma,
+      req
+    }
+  }
 })
 
 server.start(()=> {

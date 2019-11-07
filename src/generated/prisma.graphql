@@ -1,5 +1,376 @@
 # source: http://localhost:4466
-# timestamp: Wed Nov 06 2019 18:55:16 GMT+0600 (+06)
+# timestamp: Thu Nov 07 2019 20:55:42 GMT+0600 (+06)
+
+type Admin implements Node {
+  id: ID!
+  name: String!
+  email: String!
+  username: String!
+  password: String!
+  departments(where: DepartmentWhereInput, orderBy: DepartmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Department!]
+  students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student!]
+  sessions(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Session!]
+  teachers(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Teacher!]
+  classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class!]
+  routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine!]
+  periods(where: PeriodWhereInput, orderBy: PeriodOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Period!]
+}
+
+"""A connection to a list of items."""
+type AdminConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [AdminEdge]!
+  aggregate: AggregateAdmin!
+}
+
+input AdminCreateInput {
+  id: ID
+  name: String!
+  email: String!
+  username: String!
+  password: String!
+  departments: DepartmentCreateManyInput
+  students: StudentCreateManyInput
+  sessions: SessionCreateManyInput
+  teachers: TeacherCreateManyInput
+  classes: ClassCreateManyInput
+  routines: RoutineCreateManyInput
+  periods: PeriodCreateManyInput
+}
+
+"""An edge in a connection."""
+type AdminEdge {
+  """The item at the end of the edge."""
+  node: Admin!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum AdminOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  email_ASC
+  email_DESC
+  username_ASC
+  username_DESC
+  password_ASC
+  password_DESC
+}
+
+type AdminPreviousValues {
+  id: ID!
+  name: String!
+  email: String!
+  username: String!
+  password: String!
+}
+
+type AdminSubscriptionPayload {
+  mutation: MutationType!
+  node: Admin
+  updatedFields: [String!]
+  previousValues: AdminPreviousValues
+}
+
+input AdminSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AdminSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AdminSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AdminSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: AdminWhereInput
+}
+
+input AdminUpdateInput {
+  name: String
+  email: String
+  username: String
+  password: String
+  departments: DepartmentUpdateManyInput
+  students: StudentUpdateManyInput
+  sessions: SessionUpdateManyInput
+  teachers: TeacherUpdateManyInput
+  classes: ClassUpdateManyInput
+  routines: RoutineUpdateManyInput
+  periods: PeriodUpdateManyInput
+}
+
+input AdminUpdateManyMutationInput {
+  name: String
+  email: String
+  username: String
+  password: String
+}
+
+input AdminWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AdminWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AdminWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AdminWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  username: String
+
+  """All values that are not equal to given value."""
+  username_not: String
+
+  """All values that are contained in given list."""
+  username_in: [String!]
+
+  """All values that are not contained in given list."""
+  username_not_in: [String!]
+
+  """All values less than the given value."""
+  username_lt: String
+
+  """All values less than or equal the given value."""
+  username_lte: String
+
+  """All values greater than the given value."""
+  username_gt: String
+
+  """All values greater than or equal the given value."""
+  username_gte: String
+
+  """All values containing the given string."""
+  username_contains: String
+
+  """All values not containing the given string."""
+  username_not_contains: String
+
+  """All values starting with the given string."""
+  username_starts_with: String
+
+  """All values not starting with the given string."""
+  username_not_starts_with: String
+
+  """All values ending with the given string."""
+  username_ends_with: String
+
+  """All values not ending with the given string."""
+  username_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  departments_every: DepartmentWhereInput
+  departments_some: DepartmentWhereInput
+  departments_none: DepartmentWhereInput
+  students_every: StudentWhereInput
+  students_some: StudentWhereInput
+  students_none: StudentWhereInput
+  sessions_every: SessionWhereInput
+  sessions_some: SessionWhereInput
+  sessions_none: SessionWhereInput
+  teachers_every: TeacherWhereInput
+  teachers_some: TeacherWhereInput
+  teachers_none: TeacherWhereInput
+  classes_every: ClassWhereInput
+  classes_some: ClassWhereInput
+  classes_none: ClassWhereInput
+  routines_every: RoutineWhereInput
+  routines_some: RoutineWhereInput
+  routines_none: RoutineWhereInput
+  periods_every: PeriodWhereInput
+  periods_some: PeriodWhereInput
+  periods_none: PeriodWhereInput
+}
+
+input AdminWhereUniqueInput {
+  id: ID
+  name: String
+  email: String
+  username: String
+}
+
+type AggregateAdmin {
+  count: Int!
+}
 
 type AggregateBook {
   count: Int!
@@ -18,10 +389,6 @@ type AggregateDayInWeek {
 }
 
 type AggregateDepartment {
-  count: Int!
-}
-
-type AggregateInstitute {
   count: Int!
 }
 
@@ -58,7 +425,7 @@ type Book implements Node {
   id: ID!
   name: String!
   code: String!
-  listNo: BookList!
+  bookList: BookList!
   classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class!]
 }
 
@@ -76,12 +443,12 @@ input BookCreateInput {
   id: ID
   name: String!
   code: String!
-  listNo: BookListCreateOneWithoutBooksInput!
+  bookList: BookListCreateOneWithoutBooksInput!
   classes: ClassCreateManyWithoutSubjectInput
 }
 
-input BookCreateManyWithoutListNoInput {
-  create: [BookCreateWithoutListNoInput!]
+input BookCreateManyWithoutBookListInput {
+  create: [BookCreateWithoutBookListInput!]
   connect: [BookWhereUniqueInput!]
 }
 
@@ -90,18 +457,18 @@ input BookCreateOneWithoutClassesInput {
   connect: BookWhereUniqueInput
 }
 
-input BookCreateWithoutClassesInput {
-  id: ID
-  name: String!
-  code: String!
-  listNo: BookListCreateOneWithoutBooksInput!
-}
-
-input BookCreateWithoutListNoInput {
+input BookCreateWithoutBookListInput {
   id: ID
   name: String!
   code: String!
   classes: ClassCreateManyWithoutSubjectInput
+}
+
+input BookCreateWithoutClassesInput {
+  id: ID
+  name: String!
+  code: String!
+  bookList: BookListCreateOneWithoutBooksInput!
 }
 
 """An edge in a connection."""
@@ -117,6 +484,7 @@ type BookList implements Node {
   id: ID!
   department: Department!
   semester: Semester!
+  probidan: String!
   books(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Book!]
 }
 
@@ -132,9 +500,10 @@ type BookListConnection {
 
 input BookListCreateInput {
   id: ID
+  probidan: String!
   department: DepartmentCreateOneWithoutBookListsInput!
   semester: SemesterCreateOneWithoutBookListsInput!
-  books: BookCreateManyWithoutListNoInput
+  books: BookCreateManyWithoutBookListInput
 }
 
 input BookListCreateManyWithoutDepartmentInput {
@@ -154,20 +523,23 @@ input BookListCreateOneWithoutBooksInput {
 
 input BookListCreateWithoutBooksInput {
   id: ID
+  probidan: String!
   department: DepartmentCreateOneWithoutBookListsInput!
   semester: SemesterCreateOneWithoutBookListsInput!
 }
 
 input BookListCreateWithoutDepartmentInput {
   id: ID
+  probidan: String!
   semester: SemesterCreateOneWithoutBookListsInput!
-  books: BookCreateManyWithoutListNoInput
+  books: BookCreateManyWithoutBookListInput
 }
 
 input BookListCreateWithoutSemesterInput {
   id: ID
+  probidan: String!
   department: DepartmentCreateOneWithoutBookListsInput!
-  books: BookCreateManyWithoutListNoInput
+  books: BookCreateManyWithoutBookListInput
 }
 
 """An edge in a connection."""
@@ -182,10 +554,13 @@ type BookListEdge {
 enum BookListOrderByInput {
   id_ASC
   id_DESC
+  probidan_ASC
+  probidan_DESC
 }
 
 type BookListPreviousValues {
   id: ID!
+  probidan: String!
 }
 
 input BookListScalarWhereInput {
@@ -237,6 +612,46 @@ input BookListScalarWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  probidan: String
+
+  """All values that are not equal to given value."""
+  probidan_not: String
+
+  """All values that are contained in given list."""
+  probidan_in: [String!]
+
+  """All values that are not contained in given list."""
+  probidan_not_in: [String!]
+
+  """All values less than the given value."""
+  probidan_lt: String
+
+  """All values less than or equal the given value."""
+  probidan_lte: String
+
+  """All values greater than the given value."""
+  probidan_gt: String
+
+  """All values greater than or equal the given value."""
+  probidan_gte: String
+
+  """All values containing the given string."""
+  probidan_contains: String
+
+  """All values not containing the given string."""
+  probidan_not_contains: String
+
+  """All values starting with the given string."""
+  probidan_starts_with: String
+
+  """All values not starting with the given string."""
+  probidan_not_starts_with: String
+
+  """All values ending with the given string."""
+  probidan_ends_with: String
+
+  """All values not ending with the given string."""
+  probidan_not_ends_with: String
 }
 
 type BookListSubscriptionPayload {
@@ -277,9 +692,18 @@ input BookListSubscriptionWhereInput {
 }
 
 input BookListUpdateInput {
+  probidan: String
   department: DepartmentUpdateOneRequiredWithoutBookListsInput
   semester: SemesterUpdateOneRequiredWithoutBookListsInput
-  books: BookUpdateManyWithoutListNoInput
+  books: BookUpdateManyWithoutBookListInput
+}
+
+input BookListUpdateManyDataInput {
+  probidan: String
+}
+
+input BookListUpdateManyMutationInput {
+  probidan: String
 }
 
 input BookListUpdateManyWithoutDepartmentInput {
@@ -289,6 +713,7 @@ input BookListUpdateManyWithoutDepartmentInput {
   disconnect: [BookListWhereUniqueInput!]
   delete: [BookListWhereUniqueInput!]
   update: [BookListUpdateWithWhereUniqueWithoutDepartmentInput!]
+  updateMany: [BookListUpdateManyWithWhereNestedInput!]
   deleteMany: [BookListScalarWhereInput!]
   upsert: [BookListUpsertWithWhereUniqueWithoutDepartmentInput!]
 }
@@ -300,8 +725,14 @@ input BookListUpdateManyWithoutSemesterInput {
   disconnect: [BookListWhereUniqueInput!]
   delete: [BookListWhereUniqueInput!]
   update: [BookListUpdateWithWhereUniqueWithoutSemesterInput!]
+  updateMany: [BookListUpdateManyWithWhereNestedInput!]
   deleteMany: [BookListScalarWhereInput!]
   upsert: [BookListUpsertWithWhereUniqueWithoutSemesterInput!]
+}
+
+input BookListUpdateManyWithWhereNestedInput {
+  where: BookListScalarWhereInput!
+  data: BookListUpdateManyDataInput!
 }
 
 input BookListUpdateOneRequiredWithoutBooksInput {
@@ -312,18 +743,21 @@ input BookListUpdateOneRequiredWithoutBooksInput {
 }
 
 input BookListUpdateWithoutBooksDataInput {
+  probidan: String
   department: DepartmentUpdateOneRequiredWithoutBookListsInput
   semester: SemesterUpdateOneRequiredWithoutBookListsInput
 }
 
 input BookListUpdateWithoutDepartmentDataInput {
+  probidan: String
   semester: SemesterUpdateOneRequiredWithoutBookListsInput
-  books: BookUpdateManyWithoutListNoInput
+  books: BookUpdateManyWithoutBookListInput
 }
 
 input BookListUpdateWithoutSemesterDataInput {
+  probidan: String
   department: DepartmentUpdateOneRequiredWithoutBookListsInput
-  books: BookUpdateManyWithoutListNoInput
+  books: BookUpdateManyWithoutBookListInput
 }
 
 input BookListUpdateWithWhereUniqueWithoutDepartmentInput {
@@ -402,6 +836,46 @@ input BookListWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  probidan: String
+
+  """All values that are not equal to given value."""
+  probidan_not: String
+
+  """All values that are contained in given list."""
+  probidan_in: [String!]
+
+  """All values that are not contained in given list."""
+  probidan_not_in: [String!]
+
+  """All values less than the given value."""
+  probidan_lt: String
+
+  """All values less than or equal the given value."""
+  probidan_lte: String
+
+  """All values greater than the given value."""
+  probidan_gt: String
+
+  """All values greater than or equal the given value."""
+  probidan_gte: String
+
+  """All values containing the given string."""
+  probidan_contains: String
+
+  """All values not containing the given string."""
+  probidan_not_contains: String
+
+  """All values starting with the given string."""
+  probidan_starts_with: String
+
+  """All values not starting with the given string."""
+  probidan_not_starts_with: String
+
+  """All values ending with the given string."""
+  probidan_ends_with: String
+
+  """All values not ending with the given string."""
+  probidan_not_ends_with: String
   department: DepartmentWhereInput
   semester: SemesterWhereInput
   books_every: BookWhereInput
@@ -599,7 +1073,7 @@ input BookSubscriptionWhereInput {
 input BookUpdateInput {
   name: String
   code: String
-  listNo: BookListUpdateOneRequiredWithoutBooksInput
+  bookList: BookListUpdateOneRequiredWithoutBooksInput
   classes: ClassUpdateManyWithoutSubjectInput
 }
 
@@ -613,16 +1087,16 @@ input BookUpdateManyMutationInput {
   code: String
 }
 
-input BookUpdateManyWithoutListNoInput {
-  create: [BookCreateWithoutListNoInput!]
+input BookUpdateManyWithoutBookListInput {
+  create: [BookCreateWithoutBookListInput!]
   connect: [BookWhereUniqueInput!]
   set: [BookWhereUniqueInput!]
   disconnect: [BookWhereUniqueInput!]
   delete: [BookWhereUniqueInput!]
-  update: [BookUpdateWithWhereUniqueWithoutListNoInput!]
+  update: [BookUpdateWithWhereUniqueWithoutBookListInput!]
   updateMany: [BookUpdateManyWithWhereNestedInput!]
   deleteMany: [BookScalarWhereInput!]
-  upsert: [BookUpsertWithWhereUniqueWithoutListNoInput!]
+  upsert: [BookUpsertWithWhereUniqueWithoutBookListInput!]
 }
 
 input BookUpdateManyWithWhereNestedInput {
@@ -637,21 +1111,21 @@ input BookUpdateOneRequiredWithoutClassesInput {
   upsert: BookUpsertWithoutClassesInput
 }
 
-input BookUpdateWithoutClassesDataInput {
-  name: String
-  code: String
-  listNo: BookListUpdateOneRequiredWithoutBooksInput
-}
-
-input BookUpdateWithoutListNoDataInput {
+input BookUpdateWithoutBookListDataInput {
   name: String
   code: String
   classes: ClassUpdateManyWithoutSubjectInput
 }
 
-input BookUpdateWithWhereUniqueWithoutListNoInput {
+input BookUpdateWithoutClassesDataInput {
+  name: String
+  code: String
+  bookList: BookListUpdateOneRequiredWithoutBooksInput
+}
+
+input BookUpdateWithWhereUniqueWithoutBookListInput {
   where: BookWhereUniqueInput!
-  data: BookUpdateWithoutListNoDataInput!
+  data: BookUpdateWithoutBookListDataInput!
 }
 
 input BookUpsertWithoutClassesInput {
@@ -659,10 +1133,10 @@ input BookUpsertWithoutClassesInput {
   create: BookCreateWithoutClassesInput!
 }
 
-input BookUpsertWithWhereUniqueWithoutListNoInput {
+input BookUpsertWithWhereUniqueWithoutBookListInput {
   where: BookWhereUniqueInput!
-  update: BookUpdateWithoutListNoDataInput!
-  create: BookCreateWithoutListNoInput!
+  update: BookUpdateWithoutBookListDataInput!
+  create: BookCreateWithoutBookListInput!
 }
 
 input BookWhereInput {
@@ -794,7 +1268,7 @@ input BookWhereInput {
 
   """All values not ending with the given string."""
   code_not_ends_with: String
-  listNo: BookListWhereInput
+  bookList: BookListWhereInput
   classes_every: ClassWhereInput
   classes_some: ClassWhereInput
   classes_none: ClassWhereInput
@@ -808,7 +1282,6 @@ input BookWhereUniqueInput {
 type Class implements Node {
   id: ID!
   day: DayInWeek!
-  institute: Institute!
   semester: Semester!
   period: Period!
   mentor: Teacher!
@@ -829,12 +1302,16 @@ type ClassConnection {
 input ClassCreateInput {
   id: ID
   day: DayInWeekCreateOneWithoutClassesInput!
-  institute: InstituteCreateOneWithoutClassesInput!
   semester: SemesterCreateOneWithoutClassesInput!
   period: PeriodCreateOneInput!
   mentor: TeacherCreateOneWithoutClassesInput!
-  department: DepartmentCreateOneInput!
+  department: DepartmentCreateOneWithoutClassesInput!
   subject: BookCreateOneWithoutClassesInput!
+}
+
+input ClassCreateManyInput {
+  create: [ClassCreateInput!]
+  connect: [ClassWhereUniqueInput!]
 }
 
 input ClassCreateManyWithoutDayInput {
@@ -842,8 +1319,8 @@ input ClassCreateManyWithoutDayInput {
   connect: [ClassWhereUniqueInput!]
 }
 
-input ClassCreateManyWithoutInstituteInput {
-  create: [ClassCreateWithoutInstituteInput!]
+input ClassCreateManyWithoutDepartmentInput {
+  create: [ClassCreateWithoutDepartmentInput!]
   connect: [ClassWhereUniqueInput!]
 }
 
@@ -864,52 +1341,47 @@ input ClassCreateManyWithoutSubjectInput {
 
 input ClassCreateWithoutDayInput {
   id: ID
-  institute: InstituteCreateOneWithoutClassesInput!
   semester: SemesterCreateOneWithoutClassesInput!
   period: PeriodCreateOneInput!
   mentor: TeacherCreateOneWithoutClassesInput!
-  department: DepartmentCreateOneInput!
+  department: DepartmentCreateOneWithoutClassesInput!
   subject: BookCreateOneWithoutClassesInput!
 }
 
-input ClassCreateWithoutInstituteInput {
+input ClassCreateWithoutDepartmentInput {
   id: ID
   day: DayInWeekCreateOneWithoutClassesInput!
   semester: SemesterCreateOneWithoutClassesInput!
   period: PeriodCreateOneInput!
   mentor: TeacherCreateOneWithoutClassesInput!
-  department: DepartmentCreateOneInput!
   subject: BookCreateOneWithoutClassesInput!
 }
 
 input ClassCreateWithoutMentorInput {
   id: ID
   day: DayInWeekCreateOneWithoutClassesInput!
-  institute: InstituteCreateOneWithoutClassesInput!
   semester: SemesterCreateOneWithoutClassesInput!
   period: PeriodCreateOneInput!
-  department: DepartmentCreateOneInput!
+  department: DepartmentCreateOneWithoutClassesInput!
   subject: BookCreateOneWithoutClassesInput!
 }
 
 input ClassCreateWithoutSemesterInput {
   id: ID
   day: DayInWeekCreateOneWithoutClassesInput!
-  institute: InstituteCreateOneWithoutClassesInput!
   period: PeriodCreateOneInput!
   mentor: TeacherCreateOneWithoutClassesInput!
-  department: DepartmentCreateOneInput!
+  department: DepartmentCreateOneWithoutClassesInput!
   subject: BookCreateOneWithoutClassesInput!
 }
 
 input ClassCreateWithoutSubjectInput {
   id: ID
   day: DayInWeekCreateOneWithoutClassesInput!
-  institute: InstituteCreateOneWithoutClassesInput!
   semester: SemesterCreateOneWithoutClassesInput!
   period: PeriodCreateOneInput!
   mentor: TeacherCreateOneWithoutClassesInput!
-  department: DepartmentCreateOneInput!
+  department: DepartmentCreateOneWithoutClassesInput!
 }
 
 """An edge in a connection."""
@@ -1018,14 +1490,33 @@ input ClassSubscriptionWhereInput {
   node: ClassWhereInput
 }
 
-input ClassUpdateInput {
+input ClassUpdateDataInput {
   day: DayInWeekUpdateOneRequiredWithoutClassesInput
-  institute: InstituteUpdateOneRequiredWithoutClassesInput
   semester: SemesterUpdateOneRequiredWithoutClassesInput
   period: PeriodUpdateOneRequiredInput
   mentor: TeacherUpdateOneRequiredWithoutClassesInput
-  department: DepartmentUpdateOneRequiredInput
+  department: DepartmentUpdateOneRequiredWithoutClassesInput
   subject: BookUpdateOneRequiredWithoutClassesInput
+}
+
+input ClassUpdateInput {
+  day: DayInWeekUpdateOneRequiredWithoutClassesInput
+  semester: SemesterUpdateOneRequiredWithoutClassesInput
+  period: PeriodUpdateOneRequiredInput
+  mentor: TeacherUpdateOneRequiredWithoutClassesInput
+  department: DepartmentUpdateOneRequiredWithoutClassesInput
+  subject: BookUpdateOneRequiredWithoutClassesInput
+}
+
+input ClassUpdateManyInput {
+  create: [ClassCreateInput!]
+  connect: [ClassWhereUniqueInput!]
+  set: [ClassWhereUniqueInput!]
+  disconnect: [ClassWhereUniqueInput!]
+  delete: [ClassWhereUniqueInput!]
+  update: [ClassUpdateWithWhereUniqueNestedInput!]
+  deleteMany: [ClassScalarWhereInput!]
+  upsert: [ClassUpsertWithWhereUniqueNestedInput!]
 }
 
 input ClassUpdateManyWithoutDayInput {
@@ -1039,15 +1530,15 @@ input ClassUpdateManyWithoutDayInput {
   upsert: [ClassUpsertWithWhereUniqueWithoutDayInput!]
 }
 
-input ClassUpdateManyWithoutInstituteInput {
-  create: [ClassCreateWithoutInstituteInput!]
+input ClassUpdateManyWithoutDepartmentInput {
+  create: [ClassCreateWithoutDepartmentInput!]
   connect: [ClassWhereUniqueInput!]
   set: [ClassWhereUniqueInput!]
   disconnect: [ClassWhereUniqueInput!]
   delete: [ClassWhereUniqueInput!]
-  update: [ClassUpdateWithWhereUniqueWithoutInstituteInput!]
+  update: [ClassUpdateWithWhereUniqueWithoutDepartmentInput!]
   deleteMany: [ClassScalarWhereInput!]
-  upsert: [ClassUpsertWithWhereUniqueWithoutInstituteInput!]
+  upsert: [ClassUpsertWithWhereUniqueWithoutDepartmentInput!]
 }
 
 input ClassUpdateManyWithoutMentorInput {
@@ -1084,48 +1575,48 @@ input ClassUpdateManyWithoutSubjectInput {
 }
 
 input ClassUpdateWithoutDayDataInput {
-  institute: InstituteUpdateOneRequiredWithoutClassesInput
   semester: SemesterUpdateOneRequiredWithoutClassesInput
   period: PeriodUpdateOneRequiredInput
   mentor: TeacherUpdateOneRequiredWithoutClassesInput
-  department: DepartmentUpdateOneRequiredInput
+  department: DepartmentUpdateOneRequiredWithoutClassesInput
   subject: BookUpdateOneRequiredWithoutClassesInput
 }
 
-input ClassUpdateWithoutInstituteDataInput {
+input ClassUpdateWithoutDepartmentDataInput {
   day: DayInWeekUpdateOneRequiredWithoutClassesInput
   semester: SemesterUpdateOneRequiredWithoutClassesInput
   period: PeriodUpdateOneRequiredInput
   mentor: TeacherUpdateOneRequiredWithoutClassesInput
-  department: DepartmentUpdateOneRequiredInput
   subject: BookUpdateOneRequiredWithoutClassesInput
 }
 
 input ClassUpdateWithoutMentorDataInput {
   day: DayInWeekUpdateOneRequiredWithoutClassesInput
-  institute: InstituteUpdateOneRequiredWithoutClassesInput
   semester: SemesterUpdateOneRequiredWithoutClassesInput
   period: PeriodUpdateOneRequiredInput
-  department: DepartmentUpdateOneRequiredInput
+  department: DepartmentUpdateOneRequiredWithoutClassesInput
   subject: BookUpdateOneRequiredWithoutClassesInput
 }
 
 input ClassUpdateWithoutSemesterDataInput {
   day: DayInWeekUpdateOneRequiredWithoutClassesInput
-  institute: InstituteUpdateOneRequiredWithoutClassesInput
   period: PeriodUpdateOneRequiredInput
   mentor: TeacherUpdateOneRequiredWithoutClassesInput
-  department: DepartmentUpdateOneRequiredInput
+  department: DepartmentUpdateOneRequiredWithoutClassesInput
   subject: BookUpdateOneRequiredWithoutClassesInput
 }
 
 input ClassUpdateWithoutSubjectDataInput {
   day: DayInWeekUpdateOneRequiredWithoutClassesInput
-  institute: InstituteUpdateOneRequiredWithoutClassesInput
   semester: SemesterUpdateOneRequiredWithoutClassesInput
   period: PeriodUpdateOneRequiredInput
   mentor: TeacherUpdateOneRequiredWithoutClassesInput
-  department: DepartmentUpdateOneRequiredInput
+  department: DepartmentUpdateOneRequiredWithoutClassesInput
+}
+
+input ClassUpdateWithWhereUniqueNestedInput {
+  where: ClassWhereUniqueInput!
+  data: ClassUpdateDataInput!
 }
 
 input ClassUpdateWithWhereUniqueWithoutDayInput {
@@ -1133,9 +1624,9 @@ input ClassUpdateWithWhereUniqueWithoutDayInput {
   data: ClassUpdateWithoutDayDataInput!
 }
 
-input ClassUpdateWithWhereUniqueWithoutInstituteInput {
+input ClassUpdateWithWhereUniqueWithoutDepartmentInput {
   where: ClassWhereUniqueInput!
-  data: ClassUpdateWithoutInstituteDataInput!
+  data: ClassUpdateWithoutDepartmentDataInput!
 }
 
 input ClassUpdateWithWhereUniqueWithoutMentorInput {
@@ -1153,16 +1644,22 @@ input ClassUpdateWithWhereUniqueWithoutSubjectInput {
   data: ClassUpdateWithoutSubjectDataInput!
 }
 
+input ClassUpsertWithWhereUniqueNestedInput {
+  where: ClassWhereUniqueInput!
+  update: ClassUpdateDataInput!
+  create: ClassCreateInput!
+}
+
 input ClassUpsertWithWhereUniqueWithoutDayInput {
   where: ClassWhereUniqueInput!
   update: ClassUpdateWithoutDayDataInput!
   create: ClassCreateWithoutDayInput!
 }
 
-input ClassUpsertWithWhereUniqueWithoutInstituteInput {
+input ClassUpsertWithWhereUniqueWithoutDepartmentInput {
   where: ClassWhereUniqueInput!
-  update: ClassUpdateWithoutInstituteDataInput!
-  create: ClassCreateWithoutInstituteInput!
+  update: ClassUpdateWithoutDepartmentDataInput!
+  create: ClassCreateWithoutDepartmentInput!
 }
 
 input ClassUpsertWithWhereUniqueWithoutMentorInput {
@@ -1233,7 +1730,6 @@ input ClassWhereInput {
   """All values not ending with the given string."""
   id_not_ends_with: ID
   day: DayInWeekWhereInput
-  institute: InstituteWhereInput
   semester: SemesterWhereInput
   period: PeriodWhereInput
   mentor: TeacherWhereInput
@@ -1613,11 +2109,11 @@ enum DayTypes {
 type Department implements Node {
   id: ID!
   name: String!
-  institute: Institute!
   students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student!]
   semesters(where: SemesterWhereInput, orderBy: SemesterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Semester!]
   bookLists(where: BookListWhereInput, orderBy: BookListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BookList!]
   routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine!]
+  classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class!]
 }
 
 """A connection to a list of items."""
@@ -1633,30 +2129,25 @@ type DepartmentConnection {
 input DepartmentCreateInput {
   id: ID
   name: String!
-  institute: InstituteCreateOneWithoutDepartmentsInput!
   students: StudentCreateManyWithoutDepartmentInput
-  semesters: SemesterCreateManyWithoutDepartmentsInput
+  semesters: SemesterCreateManyInput
   bookLists: BookListCreateManyWithoutDepartmentInput
   routines: RoutineCreateManyWithoutDepartmentInput
+  classes: ClassCreateManyWithoutDepartmentInput
 }
 
-input DepartmentCreateManyWithoutInstituteInput {
-  create: [DepartmentCreateWithoutInstituteInput!]
+input DepartmentCreateManyInput {
+  create: [DepartmentCreateInput!]
   connect: [DepartmentWhereUniqueInput!]
-}
-
-input DepartmentCreateManyWithoutSemestersInput {
-  create: [DepartmentCreateWithoutSemestersInput!]
-  connect: [DepartmentWhereUniqueInput!]
-}
-
-input DepartmentCreateOneInput {
-  create: DepartmentCreateInput
-  connect: DepartmentWhereUniqueInput
 }
 
 input DepartmentCreateOneWithoutBookListsInput {
   create: DepartmentCreateWithoutBookListsInput
+  connect: DepartmentWhereUniqueInput
+}
+
+input DepartmentCreateOneWithoutClassesInput {
+  create: DepartmentCreateWithoutClassesInput
   connect: DepartmentWhereUniqueInput
 }
 
@@ -1673,17 +2164,17 @@ input DepartmentCreateOneWithoutStudentsInput {
 input DepartmentCreateWithoutBookListsInput {
   id: ID
   name: String!
-  institute: InstituteCreateOneWithoutDepartmentsInput!
   students: StudentCreateManyWithoutDepartmentInput
-  semesters: SemesterCreateManyWithoutDepartmentsInput
+  semesters: SemesterCreateManyInput
   routines: RoutineCreateManyWithoutDepartmentInput
+  classes: ClassCreateManyWithoutDepartmentInput
 }
 
-input DepartmentCreateWithoutInstituteInput {
+input DepartmentCreateWithoutClassesInput {
   id: ID
   name: String!
   students: StudentCreateManyWithoutDepartmentInput
-  semesters: SemesterCreateManyWithoutDepartmentsInput
+  semesters: SemesterCreateManyInput
   bookLists: BookListCreateManyWithoutDepartmentInput
   routines: RoutineCreateManyWithoutDepartmentInput
 }
@@ -1691,28 +2182,19 @@ input DepartmentCreateWithoutInstituteInput {
 input DepartmentCreateWithoutRoutinesInput {
   id: ID
   name: String!
-  institute: InstituteCreateOneWithoutDepartmentsInput!
   students: StudentCreateManyWithoutDepartmentInput
-  semesters: SemesterCreateManyWithoutDepartmentsInput
+  semesters: SemesterCreateManyInput
   bookLists: BookListCreateManyWithoutDepartmentInput
-}
-
-input DepartmentCreateWithoutSemestersInput {
-  id: ID
-  name: String!
-  institute: InstituteCreateOneWithoutDepartmentsInput!
-  students: StudentCreateManyWithoutDepartmentInput
-  bookLists: BookListCreateManyWithoutDepartmentInput
-  routines: RoutineCreateManyWithoutDepartmentInput
+  classes: ClassCreateManyWithoutDepartmentInput
 }
 
 input DepartmentCreateWithoutStudentsInput {
   id: ID
   name: String!
-  institute: InstituteCreateOneWithoutDepartmentsInput!
-  semesters: SemesterCreateManyWithoutDepartmentsInput
+  semesters: SemesterCreateManyInput
   bookLists: BookListCreateManyWithoutDepartmentInput
   routines: RoutineCreateManyWithoutDepartmentInput
+  classes: ClassCreateManyWithoutDepartmentInput
 }
 
 """An edge in a connection."""
@@ -1866,52 +2348,40 @@ input DepartmentSubscriptionWhereInput {
 
 input DepartmentUpdateDataInput {
   name: String
-  institute: InstituteUpdateOneRequiredWithoutDepartmentsInput
   students: StudentUpdateManyWithoutDepartmentInput
-  semesters: SemesterUpdateManyWithoutDepartmentsInput
+  semesters: SemesterUpdateManyInput
   bookLists: BookListUpdateManyWithoutDepartmentInput
   routines: RoutineUpdateManyWithoutDepartmentInput
+  classes: ClassUpdateManyWithoutDepartmentInput
 }
 
 input DepartmentUpdateInput {
   name: String
-  institute: InstituteUpdateOneRequiredWithoutDepartmentsInput
   students: StudentUpdateManyWithoutDepartmentInput
-  semesters: SemesterUpdateManyWithoutDepartmentsInput
+  semesters: SemesterUpdateManyInput
   bookLists: BookListUpdateManyWithoutDepartmentInput
   routines: RoutineUpdateManyWithoutDepartmentInput
+  classes: ClassUpdateManyWithoutDepartmentInput
 }
 
 input DepartmentUpdateManyDataInput {
   name: String
 }
 
+input DepartmentUpdateManyInput {
+  create: [DepartmentCreateInput!]
+  connect: [DepartmentWhereUniqueInput!]
+  set: [DepartmentWhereUniqueInput!]
+  disconnect: [DepartmentWhereUniqueInput!]
+  delete: [DepartmentWhereUniqueInput!]
+  update: [DepartmentUpdateWithWhereUniqueNestedInput!]
+  updateMany: [DepartmentUpdateManyWithWhereNestedInput!]
+  deleteMany: [DepartmentScalarWhereInput!]
+  upsert: [DepartmentUpsertWithWhereUniqueNestedInput!]
+}
+
 input DepartmentUpdateManyMutationInput {
   name: String
-}
-
-input DepartmentUpdateManyWithoutInstituteInput {
-  create: [DepartmentCreateWithoutInstituteInput!]
-  connect: [DepartmentWhereUniqueInput!]
-  set: [DepartmentWhereUniqueInput!]
-  disconnect: [DepartmentWhereUniqueInput!]
-  delete: [DepartmentWhereUniqueInput!]
-  update: [DepartmentUpdateWithWhereUniqueWithoutInstituteInput!]
-  updateMany: [DepartmentUpdateManyWithWhereNestedInput!]
-  deleteMany: [DepartmentScalarWhereInput!]
-  upsert: [DepartmentUpsertWithWhereUniqueWithoutInstituteInput!]
-}
-
-input DepartmentUpdateManyWithoutSemestersInput {
-  create: [DepartmentCreateWithoutSemestersInput!]
-  connect: [DepartmentWhereUniqueInput!]
-  set: [DepartmentWhereUniqueInput!]
-  disconnect: [DepartmentWhereUniqueInput!]
-  delete: [DepartmentWhereUniqueInput!]
-  update: [DepartmentUpdateWithWhereUniqueWithoutSemestersInput!]
-  updateMany: [DepartmentUpdateManyWithWhereNestedInput!]
-  deleteMany: [DepartmentScalarWhereInput!]
-  upsert: [DepartmentUpsertWithWhereUniqueWithoutSemestersInput!]
 }
 
 input DepartmentUpdateManyWithWhereNestedInput {
@@ -1919,18 +2389,18 @@ input DepartmentUpdateManyWithWhereNestedInput {
   data: DepartmentUpdateManyDataInput!
 }
 
-input DepartmentUpdateOneRequiredInput {
-  create: DepartmentCreateInput
-  connect: DepartmentWhereUniqueInput
-  update: DepartmentUpdateDataInput
-  upsert: DepartmentUpsertNestedInput
-}
-
 input DepartmentUpdateOneRequiredWithoutBookListsInput {
   create: DepartmentCreateWithoutBookListsInput
   connect: DepartmentWhereUniqueInput
   update: DepartmentUpdateWithoutBookListsDataInput
   upsert: DepartmentUpsertWithoutBookListsInput
+}
+
+input DepartmentUpdateOneRequiredWithoutClassesInput {
+  create: DepartmentCreateWithoutClassesInput
+  connect: DepartmentWhereUniqueInput
+  update: DepartmentUpdateWithoutClassesDataInput
+  upsert: DepartmentUpsertWithoutClassesInput
 }
 
 input DepartmentUpdateOneRequiredWithoutRoutinesInput {
@@ -1949,62 +2419,49 @@ input DepartmentUpdateOneRequiredWithoutStudentsInput {
 
 input DepartmentUpdateWithoutBookListsDataInput {
   name: String
-  institute: InstituteUpdateOneRequiredWithoutDepartmentsInput
   students: StudentUpdateManyWithoutDepartmentInput
-  semesters: SemesterUpdateManyWithoutDepartmentsInput
+  semesters: SemesterUpdateManyInput
   routines: RoutineUpdateManyWithoutDepartmentInput
+  classes: ClassUpdateManyWithoutDepartmentInput
 }
 
-input DepartmentUpdateWithoutInstituteDataInput {
+input DepartmentUpdateWithoutClassesDataInput {
   name: String
   students: StudentUpdateManyWithoutDepartmentInput
-  semesters: SemesterUpdateManyWithoutDepartmentsInput
+  semesters: SemesterUpdateManyInput
   bookLists: BookListUpdateManyWithoutDepartmentInput
   routines: RoutineUpdateManyWithoutDepartmentInput
 }
 
 input DepartmentUpdateWithoutRoutinesDataInput {
   name: String
-  institute: InstituteUpdateOneRequiredWithoutDepartmentsInput
   students: StudentUpdateManyWithoutDepartmentInput
-  semesters: SemesterUpdateManyWithoutDepartmentsInput
+  semesters: SemesterUpdateManyInput
   bookLists: BookListUpdateManyWithoutDepartmentInput
-}
-
-input DepartmentUpdateWithoutSemestersDataInput {
-  name: String
-  institute: InstituteUpdateOneRequiredWithoutDepartmentsInput
-  students: StudentUpdateManyWithoutDepartmentInput
-  bookLists: BookListUpdateManyWithoutDepartmentInput
-  routines: RoutineUpdateManyWithoutDepartmentInput
+  classes: ClassUpdateManyWithoutDepartmentInput
 }
 
 input DepartmentUpdateWithoutStudentsDataInput {
   name: String
-  institute: InstituteUpdateOneRequiredWithoutDepartmentsInput
-  semesters: SemesterUpdateManyWithoutDepartmentsInput
+  semesters: SemesterUpdateManyInput
   bookLists: BookListUpdateManyWithoutDepartmentInput
   routines: RoutineUpdateManyWithoutDepartmentInput
+  classes: ClassUpdateManyWithoutDepartmentInput
 }
 
-input DepartmentUpdateWithWhereUniqueWithoutInstituteInput {
+input DepartmentUpdateWithWhereUniqueNestedInput {
   where: DepartmentWhereUniqueInput!
-  data: DepartmentUpdateWithoutInstituteDataInput!
-}
-
-input DepartmentUpdateWithWhereUniqueWithoutSemestersInput {
-  where: DepartmentWhereUniqueInput!
-  data: DepartmentUpdateWithoutSemestersDataInput!
-}
-
-input DepartmentUpsertNestedInput {
-  update: DepartmentUpdateDataInput!
-  create: DepartmentCreateInput!
+  data: DepartmentUpdateDataInput!
 }
 
 input DepartmentUpsertWithoutBookListsInput {
   update: DepartmentUpdateWithoutBookListsDataInput!
   create: DepartmentCreateWithoutBookListsInput!
+}
+
+input DepartmentUpsertWithoutClassesInput {
+  update: DepartmentUpdateWithoutClassesDataInput!
+  create: DepartmentCreateWithoutClassesInput!
 }
 
 input DepartmentUpsertWithoutRoutinesInput {
@@ -2017,16 +2474,10 @@ input DepartmentUpsertWithoutStudentsInput {
   create: DepartmentCreateWithoutStudentsInput!
 }
 
-input DepartmentUpsertWithWhereUniqueWithoutInstituteInput {
+input DepartmentUpsertWithWhereUniqueNestedInput {
   where: DepartmentWhereUniqueInput!
-  update: DepartmentUpdateWithoutInstituteDataInput!
-  create: DepartmentCreateWithoutInstituteInput!
-}
-
-input DepartmentUpsertWithWhereUniqueWithoutSemestersInput {
-  where: DepartmentWhereUniqueInput!
-  update: DepartmentUpdateWithoutSemestersDataInput!
-  create: DepartmentCreateWithoutSemestersInput!
+  update: DepartmentUpdateDataInput!
+  create: DepartmentCreateInput!
 }
 
 input DepartmentWhereInput {
@@ -2118,7 +2569,6 @@ input DepartmentWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  institute: InstituteWhereInput
   students_every: StudentWhereInput
   students_some: StudentWhereInput
   students_none: StudentWhereInput
@@ -2131,731 +2581,13 @@ input DepartmentWhereInput {
   routines_every: RoutineWhereInput
   routines_some: RoutineWhereInput
   routines_none: RoutineWhereInput
+  classes_every: ClassWhereInput
+  classes_some: ClassWhereInput
+  classes_none: ClassWhereInput
 }
 
 input DepartmentWhereUniqueInput {
   id: ID
-}
-
-type Institute implements Node {
-  id: ID!
-  name: String!
-  address: String!
-  email: String!
-  username: String!
-  password: String!
-  departments(where: DepartmentWhereInput, orderBy: DepartmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Department!]
-  students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student!]
-  sessions(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Session!]
-  teachers(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Teacher!]
-  classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class!]
-  routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine!]
-  periods(where: PeriodWhereInput, orderBy: PeriodOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Period!]
-}
-
-"""A connection to a list of items."""
-type InstituteConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [InstituteEdge]!
-  aggregate: AggregateInstitute!
-}
-
-input InstituteCreateInput {
-  id: ID
-  name: String!
-  address: String!
-  email: String!
-  username: String!
-  password: String!
-  departments: DepartmentCreateManyWithoutInstituteInput
-  students: StudentCreateManyWithoutInstituteInput
-  sessions: SessionCreateManyInput
-  teachers: TeacherCreateManyWithoutInstituteInput
-  classes: ClassCreateManyWithoutInstituteInput
-  routines: RoutineCreateManyWithoutInstituteInput
-  periods: PeriodCreateManyWithoutInstituteInput
-}
-
-input InstituteCreateOneInput {
-  create: InstituteCreateInput
-  connect: InstituteWhereUniqueInput
-}
-
-input InstituteCreateOneWithoutClassesInput {
-  create: InstituteCreateWithoutClassesInput
-  connect: InstituteWhereUniqueInput
-}
-
-input InstituteCreateOneWithoutDepartmentsInput {
-  create: InstituteCreateWithoutDepartmentsInput
-  connect: InstituteWhereUniqueInput
-}
-
-input InstituteCreateOneWithoutPeriodsInput {
-  create: InstituteCreateWithoutPeriodsInput
-  connect: InstituteWhereUniqueInput
-}
-
-input InstituteCreateOneWithoutRoutinesInput {
-  create: InstituteCreateWithoutRoutinesInput
-  connect: InstituteWhereUniqueInput
-}
-
-input InstituteCreateOneWithoutStudentsInput {
-  create: InstituteCreateWithoutStudentsInput
-  connect: InstituteWhereUniqueInput
-}
-
-input InstituteCreateOneWithoutTeachersInput {
-  create: InstituteCreateWithoutTeachersInput
-  connect: InstituteWhereUniqueInput
-}
-
-input InstituteCreateWithoutClassesInput {
-  id: ID
-  name: String!
-  address: String!
-  email: String!
-  username: String!
-  password: String!
-  departments: DepartmentCreateManyWithoutInstituteInput
-  students: StudentCreateManyWithoutInstituteInput
-  sessions: SessionCreateManyInput
-  teachers: TeacherCreateManyWithoutInstituteInput
-  routines: RoutineCreateManyWithoutInstituteInput
-  periods: PeriodCreateManyWithoutInstituteInput
-}
-
-input InstituteCreateWithoutDepartmentsInput {
-  id: ID
-  name: String!
-  address: String!
-  email: String!
-  username: String!
-  password: String!
-  students: StudentCreateManyWithoutInstituteInput
-  sessions: SessionCreateManyInput
-  teachers: TeacherCreateManyWithoutInstituteInput
-  classes: ClassCreateManyWithoutInstituteInput
-  routines: RoutineCreateManyWithoutInstituteInput
-  periods: PeriodCreateManyWithoutInstituteInput
-}
-
-input InstituteCreateWithoutPeriodsInput {
-  id: ID
-  name: String!
-  address: String!
-  email: String!
-  username: String!
-  password: String!
-  departments: DepartmentCreateManyWithoutInstituteInput
-  students: StudentCreateManyWithoutInstituteInput
-  sessions: SessionCreateManyInput
-  teachers: TeacherCreateManyWithoutInstituteInput
-  classes: ClassCreateManyWithoutInstituteInput
-  routines: RoutineCreateManyWithoutInstituteInput
-}
-
-input InstituteCreateWithoutRoutinesInput {
-  id: ID
-  name: String!
-  address: String!
-  email: String!
-  username: String!
-  password: String!
-  departments: DepartmentCreateManyWithoutInstituteInput
-  students: StudentCreateManyWithoutInstituteInput
-  sessions: SessionCreateManyInput
-  teachers: TeacherCreateManyWithoutInstituteInput
-  classes: ClassCreateManyWithoutInstituteInput
-  periods: PeriodCreateManyWithoutInstituteInput
-}
-
-input InstituteCreateWithoutStudentsInput {
-  id: ID
-  name: String!
-  address: String!
-  email: String!
-  username: String!
-  password: String!
-  departments: DepartmentCreateManyWithoutInstituteInput
-  sessions: SessionCreateManyInput
-  teachers: TeacherCreateManyWithoutInstituteInput
-  classes: ClassCreateManyWithoutInstituteInput
-  routines: RoutineCreateManyWithoutInstituteInput
-  periods: PeriodCreateManyWithoutInstituteInput
-}
-
-input InstituteCreateWithoutTeachersInput {
-  id: ID
-  name: String!
-  address: String!
-  email: String!
-  username: String!
-  password: String!
-  departments: DepartmentCreateManyWithoutInstituteInput
-  students: StudentCreateManyWithoutInstituteInput
-  sessions: SessionCreateManyInput
-  classes: ClassCreateManyWithoutInstituteInput
-  routines: RoutineCreateManyWithoutInstituteInput
-  periods: PeriodCreateManyWithoutInstituteInput
-}
-
-"""An edge in a connection."""
-type InstituteEdge {
-  """The item at the end of the edge."""
-  node: Institute!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum InstituteOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  address_ASC
-  address_DESC
-  email_ASC
-  email_DESC
-  username_ASC
-  username_DESC
-  password_ASC
-  password_DESC
-}
-
-type InstitutePreviousValues {
-  id: ID!
-  name: String!
-  address: String!
-  email: String!
-  username: String!
-  password: String!
-}
-
-type InstituteSubscriptionPayload {
-  mutation: MutationType!
-  node: Institute
-  updatedFields: [String!]
-  previousValues: InstitutePreviousValues
-}
-
-input InstituteSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [InstituteSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [InstituteSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [InstituteSubscriptionWhereInput!]
-
-  """The subscription event gets dispatched when it's listed in mutation_in"""
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: InstituteWhereInput
-}
-
-input InstituteUpdateDataInput {
-  name: String
-  address: String
-  email: String
-  username: String
-  password: String
-  departments: DepartmentUpdateManyWithoutInstituteInput
-  students: StudentUpdateManyWithoutInstituteInput
-  sessions: SessionUpdateManyInput
-  teachers: TeacherUpdateManyWithoutInstituteInput
-  classes: ClassUpdateManyWithoutInstituteInput
-  routines: RoutineUpdateManyWithoutInstituteInput
-  periods: PeriodUpdateManyWithoutInstituteInput
-}
-
-input InstituteUpdateInput {
-  name: String
-  address: String
-  email: String
-  username: String
-  password: String
-  departments: DepartmentUpdateManyWithoutInstituteInput
-  students: StudentUpdateManyWithoutInstituteInput
-  sessions: SessionUpdateManyInput
-  teachers: TeacherUpdateManyWithoutInstituteInput
-  classes: ClassUpdateManyWithoutInstituteInput
-  routines: RoutineUpdateManyWithoutInstituteInput
-  periods: PeriodUpdateManyWithoutInstituteInput
-}
-
-input InstituteUpdateManyMutationInput {
-  name: String
-  address: String
-  email: String
-  username: String
-  password: String
-}
-
-input InstituteUpdateOneRequiredInput {
-  create: InstituteCreateInput
-  connect: InstituteWhereUniqueInput
-  update: InstituteUpdateDataInput
-  upsert: InstituteUpsertNestedInput
-}
-
-input InstituteUpdateOneRequiredWithoutClassesInput {
-  create: InstituteCreateWithoutClassesInput
-  connect: InstituteWhereUniqueInput
-  update: InstituteUpdateWithoutClassesDataInput
-  upsert: InstituteUpsertWithoutClassesInput
-}
-
-input InstituteUpdateOneRequiredWithoutDepartmentsInput {
-  create: InstituteCreateWithoutDepartmentsInput
-  connect: InstituteWhereUniqueInput
-  update: InstituteUpdateWithoutDepartmentsDataInput
-  upsert: InstituteUpsertWithoutDepartmentsInput
-}
-
-input InstituteUpdateOneRequiredWithoutPeriodsInput {
-  create: InstituteCreateWithoutPeriodsInput
-  connect: InstituteWhereUniqueInput
-  update: InstituteUpdateWithoutPeriodsDataInput
-  upsert: InstituteUpsertWithoutPeriodsInput
-}
-
-input InstituteUpdateOneRequiredWithoutRoutinesInput {
-  create: InstituteCreateWithoutRoutinesInput
-  connect: InstituteWhereUniqueInput
-  update: InstituteUpdateWithoutRoutinesDataInput
-  upsert: InstituteUpsertWithoutRoutinesInput
-}
-
-input InstituteUpdateOneRequiredWithoutStudentsInput {
-  create: InstituteCreateWithoutStudentsInput
-  connect: InstituteWhereUniqueInput
-  update: InstituteUpdateWithoutStudentsDataInput
-  upsert: InstituteUpsertWithoutStudentsInput
-}
-
-input InstituteUpdateOneRequiredWithoutTeachersInput {
-  create: InstituteCreateWithoutTeachersInput
-  connect: InstituteWhereUniqueInput
-  update: InstituteUpdateWithoutTeachersDataInput
-  upsert: InstituteUpsertWithoutTeachersInput
-}
-
-input InstituteUpdateWithoutClassesDataInput {
-  name: String
-  address: String
-  email: String
-  username: String
-  password: String
-  departments: DepartmentUpdateManyWithoutInstituteInput
-  students: StudentUpdateManyWithoutInstituteInput
-  sessions: SessionUpdateManyInput
-  teachers: TeacherUpdateManyWithoutInstituteInput
-  routines: RoutineUpdateManyWithoutInstituteInput
-  periods: PeriodUpdateManyWithoutInstituteInput
-}
-
-input InstituteUpdateWithoutDepartmentsDataInput {
-  name: String
-  address: String
-  email: String
-  username: String
-  password: String
-  students: StudentUpdateManyWithoutInstituteInput
-  sessions: SessionUpdateManyInput
-  teachers: TeacherUpdateManyWithoutInstituteInput
-  classes: ClassUpdateManyWithoutInstituteInput
-  routines: RoutineUpdateManyWithoutInstituteInput
-  periods: PeriodUpdateManyWithoutInstituteInput
-}
-
-input InstituteUpdateWithoutPeriodsDataInput {
-  name: String
-  address: String
-  email: String
-  username: String
-  password: String
-  departments: DepartmentUpdateManyWithoutInstituteInput
-  students: StudentUpdateManyWithoutInstituteInput
-  sessions: SessionUpdateManyInput
-  teachers: TeacherUpdateManyWithoutInstituteInput
-  classes: ClassUpdateManyWithoutInstituteInput
-  routines: RoutineUpdateManyWithoutInstituteInput
-}
-
-input InstituteUpdateWithoutRoutinesDataInput {
-  name: String
-  address: String
-  email: String
-  username: String
-  password: String
-  departments: DepartmentUpdateManyWithoutInstituteInput
-  students: StudentUpdateManyWithoutInstituteInput
-  sessions: SessionUpdateManyInput
-  teachers: TeacherUpdateManyWithoutInstituteInput
-  classes: ClassUpdateManyWithoutInstituteInput
-  periods: PeriodUpdateManyWithoutInstituteInput
-}
-
-input InstituteUpdateWithoutStudentsDataInput {
-  name: String
-  address: String
-  email: String
-  username: String
-  password: String
-  departments: DepartmentUpdateManyWithoutInstituteInput
-  sessions: SessionUpdateManyInput
-  teachers: TeacherUpdateManyWithoutInstituteInput
-  classes: ClassUpdateManyWithoutInstituteInput
-  routines: RoutineUpdateManyWithoutInstituteInput
-  periods: PeriodUpdateManyWithoutInstituteInput
-}
-
-input InstituteUpdateWithoutTeachersDataInput {
-  name: String
-  address: String
-  email: String
-  username: String
-  password: String
-  departments: DepartmentUpdateManyWithoutInstituteInput
-  students: StudentUpdateManyWithoutInstituteInput
-  sessions: SessionUpdateManyInput
-  classes: ClassUpdateManyWithoutInstituteInput
-  routines: RoutineUpdateManyWithoutInstituteInput
-  periods: PeriodUpdateManyWithoutInstituteInput
-}
-
-input InstituteUpsertNestedInput {
-  update: InstituteUpdateDataInput!
-  create: InstituteCreateInput!
-}
-
-input InstituteUpsertWithoutClassesInput {
-  update: InstituteUpdateWithoutClassesDataInput!
-  create: InstituteCreateWithoutClassesInput!
-}
-
-input InstituteUpsertWithoutDepartmentsInput {
-  update: InstituteUpdateWithoutDepartmentsDataInput!
-  create: InstituteCreateWithoutDepartmentsInput!
-}
-
-input InstituteUpsertWithoutPeriodsInput {
-  update: InstituteUpdateWithoutPeriodsDataInput!
-  create: InstituteCreateWithoutPeriodsInput!
-}
-
-input InstituteUpsertWithoutRoutinesInput {
-  update: InstituteUpdateWithoutRoutinesDataInput!
-  create: InstituteCreateWithoutRoutinesInput!
-}
-
-input InstituteUpsertWithoutStudentsInput {
-  update: InstituteUpdateWithoutStudentsDataInput!
-  create: InstituteCreateWithoutStudentsInput!
-}
-
-input InstituteUpsertWithoutTeachersInput {
-  update: InstituteUpdateWithoutTeachersDataInput!
-  create: InstituteCreateWithoutTeachersInput!
-}
-
-input InstituteWhereInput {
-  """Logical AND on all given filters."""
-  AND: [InstituteWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [InstituteWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [InstituteWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  name: String
-
-  """All values that are not equal to given value."""
-  name_not: String
-
-  """All values that are contained in given list."""
-  name_in: [String!]
-
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
-
-  """All values less than the given value."""
-  name_lt: String
-
-  """All values less than or equal the given value."""
-  name_lte: String
-
-  """All values greater than the given value."""
-  name_gt: String
-
-  """All values greater than or equal the given value."""
-  name_gte: String
-
-  """All values containing the given string."""
-  name_contains: String
-
-  """All values not containing the given string."""
-  name_not_contains: String
-
-  """All values starting with the given string."""
-  name_starts_with: String
-
-  """All values not starting with the given string."""
-  name_not_starts_with: String
-
-  """All values ending with the given string."""
-  name_ends_with: String
-
-  """All values not ending with the given string."""
-  name_not_ends_with: String
-  address: String
-
-  """All values that are not equal to given value."""
-  address_not: String
-
-  """All values that are contained in given list."""
-  address_in: [String!]
-
-  """All values that are not contained in given list."""
-  address_not_in: [String!]
-
-  """All values less than the given value."""
-  address_lt: String
-
-  """All values less than or equal the given value."""
-  address_lte: String
-
-  """All values greater than the given value."""
-  address_gt: String
-
-  """All values greater than or equal the given value."""
-  address_gte: String
-
-  """All values containing the given string."""
-  address_contains: String
-
-  """All values not containing the given string."""
-  address_not_contains: String
-
-  """All values starting with the given string."""
-  address_starts_with: String
-
-  """All values not starting with the given string."""
-  address_not_starts_with: String
-
-  """All values ending with the given string."""
-  address_ends_with: String
-
-  """All values not ending with the given string."""
-  address_not_ends_with: String
-  email: String
-
-  """All values that are not equal to given value."""
-  email_not: String
-
-  """All values that are contained in given list."""
-  email_in: [String!]
-
-  """All values that are not contained in given list."""
-  email_not_in: [String!]
-
-  """All values less than the given value."""
-  email_lt: String
-
-  """All values less than or equal the given value."""
-  email_lte: String
-
-  """All values greater than the given value."""
-  email_gt: String
-
-  """All values greater than or equal the given value."""
-  email_gte: String
-
-  """All values containing the given string."""
-  email_contains: String
-
-  """All values not containing the given string."""
-  email_not_contains: String
-
-  """All values starting with the given string."""
-  email_starts_with: String
-
-  """All values not starting with the given string."""
-  email_not_starts_with: String
-
-  """All values ending with the given string."""
-  email_ends_with: String
-
-  """All values not ending with the given string."""
-  email_not_ends_with: String
-  username: String
-
-  """All values that are not equal to given value."""
-  username_not: String
-
-  """All values that are contained in given list."""
-  username_in: [String!]
-
-  """All values that are not contained in given list."""
-  username_not_in: [String!]
-
-  """All values less than the given value."""
-  username_lt: String
-
-  """All values less than or equal the given value."""
-  username_lte: String
-
-  """All values greater than the given value."""
-  username_gt: String
-
-  """All values greater than or equal the given value."""
-  username_gte: String
-
-  """All values containing the given string."""
-  username_contains: String
-
-  """All values not containing the given string."""
-  username_not_contains: String
-
-  """All values starting with the given string."""
-  username_starts_with: String
-
-  """All values not starting with the given string."""
-  username_not_starts_with: String
-
-  """All values ending with the given string."""
-  username_ends_with: String
-
-  """All values not ending with the given string."""
-  username_not_ends_with: String
-  password: String
-
-  """All values that are not equal to given value."""
-  password_not: String
-
-  """All values that are contained in given list."""
-  password_in: [String!]
-
-  """All values that are not contained in given list."""
-  password_not_in: [String!]
-
-  """All values less than the given value."""
-  password_lt: String
-
-  """All values less than or equal the given value."""
-  password_lte: String
-
-  """All values greater than the given value."""
-  password_gt: String
-
-  """All values greater than or equal the given value."""
-  password_gte: String
-
-  """All values containing the given string."""
-  password_contains: String
-
-  """All values not containing the given string."""
-  password_not_contains: String
-
-  """All values starting with the given string."""
-  password_starts_with: String
-
-  """All values not starting with the given string."""
-  password_not_starts_with: String
-
-  """All values ending with the given string."""
-  password_ends_with: String
-
-  """All values not ending with the given string."""
-  password_not_ends_with: String
-  departments_every: DepartmentWhereInput
-  departments_some: DepartmentWhereInput
-  departments_none: DepartmentWhereInput
-  students_every: StudentWhereInput
-  students_some: StudentWhereInput
-  students_none: StudentWhereInput
-  sessions_every: SessionWhereInput
-  sessions_some: SessionWhereInput
-  sessions_none: SessionWhereInput
-  teachers_every: TeacherWhereInput
-  teachers_some: TeacherWhereInput
-  teachers_none: TeacherWhereInput
-  classes_every: ClassWhereInput
-  classes_some: ClassWhereInput
-  classes_none: ClassWhereInput
-  routines_every: RoutineWhereInput
-  routines_some: RoutineWhereInput
-  routines_none: RoutineWhereInput
-  periods_every: PeriodWhereInput
-  periods_some: PeriodWhereInput
-  periods_none: PeriodWhereInput
-}
-
-input InstituteWhereUniqueInput {
-  id: ID
-  name: String
-  email: String
 }
 
 """Raw JSON value"""
@@ -2868,76 +2600,77 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createStudent(data: StudentCreateInput!): Student!
-  createSemester(data: SemesterCreateInput!): Semester!
+  createAdmin(data: AdminCreateInput!): Admin!
   createBookList(data: BookListCreateInput!): BookList!
   createBook(data: BookCreateInput!): Book!
-  createTeacher(data: TeacherCreateInput!): Teacher!
-  createRoutine(data: RoutineCreateInput!): Routine!
   createDayInWeek(data: DayInWeekCreateInput!): DayInWeek!
+  createSemester(data: SemesterCreateInput!): Semester!
+  createRoutine(data: RoutineCreateInput!): Routine!
+  createTeacher(data: TeacherCreateInput!): Teacher!
   createClass(data: ClassCreateInput!): Class!
-  createDepartment(data: DepartmentCreateInput!): Department!
-  createPeriod(data: PeriodCreateInput!): Period!
-  createInstitute(data: InstituteCreateInput!): Institute!
+  createStudent(data: StudentCreateInput!): Student!
   createSession(data: SessionCreateInput!): Session!
-  updateStudent(data: StudentUpdateInput!, where: StudentWhereUniqueInput!): Student
-  updateSemester(data: SemesterUpdateInput!, where: SemesterWhereUniqueInput!): Semester
+  createPeriod(data: PeriodCreateInput!): Period!
+  createDepartment(data: DepartmentCreateInput!): Department!
+  updateAdmin(data: AdminUpdateInput!, where: AdminWhereUniqueInput!): Admin
   updateBookList(data: BookListUpdateInput!, where: BookListWhereUniqueInput!): BookList
   updateBook(data: BookUpdateInput!, where: BookWhereUniqueInput!): Book
-  updateTeacher(data: TeacherUpdateInput!, where: TeacherWhereUniqueInput!): Teacher
-  updateRoutine(data: RoutineUpdateInput!, where: RoutineWhereUniqueInput!): Routine
   updateDayInWeek(data: DayInWeekUpdateInput!, where: DayInWeekWhereUniqueInput!): DayInWeek
+  updateSemester(data: SemesterUpdateInput!, where: SemesterWhereUniqueInput!): Semester
+  updateRoutine(data: RoutineUpdateInput!, where: RoutineWhereUniqueInput!): Routine
+  updateTeacher(data: TeacherUpdateInput!, where: TeacherWhereUniqueInput!): Teacher
   updateClass(data: ClassUpdateInput!, where: ClassWhereUniqueInput!): Class
-  updateDepartment(data: DepartmentUpdateInput!, where: DepartmentWhereUniqueInput!): Department
-  updatePeriod(data: PeriodUpdateInput!, where: PeriodWhereUniqueInput!): Period
-  updateInstitute(data: InstituteUpdateInput!, where: InstituteWhereUniqueInput!): Institute
+  updateStudent(data: StudentUpdateInput!, where: StudentWhereUniqueInput!): Student
   updateSession(data: SessionUpdateInput!, where: SessionWhereUniqueInput!): Session
-  deleteStudent(where: StudentWhereUniqueInput!): Student
-  deleteSemester(where: SemesterWhereUniqueInput!): Semester
+  updatePeriod(data: PeriodUpdateInput!, where: PeriodWhereUniqueInput!): Period
+  updateDepartment(data: DepartmentUpdateInput!, where: DepartmentWhereUniqueInput!): Department
+  deleteAdmin(where: AdminWhereUniqueInput!): Admin
   deleteBookList(where: BookListWhereUniqueInput!): BookList
   deleteBook(where: BookWhereUniqueInput!): Book
-  deleteTeacher(where: TeacherWhereUniqueInput!): Teacher
-  deleteRoutine(where: RoutineWhereUniqueInput!): Routine
   deleteDayInWeek(where: DayInWeekWhereUniqueInput!): DayInWeek
+  deleteSemester(where: SemesterWhereUniqueInput!): Semester
+  deleteRoutine(where: RoutineWhereUniqueInput!): Routine
+  deleteTeacher(where: TeacherWhereUniqueInput!): Teacher
   deleteClass(where: ClassWhereUniqueInput!): Class
-  deleteDepartment(where: DepartmentWhereUniqueInput!): Department
-  deletePeriod(where: PeriodWhereUniqueInput!): Period
-  deleteInstitute(where: InstituteWhereUniqueInput!): Institute
+  deleteStudent(where: StudentWhereUniqueInput!): Student
   deleteSession(where: SessionWhereUniqueInput!): Session
-  upsertStudent(where: StudentWhereUniqueInput!, create: StudentCreateInput!, update: StudentUpdateInput!): Student!
-  upsertSemester(where: SemesterWhereUniqueInput!, create: SemesterCreateInput!, update: SemesterUpdateInput!): Semester!
+  deletePeriod(where: PeriodWhereUniqueInput!): Period
+  deleteDepartment(where: DepartmentWhereUniqueInput!): Department
+  upsertAdmin(where: AdminWhereUniqueInput!, create: AdminCreateInput!, update: AdminUpdateInput!): Admin!
   upsertBookList(where: BookListWhereUniqueInput!, create: BookListCreateInput!, update: BookListUpdateInput!): BookList!
   upsertBook(where: BookWhereUniqueInput!, create: BookCreateInput!, update: BookUpdateInput!): Book!
-  upsertTeacher(where: TeacherWhereUniqueInput!, create: TeacherCreateInput!, update: TeacherUpdateInput!): Teacher!
-  upsertRoutine(where: RoutineWhereUniqueInput!, create: RoutineCreateInput!, update: RoutineUpdateInput!): Routine!
   upsertDayInWeek(where: DayInWeekWhereUniqueInput!, create: DayInWeekCreateInput!, update: DayInWeekUpdateInput!): DayInWeek!
+  upsertSemester(where: SemesterWhereUniqueInput!, create: SemesterCreateInput!, update: SemesterUpdateInput!): Semester!
+  upsertRoutine(where: RoutineWhereUniqueInput!, create: RoutineCreateInput!, update: RoutineUpdateInput!): Routine!
+  upsertTeacher(where: TeacherWhereUniqueInput!, create: TeacherCreateInput!, update: TeacherUpdateInput!): Teacher!
   upsertClass(where: ClassWhereUniqueInput!, create: ClassCreateInput!, update: ClassUpdateInput!): Class!
-  upsertDepartment(where: DepartmentWhereUniqueInput!, create: DepartmentCreateInput!, update: DepartmentUpdateInput!): Department!
-  upsertPeriod(where: PeriodWhereUniqueInput!, create: PeriodCreateInput!, update: PeriodUpdateInput!): Period!
-  upsertInstitute(where: InstituteWhereUniqueInput!, create: InstituteCreateInput!, update: InstituteUpdateInput!): Institute!
+  upsertStudent(where: StudentWhereUniqueInput!, create: StudentCreateInput!, update: StudentUpdateInput!): Student!
   upsertSession(where: SessionWhereUniqueInput!, create: SessionCreateInput!, update: SessionUpdateInput!): Session!
-  updateManyStudents(data: StudentUpdateManyMutationInput!, where: StudentWhereInput): BatchPayload!
-  updateManySemesters(data: SemesterUpdateManyMutationInput!, where: SemesterWhereInput): BatchPayload!
+  upsertPeriod(where: PeriodWhereUniqueInput!, create: PeriodCreateInput!, update: PeriodUpdateInput!): Period!
+  upsertDepartment(where: DepartmentWhereUniqueInput!, create: DepartmentCreateInput!, update: DepartmentUpdateInput!): Department!
+  updateManyAdmins(data: AdminUpdateManyMutationInput!, where: AdminWhereInput): BatchPayload!
+  updateManyBookLists(data: BookListUpdateManyMutationInput!, where: BookListWhereInput): BatchPayload!
   updateManyBooks(data: BookUpdateManyMutationInput!, where: BookWhereInput): BatchPayload!
-  updateManyTeachers(data: TeacherUpdateManyMutationInput!, where: TeacherWhereInput): BatchPayload!
-  updateManyRoutines(data: RoutineUpdateManyMutationInput!, where: RoutineWhereInput): BatchPayload!
   updateManyDayInWeeks(data: DayInWeekUpdateManyMutationInput!, where: DayInWeekWhereInput): BatchPayload!
-  updateManyDepartments(data: DepartmentUpdateManyMutationInput!, where: DepartmentWhereInput): BatchPayload!
-  updateManyPeriods(data: PeriodUpdateManyMutationInput!, where: PeriodWhereInput): BatchPayload!
-  updateManyInstitutes(data: InstituteUpdateManyMutationInput!, where: InstituteWhereInput): BatchPayload!
+  updateManySemesters(data: SemesterUpdateManyMutationInput!, where: SemesterWhereInput): BatchPayload!
+  updateManyRoutines(data: RoutineUpdateManyMutationInput!, where: RoutineWhereInput): BatchPayload!
+  updateManyTeachers(data: TeacherUpdateManyMutationInput!, where: TeacherWhereInput): BatchPayload!
+  updateManyStudents(data: StudentUpdateManyMutationInput!, where: StudentWhereInput): BatchPayload!
   updateManySessions(data: SessionUpdateManyMutationInput!, where: SessionWhereInput): BatchPayload!
-  deleteManyStudents(where: StudentWhereInput): BatchPayload!
-  deleteManySemesters(where: SemesterWhereInput): BatchPayload!
+  updateManyPeriods(data: PeriodUpdateManyMutationInput!, where: PeriodWhereInput): BatchPayload!
+  updateManyDepartments(data: DepartmentUpdateManyMutationInput!, where: DepartmentWhereInput): BatchPayload!
+  deleteManyAdmins(where: AdminWhereInput): BatchPayload!
   deleteManyBookLists(where: BookListWhereInput): BatchPayload!
   deleteManyBooks(where: BookWhereInput): BatchPayload!
-  deleteManyTeachers(where: TeacherWhereInput): BatchPayload!
-  deleteManyRoutines(where: RoutineWhereInput): BatchPayload!
   deleteManyDayInWeeks(where: DayInWeekWhereInput): BatchPayload!
+  deleteManySemesters(where: SemesterWhereInput): BatchPayload!
+  deleteManyRoutines(where: RoutineWhereInput): BatchPayload!
+  deleteManyTeachers(where: TeacherWhereInput): BatchPayload!
   deleteManyClasses(where: ClassWhereInput): BatchPayload!
-  deleteManyDepartments(where: DepartmentWhereInput): BatchPayload!
-  deleteManyPeriods(where: PeriodWhereInput): BatchPayload!
-  deleteManyInstitutes(where: InstituteWhereInput): BatchPayload!
+  deleteManyStudents(where: StudentWhereInput): BatchPayload!
   deleteManySessions(where: SessionWhereInput): BatchPayload!
+  deleteManyPeriods(where: PeriodWhereInput): BatchPayload!
+  deleteManyDepartments(where: DepartmentWhereInput): BatchPayload!
   executeRaw(database: PrismaDatabase, query: String!): Json!
 }
 
@@ -2970,7 +2703,6 @@ type PageInfo {
 
 type Period implements Node {
   id: ID!
-  institute: Institute!
   time: Int!
   startedAt: String!
   endAt: String!
@@ -2991,24 +2723,16 @@ input PeriodCreateInput {
   time: Int!
   startedAt: String!
   endAt: String!
-  institute: InstituteCreateOneWithoutPeriodsInput!
 }
 
-input PeriodCreateManyWithoutInstituteInput {
-  create: [PeriodCreateWithoutInstituteInput!]
+input PeriodCreateManyInput {
+  create: [PeriodCreateInput!]
   connect: [PeriodWhereUniqueInput!]
 }
 
 input PeriodCreateOneInput {
   create: PeriodCreateInput
   connect: PeriodWhereUniqueInput
-}
-
-input PeriodCreateWithoutInstituteInput {
-  id: ID
-  time: Int!
-  startedAt: String!
-  endAt: String!
 }
 
 """An edge in a connection."""
@@ -3232,14 +2956,12 @@ input PeriodUpdateDataInput {
   time: Int
   startedAt: String
   endAt: String
-  institute: InstituteUpdateOneRequiredWithoutPeriodsInput
 }
 
 input PeriodUpdateInput {
   time: Int
   startedAt: String
   endAt: String
-  institute: InstituteUpdateOneRequiredWithoutPeriodsInput
 }
 
 input PeriodUpdateManyDataInput {
@@ -3248,22 +2970,22 @@ input PeriodUpdateManyDataInput {
   endAt: String
 }
 
-input PeriodUpdateManyMutationInput {
-  time: Int
-  startedAt: String
-  endAt: String
-}
-
-input PeriodUpdateManyWithoutInstituteInput {
-  create: [PeriodCreateWithoutInstituteInput!]
+input PeriodUpdateManyInput {
+  create: [PeriodCreateInput!]
   connect: [PeriodWhereUniqueInput!]
   set: [PeriodWhereUniqueInput!]
   disconnect: [PeriodWhereUniqueInput!]
   delete: [PeriodWhereUniqueInput!]
-  update: [PeriodUpdateWithWhereUniqueWithoutInstituteInput!]
+  update: [PeriodUpdateWithWhereUniqueNestedInput!]
   updateMany: [PeriodUpdateManyWithWhereNestedInput!]
   deleteMany: [PeriodScalarWhereInput!]
-  upsert: [PeriodUpsertWithWhereUniqueWithoutInstituteInput!]
+  upsert: [PeriodUpsertWithWhereUniqueNestedInput!]
+}
+
+input PeriodUpdateManyMutationInput {
+  time: Int
+  startedAt: String
+  endAt: String
 }
 
 input PeriodUpdateManyWithWhereNestedInput {
@@ -3278,15 +3000,9 @@ input PeriodUpdateOneRequiredInput {
   upsert: PeriodUpsertNestedInput
 }
 
-input PeriodUpdateWithoutInstituteDataInput {
-  time: Int
-  startedAt: String
-  endAt: String
-}
-
-input PeriodUpdateWithWhereUniqueWithoutInstituteInput {
+input PeriodUpdateWithWhereUniqueNestedInput {
   where: PeriodWhereUniqueInput!
-  data: PeriodUpdateWithoutInstituteDataInput!
+  data: PeriodUpdateDataInput!
 }
 
 input PeriodUpsertNestedInput {
@@ -3294,10 +3010,10 @@ input PeriodUpsertNestedInput {
   create: PeriodCreateInput!
 }
 
-input PeriodUpsertWithWhereUniqueWithoutInstituteInput {
+input PeriodUpsertWithWhereUniqueNestedInput {
   where: PeriodWhereUniqueInput!
-  update: PeriodUpdateWithoutInstituteDataInput!
-  create: PeriodCreateWithoutInstituteInput!
+  update: PeriodUpdateDataInput!
+  create: PeriodCreateInput!
 }
 
 input PeriodWhereInput {
@@ -3451,7 +3167,6 @@ input PeriodWhereInput {
 
   """All values not ending with the given string."""
   endAt_not_ends_with: String
-  institute: InstituteWhereInput
 }
 
 input PeriodWhereUniqueInput {
@@ -3463,42 +3178,42 @@ enum PrismaDatabase {
 }
 
 type Query {
-  students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student]!
-  semesters(where: SemesterWhereInput, orderBy: SemesterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Semester]!
+  admins(where: AdminWhereInput, orderBy: AdminOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Admin]!
   bookLists(where: BookListWhereInput, orderBy: BookListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BookList]!
   books(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Book]!
-  teachers(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Teacher]!
-  routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine]!
   dayInWeeks(where: DayInWeekWhereInput, orderBy: DayInWeekOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DayInWeek]!
+  semesters(where: SemesterWhereInput, orderBy: SemesterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Semester]!
+  routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine]!
+  teachers(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Teacher]!
   classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class]!
-  departments(where: DepartmentWhereInput, orderBy: DepartmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Department]!
-  periods(where: PeriodWhereInput, orderBy: PeriodOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Period]!
-  institutes(where: InstituteWhereInput, orderBy: InstituteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Institute]!
+  students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student]!
   sessions(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Session]!
-  student(where: StudentWhereUniqueInput!): Student
-  semester(where: SemesterWhereUniqueInput!): Semester
+  periods(where: PeriodWhereInput, orderBy: PeriodOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Period]!
+  departments(where: DepartmentWhereInput, orderBy: DepartmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Department]!
+  admin(where: AdminWhereUniqueInput!): Admin
   bookList(where: BookListWhereUniqueInput!): BookList
   book(where: BookWhereUniqueInput!): Book
-  teacher(where: TeacherWhereUniqueInput!): Teacher
-  routine(where: RoutineWhereUniqueInput!): Routine
   dayInWeek(where: DayInWeekWhereUniqueInput!): DayInWeek
+  semester(where: SemesterWhereUniqueInput!): Semester
+  routine(where: RoutineWhereUniqueInput!): Routine
+  teacher(where: TeacherWhereUniqueInput!): Teacher
   class(where: ClassWhereUniqueInput!): Class
-  department(where: DepartmentWhereUniqueInput!): Department
-  period(where: PeriodWhereUniqueInput!): Period
-  institute(where: InstituteWhereUniqueInput!): Institute
+  student(where: StudentWhereUniqueInput!): Student
   session(where: SessionWhereUniqueInput!): Session
-  studentsConnection(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StudentConnection!
-  semestersConnection(where: SemesterWhereInput, orderBy: SemesterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SemesterConnection!
+  period(where: PeriodWhereUniqueInput!): Period
+  department(where: DepartmentWhereUniqueInput!): Department
+  adminsConnection(where: AdminWhereInput, orderBy: AdminOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AdminConnection!
   bookListsConnection(where: BookListWhereInput, orderBy: BookListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BookListConnection!
   booksConnection(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BookConnection!
-  teachersConnection(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeacherConnection!
-  routinesConnection(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoutineConnection!
   dayInWeeksConnection(where: DayInWeekWhereInput, orderBy: DayInWeekOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DayInWeekConnection!
+  semestersConnection(where: SemesterWhereInput, orderBy: SemesterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SemesterConnection!
+  routinesConnection(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoutineConnection!
+  teachersConnection(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeacherConnection!
   classesConnection(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ClassConnection!
-  departmentsConnection(where: DepartmentWhereInput, orderBy: DepartmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DepartmentConnection!
-  periodsConnection(where: PeriodWhereInput, orderBy: PeriodOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PeriodConnection!
-  institutesConnection(where: InstituteWhereInput, orderBy: InstituteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InstituteConnection!
+  studentsConnection(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StudentConnection!
   sessionsConnection(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SessionConnection!
+  periodsConnection(where: PeriodWhereInput, orderBy: PeriodOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PeriodConnection!
+  departmentsConnection(where: DepartmentWhereInput, orderBy: DepartmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DepartmentConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -3510,10 +3225,10 @@ type Query {
 type Routine implements Node {
   id: ID!
   title: String!
-  institute: Institute!
   session: Session!
   semester: Semester!
   department: Department!
+  shift: ShiftTypes!
   days(where: DayInWeekWhereInput, orderBy: DayInWeekOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DayInWeek!]
 }
 
@@ -3530,20 +3245,20 @@ type RoutineConnection {
 input RoutineCreateInput {
   id: ID
   title: String!
-  institute: InstituteCreateOneWithoutRoutinesInput!
+  shift: ShiftTypes!
   session: SessionCreateOneWithoutRoutinesInput!
   semester: SemesterCreateOneWithoutRoutinesInput!
   department: DepartmentCreateOneWithoutRoutinesInput!
   days: DayInWeekCreateManyWithoutRoutineInput
 }
 
-input RoutineCreateManyWithoutDepartmentInput {
-  create: [RoutineCreateWithoutDepartmentInput!]
+input RoutineCreateManyInput {
+  create: [RoutineCreateInput!]
   connect: [RoutineWhereUniqueInput!]
 }
 
-input RoutineCreateManyWithoutInstituteInput {
-  create: [RoutineCreateWithoutInstituteInput!]
+input RoutineCreateManyWithoutDepartmentInput {
+  create: [RoutineCreateWithoutDepartmentInput!]
   connect: [RoutineWhereUniqueInput!]
 }
 
@@ -3565,7 +3280,7 @@ input RoutineCreateOneWithoutDaysInput {
 input RoutineCreateWithoutDaysInput {
   id: ID
   title: String!
-  institute: InstituteCreateOneWithoutRoutinesInput!
+  shift: ShiftTypes!
   session: SessionCreateOneWithoutRoutinesInput!
   semester: SemesterCreateOneWithoutRoutinesInput!
   department: DepartmentCreateOneWithoutRoutinesInput!
@@ -3574,25 +3289,16 @@ input RoutineCreateWithoutDaysInput {
 input RoutineCreateWithoutDepartmentInput {
   id: ID
   title: String!
-  institute: InstituteCreateOneWithoutRoutinesInput!
+  shift: ShiftTypes!
   session: SessionCreateOneWithoutRoutinesInput!
   semester: SemesterCreateOneWithoutRoutinesInput!
-  days: DayInWeekCreateManyWithoutRoutineInput
-}
-
-input RoutineCreateWithoutInstituteInput {
-  id: ID
-  title: String!
-  session: SessionCreateOneWithoutRoutinesInput!
-  semester: SemesterCreateOneWithoutRoutinesInput!
-  department: DepartmentCreateOneWithoutRoutinesInput!
   days: DayInWeekCreateManyWithoutRoutineInput
 }
 
 input RoutineCreateWithoutSemesterInput {
   id: ID
   title: String!
-  institute: InstituteCreateOneWithoutRoutinesInput!
+  shift: ShiftTypes!
   session: SessionCreateOneWithoutRoutinesInput!
   department: DepartmentCreateOneWithoutRoutinesInput!
   days: DayInWeekCreateManyWithoutRoutineInput
@@ -3601,7 +3307,7 @@ input RoutineCreateWithoutSemesterInput {
 input RoutineCreateWithoutSessionInput {
   id: ID
   title: String!
-  institute: InstituteCreateOneWithoutRoutinesInput!
+  shift: ShiftTypes!
   semester: SemesterCreateOneWithoutRoutinesInput!
   department: DepartmentCreateOneWithoutRoutinesInput!
   days: DayInWeekCreateManyWithoutRoutineInput
@@ -3621,11 +3327,14 @@ enum RoutineOrderByInput {
   id_DESC
   title_ASC
   title_DESC
+  shift_ASC
+  shift_DESC
 }
 
 type RoutinePreviousValues {
   id: ID!
   title: String!
+  shift: ShiftTypes!
 }
 
 input RoutineScalarWhereInput {
@@ -3717,6 +3426,16 @@ input RoutineScalarWhereInput {
 
   """All values not ending with the given string."""
   title_not_ends_with: String
+  shift: ShiftTypes
+
+  """All values that are not equal to given value."""
+  shift_not: ShiftTypes
+
+  """All values that are contained in given list."""
+  shift_in: [ShiftTypes!]
+
+  """All values that are not contained in given list."""
+  shift_not_in: [ShiftTypes!]
 }
 
 type RoutineSubscriptionPayload {
@@ -3756,9 +3475,18 @@ input RoutineSubscriptionWhereInput {
   node: RoutineWhereInput
 }
 
+input RoutineUpdateDataInput {
+  title: String
+  shift: ShiftTypes
+  session: SessionUpdateOneRequiredWithoutRoutinesInput
+  semester: SemesterUpdateOneRequiredWithoutRoutinesInput
+  department: DepartmentUpdateOneRequiredWithoutRoutinesInput
+  days: DayInWeekUpdateManyWithoutRoutineInput
+}
+
 input RoutineUpdateInput {
   title: String
-  institute: InstituteUpdateOneRequiredWithoutRoutinesInput
+  shift: ShiftTypes
   session: SessionUpdateOneRequiredWithoutRoutinesInput
   semester: SemesterUpdateOneRequiredWithoutRoutinesInput
   department: DepartmentUpdateOneRequiredWithoutRoutinesInput
@@ -3767,10 +3495,24 @@ input RoutineUpdateInput {
 
 input RoutineUpdateManyDataInput {
   title: String
+  shift: ShiftTypes
+}
+
+input RoutineUpdateManyInput {
+  create: [RoutineCreateInput!]
+  connect: [RoutineWhereUniqueInput!]
+  set: [RoutineWhereUniqueInput!]
+  disconnect: [RoutineWhereUniqueInput!]
+  delete: [RoutineWhereUniqueInput!]
+  update: [RoutineUpdateWithWhereUniqueNestedInput!]
+  updateMany: [RoutineUpdateManyWithWhereNestedInput!]
+  deleteMany: [RoutineScalarWhereInput!]
+  upsert: [RoutineUpsertWithWhereUniqueNestedInput!]
 }
 
 input RoutineUpdateManyMutationInput {
   title: String
+  shift: ShiftTypes
 }
 
 input RoutineUpdateManyWithoutDepartmentInput {
@@ -3783,18 +3525,6 @@ input RoutineUpdateManyWithoutDepartmentInput {
   updateMany: [RoutineUpdateManyWithWhereNestedInput!]
   deleteMany: [RoutineScalarWhereInput!]
   upsert: [RoutineUpsertWithWhereUniqueWithoutDepartmentInput!]
-}
-
-input RoutineUpdateManyWithoutInstituteInput {
-  create: [RoutineCreateWithoutInstituteInput!]
-  connect: [RoutineWhereUniqueInput!]
-  set: [RoutineWhereUniqueInput!]
-  disconnect: [RoutineWhereUniqueInput!]
-  delete: [RoutineWhereUniqueInput!]
-  update: [RoutineUpdateWithWhereUniqueWithoutInstituteInput!]
-  updateMany: [RoutineUpdateManyWithWhereNestedInput!]
-  deleteMany: [RoutineScalarWhereInput!]
-  upsert: [RoutineUpsertWithWhereUniqueWithoutInstituteInput!]
 }
 
 input RoutineUpdateManyWithoutSemesterInput {
@@ -3835,7 +3565,7 @@ input RoutineUpdateOneRequiredWithoutDaysInput {
 
 input RoutineUpdateWithoutDaysDataInput {
   title: String
-  institute: InstituteUpdateOneRequiredWithoutRoutinesInput
+  shift: ShiftTypes
   session: SessionUpdateOneRequiredWithoutRoutinesInput
   semester: SemesterUpdateOneRequiredWithoutRoutinesInput
   department: DepartmentUpdateOneRequiredWithoutRoutinesInput
@@ -3843,23 +3573,15 @@ input RoutineUpdateWithoutDaysDataInput {
 
 input RoutineUpdateWithoutDepartmentDataInput {
   title: String
-  institute: InstituteUpdateOneRequiredWithoutRoutinesInput
+  shift: ShiftTypes
   session: SessionUpdateOneRequiredWithoutRoutinesInput
   semester: SemesterUpdateOneRequiredWithoutRoutinesInput
-  days: DayInWeekUpdateManyWithoutRoutineInput
-}
-
-input RoutineUpdateWithoutInstituteDataInput {
-  title: String
-  session: SessionUpdateOneRequiredWithoutRoutinesInput
-  semester: SemesterUpdateOneRequiredWithoutRoutinesInput
-  department: DepartmentUpdateOneRequiredWithoutRoutinesInput
   days: DayInWeekUpdateManyWithoutRoutineInput
 }
 
 input RoutineUpdateWithoutSemesterDataInput {
   title: String
-  institute: InstituteUpdateOneRequiredWithoutRoutinesInput
+  shift: ShiftTypes
   session: SessionUpdateOneRequiredWithoutRoutinesInput
   department: DepartmentUpdateOneRequiredWithoutRoutinesInput
   days: DayInWeekUpdateManyWithoutRoutineInput
@@ -3867,20 +3589,20 @@ input RoutineUpdateWithoutSemesterDataInput {
 
 input RoutineUpdateWithoutSessionDataInput {
   title: String
-  institute: InstituteUpdateOneRequiredWithoutRoutinesInput
+  shift: ShiftTypes
   semester: SemesterUpdateOneRequiredWithoutRoutinesInput
   department: DepartmentUpdateOneRequiredWithoutRoutinesInput
   days: DayInWeekUpdateManyWithoutRoutineInput
 }
 
+input RoutineUpdateWithWhereUniqueNestedInput {
+  where: RoutineWhereUniqueInput!
+  data: RoutineUpdateDataInput!
+}
+
 input RoutineUpdateWithWhereUniqueWithoutDepartmentInput {
   where: RoutineWhereUniqueInput!
   data: RoutineUpdateWithoutDepartmentDataInput!
-}
-
-input RoutineUpdateWithWhereUniqueWithoutInstituteInput {
-  where: RoutineWhereUniqueInput!
-  data: RoutineUpdateWithoutInstituteDataInput!
 }
 
 input RoutineUpdateWithWhereUniqueWithoutSemesterInput {
@@ -3898,16 +3620,16 @@ input RoutineUpsertWithoutDaysInput {
   create: RoutineCreateWithoutDaysInput!
 }
 
+input RoutineUpsertWithWhereUniqueNestedInput {
+  where: RoutineWhereUniqueInput!
+  update: RoutineUpdateDataInput!
+  create: RoutineCreateInput!
+}
+
 input RoutineUpsertWithWhereUniqueWithoutDepartmentInput {
   where: RoutineWhereUniqueInput!
   update: RoutineUpdateWithoutDepartmentDataInput!
   create: RoutineCreateWithoutDepartmentInput!
-}
-
-input RoutineUpsertWithWhereUniqueWithoutInstituteInput {
-  where: RoutineWhereUniqueInput!
-  update: RoutineUpdateWithoutInstituteDataInput!
-  create: RoutineCreateWithoutInstituteInput!
 }
 
 input RoutineUpsertWithWhereUniqueWithoutSemesterInput {
@@ -4011,7 +3733,16 @@ input RoutineWhereInput {
 
   """All values not ending with the given string."""
   title_not_ends_with: String
-  institute: InstituteWhereInput
+  shift: ShiftTypes
+
+  """All values that are not equal to given value."""
+  shift_not: ShiftTypes
+
+  """All values that are contained in given list."""
+  shift_in: [ShiftTypes!]
+
+  """All values that are not contained in given list."""
+  shift_not_in: [ShiftTypes!]
   session: SessionWhereInput
   semester: SemesterWhereInput
   department: DepartmentWhereInput
@@ -4026,13 +3757,11 @@ input RoutineWhereUniqueInput {
 
 type Semester implements Node {
   id: ID!
-  institute: Institute!
   name: SemesterTypes!
-  departments(where: DepartmentWhereInput, orderBy: DepartmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Department!]
   students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student!]
-  bookLists(where: BookListWhereInput, orderBy: BookListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BookList!]
   routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine!]
   classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class!]
+  bookLists(where: BookListWhereInput, orderBy: BookListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BookList!]
 }
 
 """A connection to a list of items."""
@@ -4048,16 +3777,14 @@ type SemesterConnection {
 input SemesterCreateInput {
   id: ID
   name: SemesterTypes!
-  institute: InstituteCreateOneInput!
-  departments: DepartmentCreateManyWithoutSemestersInput
   students: StudentCreateManyWithoutSemesterInput
-  bookLists: BookListCreateManyWithoutSemesterInput
   routines: RoutineCreateManyWithoutSemesterInput
   classes: ClassCreateManyWithoutSemesterInput
+  bookLists: BookListCreateManyWithoutSemesterInput
 }
 
-input SemesterCreateManyWithoutDepartmentsInput {
-  create: [SemesterCreateWithoutDepartmentsInput!]
+input SemesterCreateManyInput {
+  create: [SemesterCreateInput!]
   connect: [SemesterWhereUniqueInput!]
 }
 
@@ -4084,8 +3811,6 @@ input SemesterCreateOneWithoutStudentsInput {
 input SemesterCreateWithoutBookListsInput {
   id: ID
   name: SemesterTypes!
-  institute: InstituteCreateOneInput!
-  departments: DepartmentCreateManyWithoutSemestersInput
   students: StudentCreateManyWithoutSemesterInput
   routines: RoutineCreateManyWithoutSemesterInput
   classes: ClassCreateManyWithoutSemesterInput
@@ -4094,41 +3819,25 @@ input SemesterCreateWithoutBookListsInput {
 input SemesterCreateWithoutClassesInput {
   id: ID
   name: SemesterTypes!
-  institute: InstituteCreateOneInput!
-  departments: DepartmentCreateManyWithoutSemestersInput
   students: StudentCreateManyWithoutSemesterInput
-  bookLists: BookListCreateManyWithoutSemesterInput
   routines: RoutineCreateManyWithoutSemesterInput
-}
-
-input SemesterCreateWithoutDepartmentsInput {
-  id: ID
-  name: SemesterTypes!
-  institute: InstituteCreateOneInput!
-  students: StudentCreateManyWithoutSemesterInput
   bookLists: BookListCreateManyWithoutSemesterInput
-  routines: RoutineCreateManyWithoutSemesterInput
-  classes: ClassCreateManyWithoutSemesterInput
 }
 
 input SemesterCreateWithoutRoutinesInput {
   id: ID
   name: SemesterTypes!
-  institute: InstituteCreateOneInput!
-  departments: DepartmentCreateManyWithoutSemestersInput
   students: StudentCreateManyWithoutSemesterInput
-  bookLists: BookListCreateManyWithoutSemesterInput
   classes: ClassCreateManyWithoutSemesterInput
+  bookLists: BookListCreateManyWithoutSemesterInput
 }
 
 input SemesterCreateWithoutStudentsInput {
   id: ID
   name: SemesterTypes!
-  institute: InstituteCreateOneInput!
-  departments: DepartmentCreateManyWithoutSemestersInput
-  bookLists: BookListCreateManyWithoutSemesterInput
   routines: RoutineCreateManyWithoutSemesterInput
   classes: ClassCreateManyWithoutSemesterInput
+  bookLists: BookListCreateManyWithoutSemesterInput
 }
 
 """An edge in a connection."""
@@ -4261,34 +3970,40 @@ enum SemesterTypes {
   EIGHT
 }
 
-input SemesterUpdateInput {
+input SemesterUpdateDataInput {
   name: SemesterTypes
-  institute: InstituteUpdateOneRequiredInput
-  departments: DepartmentUpdateManyWithoutSemestersInput
   students: StudentUpdateManyWithoutSemesterInput
-  bookLists: BookListUpdateManyWithoutSemesterInput
   routines: RoutineUpdateManyWithoutSemesterInput
   classes: ClassUpdateManyWithoutSemesterInput
+  bookLists: BookListUpdateManyWithoutSemesterInput
+}
+
+input SemesterUpdateInput {
+  name: SemesterTypes
+  students: StudentUpdateManyWithoutSemesterInput
+  routines: RoutineUpdateManyWithoutSemesterInput
+  classes: ClassUpdateManyWithoutSemesterInput
+  bookLists: BookListUpdateManyWithoutSemesterInput
 }
 
 input SemesterUpdateManyDataInput {
   name: SemesterTypes
 }
 
-input SemesterUpdateManyMutationInput {
-  name: SemesterTypes
-}
-
-input SemesterUpdateManyWithoutDepartmentsInput {
-  create: [SemesterCreateWithoutDepartmentsInput!]
+input SemesterUpdateManyInput {
+  create: [SemesterCreateInput!]
   connect: [SemesterWhereUniqueInput!]
   set: [SemesterWhereUniqueInput!]
   disconnect: [SemesterWhereUniqueInput!]
   delete: [SemesterWhereUniqueInput!]
-  update: [SemesterUpdateWithWhereUniqueWithoutDepartmentsInput!]
+  update: [SemesterUpdateWithWhereUniqueNestedInput!]
   updateMany: [SemesterUpdateManyWithWhereNestedInput!]
   deleteMany: [SemesterScalarWhereInput!]
-  upsert: [SemesterUpsertWithWhereUniqueWithoutDepartmentsInput!]
+  upsert: [SemesterUpsertWithWhereUniqueNestedInput!]
+}
+
+input SemesterUpdateManyMutationInput {
+  name: SemesterTypes
 }
 
 input SemesterUpdateManyWithWhereNestedInput {
@@ -4326,8 +4041,6 @@ input SemesterUpdateOneRequiredWithoutStudentsInput {
 
 input SemesterUpdateWithoutBookListsDataInput {
   name: SemesterTypes
-  institute: InstituteUpdateOneRequiredInput
-  departments: DepartmentUpdateManyWithoutSemestersInput
   students: StudentUpdateManyWithoutSemesterInput
   routines: RoutineUpdateManyWithoutSemesterInput
   classes: ClassUpdateManyWithoutSemesterInput
@@ -4335,43 +4048,28 @@ input SemesterUpdateWithoutBookListsDataInput {
 
 input SemesterUpdateWithoutClassesDataInput {
   name: SemesterTypes
-  institute: InstituteUpdateOneRequiredInput
-  departments: DepartmentUpdateManyWithoutSemestersInput
   students: StudentUpdateManyWithoutSemesterInput
-  bookLists: BookListUpdateManyWithoutSemesterInput
   routines: RoutineUpdateManyWithoutSemesterInput
-}
-
-input SemesterUpdateWithoutDepartmentsDataInput {
-  name: SemesterTypes
-  institute: InstituteUpdateOneRequiredInput
-  students: StudentUpdateManyWithoutSemesterInput
   bookLists: BookListUpdateManyWithoutSemesterInput
-  routines: RoutineUpdateManyWithoutSemesterInput
-  classes: ClassUpdateManyWithoutSemesterInput
 }
 
 input SemesterUpdateWithoutRoutinesDataInput {
   name: SemesterTypes
-  institute: InstituteUpdateOneRequiredInput
-  departments: DepartmentUpdateManyWithoutSemestersInput
   students: StudentUpdateManyWithoutSemesterInput
-  bookLists: BookListUpdateManyWithoutSemesterInput
   classes: ClassUpdateManyWithoutSemesterInput
+  bookLists: BookListUpdateManyWithoutSemesterInput
 }
 
 input SemesterUpdateWithoutStudentsDataInput {
   name: SemesterTypes
-  institute: InstituteUpdateOneRequiredInput
-  departments: DepartmentUpdateManyWithoutSemestersInput
-  bookLists: BookListUpdateManyWithoutSemesterInput
   routines: RoutineUpdateManyWithoutSemesterInput
   classes: ClassUpdateManyWithoutSemesterInput
+  bookLists: BookListUpdateManyWithoutSemesterInput
 }
 
-input SemesterUpdateWithWhereUniqueWithoutDepartmentsInput {
+input SemesterUpdateWithWhereUniqueNestedInput {
   where: SemesterWhereUniqueInput!
-  data: SemesterUpdateWithoutDepartmentsDataInput!
+  data: SemesterUpdateDataInput!
 }
 
 input SemesterUpsertWithoutBookListsInput {
@@ -4394,10 +4092,10 @@ input SemesterUpsertWithoutStudentsInput {
   create: SemesterCreateWithoutStudentsInput!
 }
 
-input SemesterUpsertWithWhereUniqueWithoutDepartmentsInput {
+input SemesterUpsertWithWhereUniqueNestedInput {
   where: SemesterWhereUniqueInput!
-  update: SemesterUpdateWithoutDepartmentsDataInput!
-  create: SemesterCreateWithoutDepartmentsInput!
+  update: SemesterUpdateDataInput!
+  create: SemesterCreateInput!
 }
 
 input SemesterWhereInput {
@@ -4459,22 +4157,18 @@ input SemesterWhereInput {
 
   """All values that are not contained in given list."""
   name_not_in: [SemesterTypes!]
-  institute: InstituteWhereInput
-  departments_every: DepartmentWhereInput
-  departments_some: DepartmentWhereInput
-  departments_none: DepartmentWhereInput
   students_every: StudentWhereInput
   students_some: StudentWhereInput
   students_none: StudentWhereInput
-  bookLists_every: BookListWhereInput
-  bookLists_some: BookListWhereInput
-  bookLists_none: BookListWhereInput
   routines_every: RoutineWhereInput
   routines_some: RoutineWhereInput
   routines_none: RoutineWhereInput
   classes_every: ClassWhereInput
   classes_some: ClassWhereInput
   classes_none: ClassWhereInput
+  bookLists_every: BookListWhereInput
+  bookLists_some: BookListWhereInput
+  bookLists_none: BookListWhereInput
 }
 
 input SemesterWhereUniqueInput {
@@ -4873,11 +4567,11 @@ enum ShiftTypes {
 
 type Student implements Node {
   id: ID!
-  institute: Institute!
   name: String!
   email: String!
   roll: Int!
   reg: Int!
+  address: String!
   session: Session!
   phone: String!
   shift: ShiftTypes!
@@ -4902,22 +4596,22 @@ input StudentCreateInput {
   email: String!
   roll: Int!
   reg: Int!
+  address: String!
   phone: String!
   shift: ShiftTypes!
   password: String!
-  institute: InstituteCreateOneWithoutStudentsInput!
   session: SessionCreateOneWithoutStudentsInput!
   department: DepartmentCreateOneWithoutStudentsInput!
   semester: SemesterCreateOneWithoutStudentsInput!
 }
 
-input StudentCreateManyWithoutDepartmentInput {
-  create: [StudentCreateWithoutDepartmentInput!]
+input StudentCreateManyInput {
+  create: [StudentCreateInput!]
   connect: [StudentWhereUniqueInput!]
 }
 
-input StudentCreateManyWithoutInstituteInput {
-  create: [StudentCreateWithoutInstituteInput!]
+input StudentCreateManyWithoutDepartmentInput {
+  create: [StudentCreateWithoutDepartmentInput!]
   connect: [StudentWhereUniqueInput!]
 }
 
@@ -4937,25 +4631,11 @@ input StudentCreateWithoutDepartmentInput {
   email: String!
   roll: Int!
   reg: Int!
-  phone: String!
-  shift: ShiftTypes!
-  password: String!
-  institute: InstituteCreateOneWithoutStudentsInput!
-  session: SessionCreateOneWithoutStudentsInput!
-  semester: SemesterCreateOneWithoutStudentsInput!
-}
-
-input StudentCreateWithoutInstituteInput {
-  id: ID
-  name: String!
-  email: String!
-  roll: Int!
-  reg: Int!
+  address: String!
   phone: String!
   shift: ShiftTypes!
   password: String!
   session: SessionCreateOneWithoutStudentsInput!
-  department: DepartmentCreateOneWithoutStudentsInput!
   semester: SemesterCreateOneWithoutStudentsInput!
 }
 
@@ -4965,10 +4645,10 @@ input StudentCreateWithoutSemesterInput {
   email: String!
   roll: Int!
   reg: Int!
+  address: String!
   phone: String!
   shift: ShiftTypes!
   password: String!
-  institute: InstituteCreateOneWithoutStudentsInput!
   session: SessionCreateOneWithoutStudentsInput!
   department: DepartmentCreateOneWithoutStudentsInput!
 }
@@ -4979,10 +4659,10 @@ input StudentCreateWithoutSessionInput {
   email: String!
   roll: Int!
   reg: Int!
+  address: String!
   phone: String!
   shift: ShiftTypes!
   password: String!
-  institute: InstituteCreateOneWithoutStudentsInput!
   department: DepartmentCreateOneWithoutStudentsInput!
   semester: SemesterCreateOneWithoutStudentsInput!
 }
@@ -5007,6 +4687,8 @@ enum StudentOrderByInput {
   roll_DESC
   reg_ASC
   reg_DESC
+  address_ASC
+  address_DESC
   phone_ASC
   phone_DESC
   shift_ASC
@@ -5021,6 +4703,7 @@ type StudentPreviousValues {
   email: String!
   roll: Int!
   reg: Int!
+  address: String!
   phone: String!
   shift: ShiftTypes!
   password: String!
@@ -5199,6 +4882,46 @@ input StudentScalarWhereInput {
 
   """All values greater than or equal the given value."""
   reg_gte: Int
+  address: String
+
+  """All values that are not equal to given value."""
+  address_not: String
+
+  """All values that are contained in given list."""
+  address_in: [String!]
+
+  """All values that are not contained in given list."""
+  address_not_in: [String!]
+
+  """All values less than the given value."""
+  address_lt: String
+
+  """All values less than or equal the given value."""
+  address_lte: String
+
+  """All values greater than the given value."""
+  address_gt: String
+
+  """All values greater than or equal the given value."""
+  address_gte: String
+
+  """All values containing the given string."""
+  address_contains: String
+
+  """All values not containing the given string."""
+  address_not_contains: String
+
+  """All values starting with the given string."""
+  address_starts_with: String
+
+  """All values not starting with the given string."""
+  address_not_starts_with: String
+
+  """All values ending with the given string."""
+  address_ends_with: String
+
+  """All values not ending with the given string."""
+  address_not_ends_with: String
   phone: String
 
   """All values that are not equal to given value."""
@@ -5328,15 +5051,29 @@ input StudentSubscriptionWhereInput {
   node: StudentWhereInput
 }
 
+input StudentUpdateDataInput {
+  name: String
+  email: String
+  roll: Int
+  reg: Int
+  address: String
+  phone: String
+  shift: ShiftTypes
+  password: String
+  session: SessionUpdateOneRequiredWithoutStudentsInput
+  department: DepartmentUpdateOneRequiredWithoutStudentsInput
+  semester: SemesterUpdateOneRequiredWithoutStudentsInput
+}
+
 input StudentUpdateInput {
   name: String
   email: String
   roll: Int
   reg: Int
+  address: String
   phone: String
   shift: ShiftTypes
   password: String
-  institute: InstituteUpdateOneRequiredWithoutStudentsInput
   session: SessionUpdateOneRequiredWithoutStudentsInput
   department: DepartmentUpdateOneRequiredWithoutStudentsInput
   semester: SemesterUpdateOneRequiredWithoutStudentsInput
@@ -5347,9 +5084,22 @@ input StudentUpdateManyDataInput {
   email: String
   roll: Int
   reg: Int
+  address: String
   phone: String
   shift: ShiftTypes
   password: String
+}
+
+input StudentUpdateManyInput {
+  create: [StudentCreateInput!]
+  connect: [StudentWhereUniqueInput!]
+  set: [StudentWhereUniqueInput!]
+  disconnect: [StudentWhereUniqueInput!]
+  delete: [StudentWhereUniqueInput!]
+  update: [StudentUpdateWithWhereUniqueNestedInput!]
+  updateMany: [StudentUpdateManyWithWhereNestedInput!]
+  deleteMany: [StudentScalarWhereInput!]
+  upsert: [StudentUpsertWithWhereUniqueNestedInput!]
 }
 
 input StudentUpdateManyMutationInput {
@@ -5357,6 +5107,7 @@ input StudentUpdateManyMutationInput {
   email: String
   roll: Int
   reg: Int
+  address: String
   phone: String
   shift: ShiftTypes
   password: String
@@ -5372,18 +5123,6 @@ input StudentUpdateManyWithoutDepartmentInput {
   updateMany: [StudentUpdateManyWithWhereNestedInput!]
   deleteMany: [StudentScalarWhereInput!]
   upsert: [StudentUpsertWithWhereUniqueWithoutDepartmentInput!]
-}
-
-input StudentUpdateManyWithoutInstituteInput {
-  create: [StudentCreateWithoutInstituteInput!]
-  connect: [StudentWhereUniqueInput!]
-  set: [StudentWhereUniqueInput!]
-  disconnect: [StudentWhereUniqueInput!]
-  delete: [StudentWhereUniqueInput!]
-  update: [StudentUpdateWithWhereUniqueWithoutInstituteInput!]
-  updateMany: [StudentUpdateManyWithWhereNestedInput!]
-  deleteMany: [StudentScalarWhereInput!]
-  upsert: [StudentUpsertWithWhereUniqueWithoutInstituteInput!]
 }
 
 input StudentUpdateManyWithoutSemesterInput {
@@ -5420,24 +5159,11 @@ input StudentUpdateWithoutDepartmentDataInput {
   email: String
   roll: Int
   reg: Int
-  phone: String
-  shift: ShiftTypes
-  password: String
-  institute: InstituteUpdateOneRequiredWithoutStudentsInput
-  session: SessionUpdateOneRequiredWithoutStudentsInput
-  semester: SemesterUpdateOneRequiredWithoutStudentsInput
-}
-
-input StudentUpdateWithoutInstituteDataInput {
-  name: String
-  email: String
-  roll: Int
-  reg: Int
+  address: String
   phone: String
   shift: ShiftTypes
   password: String
   session: SessionUpdateOneRequiredWithoutStudentsInput
-  department: DepartmentUpdateOneRequiredWithoutStudentsInput
   semester: SemesterUpdateOneRequiredWithoutStudentsInput
 }
 
@@ -5446,10 +5172,10 @@ input StudentUpdateWithoutSemesterDataInput {
   email: String
   roll: Int
   reg: Int
+  address: String
   phone: String
   shift: ShiftTypes
   password: String
-  institute: InstituteUpdateOneRequiredWithoutStudentsInput
   session: SessionUpdateOneRequiredWithoutStudentsInput
   department: DepartmentUpdateOneRequiredWithoutStudentsInput
 }
@@ -5459,22 +5185,22 @@ input StudentUpdateWithoutSessionDataInput {
   email: String
   roll: Int
   reg: Int
+  address: String
   phone: String
   shift: ShiftTypes
   password: String
-  institute: InstituteUpdateOneRequiredWithoutStudentsInput
   department: DepartmentUpdateOneRequiredWithoutStudentsInput
   semester: SemesterUpdateOneRequiredWithoutStudentsInput
+}
+
+input StudentUpdateWithWhereUniqueNestedInput {
+  where: StudentWhereUniqueInput!
+  data: StudentUpdateDataInput!
 }
 
 input StudentUpdateWithWhereUniqueWithoutDepartmentInput {
   where: StudentWhereUniqueInput!
   data: StudentUpdateWithoutDepartmentDataInput!
-}
-
-input StudentUpdateWithWhereUniqueWithoutInstituteInput {
-  where: StudentWhereUniqueInput!
-  data: StudentUpdateWithoutInstituteDataInput!
 }
 
 input StudentUpdateWithWhereUniqueWithoutSemesterInput {
@@ -5487,16 +5213,16 @@ input StudentUpdateWithWhereUniqueWithoutSessionInput {
   data: StudentUpdateWithoutSessionDataInput!
 }
 
+input StudentUpsertWithWhereUniqueNestedInput {
+  where: StudentWhereUniqueInput!
+  update: StudentUpdateDataInput!
+  create: StudentCreateInput!
+}
+
 input StudentUpsertWithWhereUniqueWithoutDepartmentInput {
   where: StudentWhereUniqueInput!
   update: StudentUpdateWithoutDepartmentDataInput!
   create: StudentCreateWithoutDepartmentInput!
-}
-
-input StudentUpsertWithWhereUniqueWithoutInstituteInput {
-  where: StudentWhereUniqueInput!
-  update: StudentUpdateWithoutInstituteDataInput!
-  create: StudentCreateWithoutInstituteInput!
 }
 
 input StudentUpsertWithWhereUniqueWithoutSemesterInput {
@@ -5684,6 +5410,46 @@ input StudentWhereInput {
 
   """All values greater than or equal the given value."""
   reg_gte: Int
+  address: String
+
+  """All values that are not equal to given value."""
+  address_not: String
+
+  """All values that are contained in given list."""
+  address_in: [String!]
+
+  """All values that are not contained in given list."""
+  address_not_in: [String!]
+
+  """All values less than the given value."""
+  address_lt: String
+
+  """All values less than or equal the given value."""
+  address_lte: String
+
+  """All values greater than the given value."""
+  address_gt: String
+
+  """All values greater than or equal the given value."""
+  address_gte: String
+
+  """All values containing the given string."""
+  address_contains: String
+
+  """All values not containing the given string."""
+  address_not_contains: String
+
+  """All values starting with the given string."""
+  address_starts_with: String
+
+  """All values not starting with the given string."""
+  address_not_starts_with: String
+
+  """All values ending with the given string."""
+  address_ends_with: String
+
+  """All values not ending with the given string."""
+  address_not_ends_with: String
   phone: String
 
   """All values that are not equal to given value."""
@@ -5774,7 +5540,6 @@ input StudentWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
-  institute: InstituteWhereInput
   session: SessionWhereInput
   department: DepartmentWhereInput
   semester: SemesterWhereInput
@@ -5788,23 +5553,22 @@ input StudentWhereUniqueInput {
 }
 
 type Subscription {
-  student(where: StudentSubscriptionWhereInput): StudentSubscriptionPayload
-  semester(where: SemesterSubscriptionWhereInput): SemesterSubscriptionPayload
+  admin(where: AdminSubscriptionWhereInput): AdminSubscriptionPayload
   bookList(where: BookListSubscriptionWhereInput): BookListSubscriptionPayload
   book(where: BookSubscriptionWhereInput): BookSubscriptionPayload
-  teacher(where: TeacherSubscriptionWhereInput): TeacherSubscriptionPayload
-  routine(where: RoutineSubscriptionWhereInput): RoutineSubscriptionPayload
   dayInWeek(where: DayInWeekSubscriptionWhereInput): DayInWeekSubscriptionPayload
+  semester(where: SemesterSubscriptionWhereInput): SemesterSubscriptionPayload
+  routine(where: RoutineSubscriptionWhereInput): RoutineSubscriptionPayload
+  teacher(where: TeacherSubscriptionWhereInput): TeacherSubscriptionPayload
   class(where: ClassSubscriptionWhereInput): ClassSubscriptionPayload
-  department(where: DepartmentSubscriptionWhereInput): DepartmentSubscriptionPayload
-  period(where: PeriodSubscriptionWhereInput): PeriodSubscriptionPayload
-  institute(where: InstituteSubscriptionWhereInput): InstituteSubscriptionPayload
+  student(where: StudentSubscriptionWhereInput): StudentSubscriptionPayload
   session(where: SessionSubscriptionWhereInput): SessionSubscriptionPayload
+  period(where: PeriodSubscriptionWhereInput): PeriodSubscriptionPayload
+  department(where: DepartmentSubscriptionWhereInput): DepartmentSubscriptionPayload
 }
 
 type Teacher implements Node {
   id: ID!
-  institute: Institute!
   name: String!
   email: String!
   address: String!
@@ -5832,12 +5596,11 @@ input TeacherCreateInput {
   position: String!
   phone: String!
   password: String!
-  institute: InstituteCreateOneWithoutTeachersInput!
   classes: ClassCreateManyWithoutMentorInput
 }
 
-input TeacherCreateManyWithoutInstituteInput {
-  create: [TeacherCreateWithoutInstituteInput!]
+input TeacherCreateManyInput {
+  create: [TeacherCreateInput!]
   connect: [TeacherWhereUniqueInput!]
 }
 
@@ -5854,18 +5617,6 @@ input TeacherCreateWithoutClassesInput {
   position: String!
   phone: String!
   password: String!
-  institute: InstituteCreateOneWithoutTeachersInput!
-}
-
-input TeacherCreateWithoutInstituteInput {
-  id: ID
-  name: String!
-  email: String!
-  address: String!
-  position: String!
-  phone: String!
-  password: String!
-  classes: ClassCreateManyWithoutMentorInput
 }
 
 """An edge in a connection."""
@@ -6232,6 +5983,16 @@ input TeacherSubscriptionWhereInput {
   node: TeacherWhereInput
 }
 
+input TeacherUpdateDataInput {
+  name: String
+  email: String
+  address: String
+  position: String
+  phone: String
+  password: String
+  classes: ClassUpdateManyWithoutMentorInput
+}
+
 input TeacherUpdateInput {
   name: String
   email: String
@@ -6239,7 +6000,6 @@ input TeacherUpdateInput {
   position: String
   phone: String
   password: String
-  institute: InstituteUpdateOneRequiredWithoutTeachersInput
   classes: ClassUpdateManyWithoutMentorInput
 }
 
@@ -6252,6 +6012,18 @@ input TeacherUpdateManyDataInput {
   password: String
 }
 
+input TeacherUpdateManyInput {
+  create: [TeacherCreateInput!]
+  connect: [TeacherWhereUniqueInput!]
+  set: [TeacherWhereUniqueInput!]
+  disconnect: [TeacherWhereUniqueInput!]
+  delete: [TeacherWhereUniqueInput!]
+  update: [TeacherUpdateWithWhereUniqueNestedInput!]
+  updateMany: [TeacherUpdateManyWithWhereNestedInput!]
+  deleteMany: [TeacherScalarWhereInput!]
+  upsert: [TeacherUpsertWithWhereUniqueNestedInput!]
+}
+
 input TeacherUpdateManyMutationInput {
   name: String
   email: String
@@ -6259,18 +6031,6 @@ input TeacherUpdateManyMutationInput {
   position: String
   phone: String
   password: String
-}
-
-input TeacherUpdateManyWithoutInstituteInput {
-  create: [TeacherCreateWithoutInstituteInput!]
-  connect: [TeacherWhereUniqueInput!]
-  set: [TeacherWhereUniqueInput!]
-  disconnect: [TeacherWhereUniqueInput!]
-  delete: [TeacherWhereUniqueInput!]
-  update: [TeacherUpdateWithWhereUniqueWithoutInstituteInput!]
-  updateMany: [TeacherUpdateManyWithWhereNestedInput!]
-  deleteMany: [TeacherScalarWhereInput!]
-  upsert: [TeacherUpsertWithWhereUniqueWithoutInstituteInput!]
 }
 
 input TeacherUpdateManyWithWhereNestedInput {
@@ -6292,22 +6052,11 @@ input TeacherUpdateWithoutClassesDataInput {
   position: String
   phone: String
   password: String
-  institute: InstituteUpdateOneRequiredWithoutTeachersInput
 }
 
-input TeacherUpdateWithoutInstituteDataInput {
-  name: String
-  email: String
-  address: String
-  position: String
-  phone: String
-  password: String
-  classes: ClassUpdateManyWithoutMentorInput
-}
-
-input TeacherUpdateWithWhereUniqueWithoutInstituteInput {
+input TeacherUpdateWithWhereUniqueNestedInput {
   where: TeacherWhereUniqueInput!
-  data: TeacherUpdateWithoutInstituteDataInput!
+  data: TeacherUpdateDataInput!
 }
 
 input TeacherUpsertWithoutClassesInput {
@@ -6315,10 +6064,10 @@ input TeacherUpsertWithoutClassesInput {
   create: TeacherCreateWithoutClassesInput!
 }
 
-input TeacherUpsertWithWhereUniqueWithoutInstituteInput {
+input TeacherUpsertWithWhereUniqueNestedInput {
   where: TeacherWhereUniqueInput!
-  update: TeacherUpdateWithoutInstituteDataInput!
-  create: TeacherCreateWithoutInstituteInput!
+  update: TeacherUpdateDataInput!
+  create: TeacherCreateInput!
 }
 
 input TeacherWhereInput {
@@ -6610,7 +6359,6 @@ input TeacherWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
-  institute: InstituteWhereInput
   classes_every: ClassWhereInput
   classes_some: ClassWhereInput
   classes_none: ClassWhereInput
@@ -6618,4 +6366,5 @@ input TeacherWhereInput {
 
 input TeacherWhereUniqueInput {
   id: ID
+  email: String
 }

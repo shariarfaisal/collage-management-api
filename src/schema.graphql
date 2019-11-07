@@ -1,42 +1,95 @@
-#import CreateInputInstitute, CreateInputDepartment, CreateInputTeacher, CreateInputStudent, CreateInputSession, CreateInputSemester, CreateInputBookList, CreateInputRoutine, CreateInputBook, CreateInputClass, CreateInputPeriod, createDayInWeek from './createInputs.graphql'
+#import CreateInputAdmin, CreateInputDepartment, CreateInputTeacher, CreateInputStudent, CreateInputSession, CreateInputSemester, CreateInputBookList, CreateInputRoutine, CreateInputBook, CreateInputClass, CreateInputPeriod, CreateInputDayInWeek,UpdateInputAdmin,UpdateInputDepartment,UpdateInputTeacher,UpdateInputStudent,UpdateInputSession,UpdateInputSemester,UpdateInputBookList,UpdateInputRoutine,UpdateInputBook,UpdateInputClass,UpdateInputPeriod,UpdateInputDayInWeek from './createInputs.graphql'
 
 
 type Query{
-  institutes: [Institute!]!
-  institute(id: ID!): Institute!
+  admins: [Admin!]!
+  admin: Admin!
   students: [Student!]!
+  student(id: ID!): Student!
   semesters: [Semester!]!
+  semester(id: ID!): Semester!
   sessions: [Session!]!
+  session(id: ID!): Session!
   books: [Book!]!
+  book(id: ID!): Book!
   teachers: [Teacher!]!
+  teacher(id: ID!): Teacher!
   routines: [Routine!]!
+  routine(id: ID!): Routine!
   dayInWeeks: [DayInWeek!]!
+  dayInWeek(id: ID!): DayInWeek!
   classes: [Class!]!
+  class(id: ID!): Class!
   departments:[Department!]!
+  department(id: ID!): Department!
   bookLists: [BookList!]!
+  bookList(id: ID!): BookList!
 }
 
 type Mutation{
-  createInstitute(data: CreateInputInstitute): Institute!
+  createAdmin(data: CreateInputAdmin): AdminAuthPayload!
+  loginAdmin(data: LoginInputAdmin): AdminAuthPayload!
   createDepartment(data: CreateInputDepartment): Department!
-  createTeacher(data: CreateInputTeacher): Teacher!
-  createStudent(data: CreateInputStudent): Student!
+  createTeacher(data: CreateInputTeacher): TeacherAuthPayload!
+  loginTeacher(data: LoginInputTeacher): TeacherAuthPayload!
+  createStudent(data: CreateInputStudent): StudentAuthPayload!
+  loginStudent(data: LoginInputStudent): StudentAuthPayload!
   createSession(data: CreateInputSession): Session!
-  createaSemester(data: CreateInputSemester): Semester!
+  createSemester(data: CreateInputSemester): Semester!
   createBookList(data: CreateInputBookList): BookList!
   createRoutine(data: CreateInputRoutine): Routine!
   createDayInWeek(data: CreateInputDayInWeek): DayInWeek!
   createBook(data: CreateInputBook): Book!
   createClass(data: CreateInputClass): Class!
   createPeriod(data: CreateInputPeriod): Period!
+
+  updateAdmin(id: ID!,data: UpdateInputAdmin): Admin!
+  updateDepartment(id: ID!,data: UpdateInputDepartment): Department!
+  updateTeacher(id: ID!,data: UpdateInputTeacher): Teacher!
+  updateStudent(id: ID!,data: UpdateInputStudent): Student!
+  updateSession(id: ID!,data: UpdateInputSession): Session!
+  updateaSemester(id: ID!,data: UpdateInputSemester): Semester!
+  updateBookList(id: ID!,data: UpdateInputBookList): BookList!
+  updateRoutine(id: ID!,data: UpdateInputRoutine): Routine!
+  updateDayInWeek(id: ID!,data: UpdateInputDayInWeek): DayInWeek!
+  updateBook(id: ID!,data: UpdateInputBook): Book!
+  updateClass(id: ID!,data: UpdateInputClass): Class!
+  updatePeriod(id: ID!,data: UpdateInputPeriod): Period!
 }
 
+type AdminAuthPayload{
+  token: String!
+  admin: Admin!
+}
 
+type TeacherAuthPayload{
+  token: String!
+  teacher: Teacher!
+}
 
-type Institute{
+type StudentAuthPayload{
+  token: String!
+  student: Student!
+}
+
+input LoginInputAdmin{
+  username: String!
+  password: String!
+}
+
+input LoginInputTeacher{
+  email: String!
+  password: String!
+}
+
+input LoginInputStudent{
+  email: String!
+  password: String!
+}
+
+type Admin{
   id: ID!
   name: String!
-  address: String!
   email: String!
   username: String!
   password: String!
@@ -57,7 +110,6 @@ enum ShiftTypes{
 type Department{
   id: ID!
   name: String!
-  institute: Institute!
   students: [Student!]!
   semesters: [Semester!]!
   bookLists: [BookList!]!
@@ -75,11 +127,11 @@ type Session{
 
 type Student{
   id: ID!
-  institute: Institute!
   name: String!
   email: String!
   roll: Int!
   reg: Int!
+  address: String!
   session: Session!
   phone: String!
   shift: ShiftTypes!
@@ -101,9 +153,7 @@ enum SemesterTypes{
 
 type Semester{
   id: ID!
-  institute: Institute!
   name: SemesterTypes!
-  departments: [Department!]!
   students: [Student!]
   bookLists: [BookList!]!
   routines: [Routine!]!
@@ -113,6 +163,7 @@ type Semester{
 type BookList{
   id: ID!
   department: Department!
+  probidan: String!
   semester: Semester!
   books:[Book!]!
 }
@@ -127,7 +178,6 @@ type Book{
 
 type Teacher{
   id: ID!
-  institute: Institute!
   name: String!
   email: String!
   address: String!
@@ -140,7 +190,7 @@ type Teacher{
 type Routine{
   id: ID!
   title: String!
-  institute: Institute!
+  shift: String!
   session: Session!
   semester: Semester!
   department: Department!
@@ -159,7 +209,6 @@ type DayInWeek{
 type Class{
   id: ID!
   day: DayInWeek!
-  institute: Institute!
   semester: Semester!
   period: Period!
   mentor: Teacher!
@@ -170,7 +219,6 @@ type Class{
 
 type Period{
   id: ID!
-  institute: Institute!
   time: Int!
   startedAt: String!
   endAt: String!
