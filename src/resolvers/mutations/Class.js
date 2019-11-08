@@ -1,5 +1,8 @@
+import getAdminId from '../../utils/getAdminId'
+
 const ClassMutation = {
   async createClass(parent,args,{ prisma,req },info){
+    const adminId = getAdminId(req)
     const { day, semester, period, mentor, department, subject } = args.data
     const cls = await prisma.query.classes({
       where:{
@@ -22,6 +25,10 @@ const ClassMutation = {
         day:{ connect:{ id: day }}
       }
     },info)
+  },
+  async deleteClass(parent,{id},{ prisma,req },info){
+    const adminId = getAdminId(req)
+    return prisma.mutation.deleteClass({ where:{ id }})
   }
 }
 

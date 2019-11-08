@@ -87,7 +87,7 @@ input UpdateInputAdmin{
   name: String
   email: String
   username: String
-  password: String!
+  password: String
 }
 
 input UpdateInputDepartment{
@@ -149,7 +149,7 @@ input UpdateInputDayInWeek{
 input UpdateInputBook{
   name: String
   code: String
-  listNo: ID!
+  bookList: ID!
 }
 
 input UpdateInputPeriod{

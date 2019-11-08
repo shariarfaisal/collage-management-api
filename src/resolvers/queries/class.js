@@ -3,7 +3,7 @@ const classQuery = {
     return prisma.query.classes(null,info)
   },
   class(parent,args,{ prisma,req },info){
-    return return prisma.query.class({where:{id: args.id}},info)
+    return prisma.query.class({where:{id: args.id}},info)
   }
 }
 

@@ -3,7 +3,7 @@ const bookList = {
     return prisma.query.bookLists(null,info)
   },
   bookList(parent,args,{ prisma,req },info){
-    return return prisma.query.bookList({where:{id: args.id}},info)
+   return prisma.query.bookList({where:{id: args.id}},info)
   }
 }
 

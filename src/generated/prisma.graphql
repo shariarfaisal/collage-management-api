@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Thu Nov 07 2019 20:55:42 GMT+0600 (+06)
+# timestamp: Fri Nov 08 2019 01:23:18 GMT+0600 (+06)
 
 type Admin implements Node {
   id: ID!
@@ -1276,7 +1276,6 @@ input BookWhereInput {
 
 input BookWhereUniqueInput {
   id: ID
-  code: String
 }
 
 type Class implements Node {
@@ -2110,7 +2109,6 @@ type Department implements Node {
   id: ID!
   name: String!
   students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student!]
-  semesters(where: SemesterWhereInput, orderBy: SemesterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Semester!]
   bookLists(where: BookListWhereInput, orderBy: BookListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BookList!]
   routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine!]
   classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class!]
@@ -2130,7 +2128,6 @@ input DepartmentCreateInput {
   id: ID
   name: String!
   students: StudentCreateManyWithoutDepartmentInput
-  semesters: SemesterCreateManyInput
   bookLists: BookListCreateManyWithoutDepartmentInput
   routines: RoutineCreateManyWithoutDepartmentInput
   classes: ClassCreateManyWithoutDepartmentInput
@@ -2165,7 +2162,6 @@ input DepartmentCreateWithoutBookListsInput {
   id: ID
   name: String!
   students: StudentCreateManyWithoutDepartmentInput
-  semesters: SemesterCreateManyInput
   routines: RoutineCreateManyWithoutDepartmentInput
   classes: ClassCreateManyWithoutDepartmentInput
 }
@@ -2174,7 +2170,6 @@ input DepartmentCreateWithoutClassesInput {
   id: ID
   name: String!
   students: StudentCreateManyWithoutDepartmentInput
-  semesters: SemesterCreateManyInput
   bookLists: BookListCreateManyWithoutDepartmentInput
   routines: RoutineCreateManyWithoutDepartmentInput
 }
@@ -2183,7 +2178,6 @@ input DepartmentCreateWithoutRoutinesInput {
   id: ID
   name: String!
   students: StudentCreateManyWithoutDepartmentInput
-  semesters: SemesterCreateManyInput
   bookLists: BookListCreateManyWithoutDepartmentInput
   classes: ClassCreateManyWithoutDepartmentInput
 }
@@ -2191,7 +2185,6 @@ input DepartmentCreateWithoutRoutinesInput {
 input DepartmentCreateWithoutStudentsInput {
   id: ID
   name: String!
-  semesters: SemesterCreateManyInput
   bookLists: BookListCreateManyWithoutDepartmentInput
   routines: RoutineCreateManyWithoutDepartmentInput
   classes: ClassCreateManyWithoutDepartmentInput
@@ -2349,7 +2342,6 @@ input DepartmentSubscriptionWhereInput {
 input DepartmentUpdateDataInput {
   name: String
   students: StudentUpdateManyWithoutDepartmentInput
-  semesters: SemesterUpdateManyInput
   bookLists: BookListUpdateManyWithoutDepartmentInput
   routines: RoutineUpdateManyWithoutDepartmentInput
   classes: ClassUpdateManyWithoutDepartmentInput
@@ -2358,7 +2350,6 @@ input DepartmentUpdateDataInput {
 input DepartmentUpdateInput {
   name: String
   students: StudentUpdateManyWithoutDepartmentInput
-  semesters: SemesterUpdateManyInput
   bookLists: BookListUpdateManyWithoutDepartmentInput
   routines: RoutineUpdateManyWithoutDepartmentInput
   classes: ClassUpdateManyWithoutDepartmentInput
@@ -2420,7 +2411,6 @@ input DepartmentUpdateOneRequiredWithoutStudentsInput {
 input DepartmentUpdateWithoutBookListsDataInput {
   name: String
   students: StudentUpdateManyWithoutDepartmentInput
-  semesters: SemesterUpdateManyInput
   routines: RoutineUpdateManyWithoutDepartmentInput
   classes: ClassUpdateManyWithoutDepartmentInput
 }
@@ -2428,7 +2418,6 @@ input DepartmentUpdateWithoutBookListsDataInput {
 input DepartmentUpdateWithoutClassesDataInput {
   name: String
   students: StudentUpdateManyWithoutDepartmentInput
-  semesters: SemesterUpdateManyInput
   bookLists: BookListUpdateManyWithoutDepartmentInput
   routines: RoutineUpdateManyWithoutDepartmentInput
 }
@@ -2436,14 +2425,12 @@ input DepartmentUpdateWithoutClassesDataInput {
 input DepartmentUpdateWithoutRoutinesDataInput {
   name: String
   students: StudentUpdateManyWithoutDepartmentInput
-  semesters: SemesterUpdateManyInput
   bookLists: BookListUpdateManyWithoutDepartmentInput
   classes: ClassUpdateManyWithoutDepartmentInput
 }
 
 input DepartmentUpdateWithoutStudentsDataInput {
   name: String
-  semesters: SemesterUpdateManyInput
   bookLists: BookListUpdateManyWithoutDepartmentInput
   routines: RoutineUpdateManyWithoutDepartmentInput
   classes: ClassUpdateManyWithoutDepartmentInput
@@ -2572,9 +2559,6 @@ input DepartmentWhereInput {
   students_every: StudentWhereInput
   students_some: StudentWhereInput
   students_none: StudentWhereInput
-  semesters_every: SemesterWhereInput
-  semesters_some: SemesterWhereInput
-  semesters_none: SemesterWhereInput
   bookLists_every: BookListWhereInput
   bookLists_some: BookListWhereInput
   bookLists_none: BookListWhereInput
@@ -2601,75 +2585,75 @@ scalar Long
 
 type Mutation {
   createAdmin(data: AdminCreateInput!): Admin!
+  createSemester(data: SemesterCreateInput!): Semester!
   createBookList(data: BookListCreateInput!): BookList!
   createBook(data: BookCreateInput!): Book!
   createDayInWeek(data: DayInWeekCreateInput!): DayInWeek!
-  createSemester(data: SemesterCreateInput!): Semester!
   createRoutine(data: RoutineCreateInput!): Routine!
   createTeacher(data: TeacherCreateInput!): Teacher!
-  createClass(data: ClassCreateInput!): Class!
-  createStudent(data: StudentCreateInput!): Student!
   createSession(data: SessionCreateInput!): Session!
+  createClass(data: ClassCreateInput!): Class!
   createPeriod(data: PeriodCreateInput!): Period!
+  createStudent(data: StudentCreateInput!): Student!
   createDepartment(data: DepartmentCreateInput!): Department!
   updateAdmin(data: AdminUpdateInput!, where: AdminWhereUniqueInput!): Admin
+  updateSemester(data: SemesterUpdateInput!, where: SemesterWhereUniqueInput!): Semester
   updateBookList(data: BookListUpdateInput!, where: BookListWhereUniqueInput!): BookList
   updateBook(data: BookUpdateInput!, where: BookWhereUniqueInput!): Book
   updateDayInWeek(data: DayInWeekUpdateInput!, where: DayInWeekWhereUniqueInput!): DayInWeek
-  updateSemester(data: SemesterUpdateInput!, where: SemesterWhereUniqueInput!): Semester
   updateRoutine(data: RoutineUpdateInput!, where: RoutineWhereUniqueInput!): Routine
   updateTeacher(data: TeacherUpdateInput!, where: TeacherWhereUniqueInput!): Teacher
-  updateClass(data: ClassUpdateInput!, where: ClassWhereUniqueInput!): Class
-  updateStudent(data: StudentUpdateInput!, where: StudentWhereUniqueInput!): Student
   updateSession(data: SessionUpdateInput!, where: SessionWhereUniqueInput!): Session
+  updateClass(data: ClassUpdateInput!, where: ClassWhereUniqueInput!): Class
   updatePeriod(data: PeriodUpdateInput!, where: PeriodWhereUniqueInput!): Period
+  updateStudent(data: StudentUpdateInput!, where: StudentWhereUniqueInput!): Student
   updateDepartment(data: DepartmentUpdateInput!, where: DepartmentWhereUniqueInput!): Department
   deleteAdmin(where: AdminWhereUniqueInput!): Admin
+  deleteSemester(where: SemesterWhereUniqueInput!): Semester
   deleteBookList(where: BookListWhereUniqueInput!): BookList
   deleteBook(where: BookWhereUniqueInput!): Book
   deleteDayInWeek(where: DayInWeekWhereUniqueInput!): DayInWeek
-  deleteSemester(where: SemesterWhereUniqueInput!): Semester
   deleteRoutine(where: RoutineWhereUniqueInput!): Routine
   deleteTeacher(where: TeacherWhereUniqueInput!): Teacher
-  deleteClass(where: ClassWhereUniqueInput!): Class
-  deleteStudent(where: StudentWhereUniqueInput!): Student
   deleteSession(where: SessionWhereUniqueInput!): Session
+  deleteClass(where: ClassWhereUniqueInput!): Class
   deletePeriod(where: PeriodWhereUniqueInput!): Period
+  deleteStudent(where: StudentWhereUniqueInput!): Student
   deleteDepartment(where: DepartmentWhereUniqueInput!): Department
   upsertAdmin(where: AdminWhereUniqueInput!, create: AdminCreateInput!, update: AdminUpdateInput!): Admin!
+  upsertSemester(where: SemesterWhereUniqueInput!, create: SemesterCreateInput!, update: SemesterUpdateInput!): Semester!
   upsertBookList(where: BookListWhereUniqueInput!, create: BookListCreateInput!, update: BookListUpdateInput!): BookList!
   upsertBook(where: BookWhereUniqueInput!, create: BookCreateInput!, update: BookUpdateInput!): Book!
   upsertDayInWeek(where: DayInWeekWhereUniqueInput!, create: DayInWeekCreateInput!, update: DayInWeekUpdateInput!): DayInWeek!
-  upsertSemester(where: SemesterWhereUniqueInput!, create: SemesterCreateInput!, update: SemesterUpdateInput!): Semester!
   upsertRoutine(where: RoutineWhereUniqueInput!, create: RoutineCreateInput!, update: RoutineUpdateInput!): Routine!
   upsertTeacher(where: TeacherWhereUniqueInput!, create: TeacherCreateInput!, update: TeacherUpdateInput!): Teacher!
-  upsertClass(where: ClassWhereUniqueInput!, create: ClassCreateInput!, update: ClassUpdateInput!): Class!
-  upsertStudent(where: StudentWhereUniqueInput!, create: StudentCreateInput!, update: StudentUpdateInput!): Student!
   upsertSession(where: SessionWhereUniqueInput!, create: SessionCreateInput!, update: SessionUpdateInput!): Session!
+  upsertClass(where: ClassWhereUniqueInput!, create: ClassCreateInput!, update: ClassUpdateInput!): Class!
   upsertPeriod(where: PeriodWhereUniqueInput!, create: PeriodCreateInput!, update: PeriodUpdateInput!): Period!
+  upsertStudent(where: StudentWhereUniqueInput!, create: StudentCreateInput!, update: StudentUpdateInput!): Student!
   upsertDepartment(where: DepartmentWhereUniqueInput!, create: DepartmentCreateInput!, update: DepartmentUpdateInput!): Department!
   updateManyAdmins(data: AdminUpdateManyMutationInput!, where: AdminWhereInput): BatchPayload!
+  updateManySemesters(data: SemesterUpdateManyMutationInput!, where: SemesterWhereInput): BatchPayload!
   updateManyBookLists(data: BookListUpdateManyMutationInput!, where: BookListWhereInput): BatchPayload!
   updateManyBooks(data: BookUpdateManyMutationInput!, where: BookWhereInput): BatchPayload!
   updateManyDayInWeeks(data: DayInWeekUpdateManyMutationInput!, where: DayInWeekWhereInput): BatchPayload!
-  updateManySemesters(data: SemesterUpdateManyMutationInput!, where: SemesterWhereInput): BatchPayload!
   updateManyRoutines(data: RoutineUpdateManyMutationInput!, where: RoutineWhereInput): BatchPayload!
   updateManyTeachers(data: TeacherUpdateManyMutationInput!, where: TeacherWhereInput): BatchPayload!
-  updateManyStudents(data: StudentUpdateManyMutationInput!, where: StudentWhereInput): BatchPayload!
   updateManySessions(data: SessionUpdateManyMutationInput!, where: SessionWhereInput): BatchPayload!
   updateManyPeriods(data: PeriodUpdateManyMutationInput!, where: PeriodWhereInput): BatchPayload!
+  updateManyStudents(data: StudentUpdateManyMutationInput!, where: StudentWhereInput): BatchPayload!
   updateManyDepartments(data: DepartmentUpdateManyMutationInput!, where: DepartmentWhereInput): BatchPayload!
   deleteManyAdmins(where: AdminWhereInput): BatchPayload!
+  deleteManySemesters(where: SemesterWhereInput): BatchPayload!
   deleteManyBookLists(where: BookListWhereInput): BatchPayload!
   deleteManyBooks(where: BookWhereInput): BatchPayload!
   deleteManyDayInWeeks(where: DayInWeekWhereInput): BatchPayload!
-  deleteManySemesters(where: SemesterWhereInput): BatchPayload!
   deleteManyRoutines(where: RoutineWhereInput): BatchPayload!
   deleteManyTeachers(where: TeacherWhereInput): BatchPayload!
-  deleteManyClasses(where: ClassWhereInput): BatchPayload!
-  deleteManyStudents(where: StudentWhereInput): BatchPayload!
   deleteManySessions(where: SessionWhereInput): BatchPayload!
+  deleteManyClasses(where: ClassWhereInput): BatchPayload!
   deleteManyPeriods(where: PeriodWhereInput): BatchPayload!
+  deleteManyStudents(where: StudentWhereInput): BatchPayload!
   deleteManyDepartments(where: DepartmentWhereInput): BatchPayload!
   executeRaw(database: PrismaDatabase, query: String!): Json!
 }
@@ -3179,40 +3163,40 @@ enum PrismaDatabase {
 
 type Query {
   admins(where: AdminWhereInput, orderBy: AdminOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Admin]!
+  semesters(where: SemesterWhereInput, orderBy: SemesterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Semester]!
   bookLists(where: BookListWhereInput, orderBy: BookListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BookList]!
   books(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Book]!
   dayInWeeks(where: DayInWeekWhereInput, orderBy: DayInWeekOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DayInWeek]!
-  semesters(where: SemesterWhereInput, orderBy: SemesterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Semester]!
   routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine]!
   teachers(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Teacher]!
-  classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class]!
-  students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student]!
   sessions(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Session]!
+  classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class]!
   periods(where: PeriodWhereInput, orderBy: PeriodOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Period]!
+  students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student]!
   departments(where: DepartmentWhereInput, orderBy: DepartmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Department]!
   admin(where: AdminWhereUniqueInput!): Admin
+  semester(where: SemesterWhereUniqueInput!): Semester
   bookList(where: BookListWhereUniqueInput!): BookList
   book(where: BookWhereUniqueInput!): Book
   dayInWeek(where: DayInWeekWhereUniqueInput!): DayInWeek
-  semester(where: SemesterWhereUniqueInput!): Semester
   routine(where: RoutineWhereUniqueInput!): Routine
   teacher(where: TeacherWhereUniqueInput!): Teacher
-  class(where: ClassWhereUniqueInput!): Class
-  student(where: StudentWhereUniqueInput!): Student
   session(where: SessionWhereUniqueInput!): Session
+  class(where: ClassWhereUniqueInput!): Class
   period(where: PeriodWhereUniqueInput!): Period
+  student(where: StudentWhereUniqueInput!): Student
   department(where: DepartmentWhereUniqueInput!): Department
   adminsConnection(where: AdminWhereInput, orderBy: AdminOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AdminConnection!
+  semestersConnection(where: SemesterWhereInput, orderBy: SemesterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SemesterConnection!
   bookListsConnection(where: BookListWhereInput, orderBy: BookListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BookListConnection!
   booksConnection(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BookConnection!
   dayInWeeksConnection(where: DayInWeekWhereInput, orderBy: DayInWeekOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DayInWeekConnection!
-  semestersConnection(where: SemesterWhereInput, orderBy: SemesterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SemesterConnection!
   routinesConnection(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoutineConnection!
   teachersConnection(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeacherConnection!
-  classesConnection(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ClassConnection!
-  studentsConnection(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StudentConnection!
   sessionsConnection(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SessionConnection!
+  classesConnection(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ClassConnection!
   periodsConnection(where: PeriodWhereInput, orderBy: PeriodOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PeriodConnection!
+  studentsConnection(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StudentConnection!
   departmentsConnection(where: DepartmentWhereInput, orderBy: DepartmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DepartmentConnection!
 
   """Fetches an object given its ID"""
@@ -3783,11 +3767,6 @@ input SemesterCreateInput {
   bookLists: BookListCreateManyWithoutSemesterInput
 }
 
-input SemesterCreateManyInput {
-  create: [SemesterCreateInput!]
-  connect: [SemesterWhereUniqueInput!]
-}
-
 input SemesterCreateOneWithoutBookListsInput {
   create: SemesterCreateWithoutBookListsInput
   connect: SemesterWhereUniqueInput
@@ -3861,67 +3840,6 @@ type SemesterPreviousValues {
   name: SemesterTypes!
 }
 
-input SemesterScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [SemesterScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [SemesterScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [SemesterScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  name: SemesterTypes
-
-  """All values that are not equal to given value."""
-  name_not: SemesterTypes
-
-  """All values that are contained in given list."""
-  name_in: [SemesterTypes!]
-
-  """All values that are not contained in given list."""
-  name_not_in: [SemesterTypes!]
-}
-
 type SemesterSubscriptionPayload {
   mutation: MutationType!
   node: Semester
@@ -3970,14 +3888,6 @@ enum SemesterTypes {
   EIGHT
 }
 
-input SemesterUpdateDataInput {
-  name: SemesterTypes
-  students: StudentUpdateManyWithoutSemesterInput
-  routines: RoutineUpdateManyWithoutSemesterInput
-  classes: ClassUpdateManyWithoutSemesterInput
-  bookLists: BookListUpdateManyWithoutSemesterInput
-}
-
 input SemesterUpdateInput {
   name: SemesterTypes
   students: StudentUpdateManyWithoutSemesterInput
@@ -3986,29 +3896,8 @@ input SemesterUpdateInput {
   bookLists: BookListUpdateManyWithoutSemesterInput
 }
 
-input SemesterUpdateManyDataInput {
-  name: SemesterTypes
-}
-
-input SemesterUpdateManyInput {
-  create: [SemesterCreateInput!]
-  connect: [SemesterWhereUniqueInput!]
-  set: [SemesterWhereUniqueInput!]
-  disconnect: [SemesterWhereUniqueInput!]
-  delete: [SemesterWhereUniqueInput!]
-  update: [SemesterUpdateWithWhereUniqueNestedInput!]
-  updateMany: [SemesterUpdateManyWithWhereNestedInput!]
-  deleteMany: [SemesterScalarWhereInput!]
-  upsert: [SemesterUpsertWithWhereUniqueNestedInput!]
-}
-
 input SemesterUpdateManyMutationInput {
   name: SemesterTypes
-}
-
-input SemesterUpdateManyWithWhereNestedInput {
-  where: SemesterScalarWhereInput!
-  data: SemesterUpdateManyDataInput!
 }
 
 input SemesterUpdateOneRequiredWithoutBookListsInput {
@@ -4067,11 +3956,6 @@ input SemesterUpdateWithoutStudentsDataInput {
   bookLists: BookListUpdateManyWithoutSemesterInput
 }
 
-input SemesterUpdateWithWhereUniqueNestedInput {
-  where: SemesterWhereUniqueInput!
-  data: SemesterUpdateDataInput!
-}
-
 input SemesterUpsertWithoutBookListsInput {
   update: SemesterUpdateWithoutBookListsDataInput!
   create: SemesterCreateWithoutBookListsInput!
@@ -4090,12 +3974,6 @@ input SemesterUpsertWithoutRoutinesInput {
 input SemesterUpsertWithoutStudentsInput {
   update: SemesterUpdateWithoutStudentsDataInput!
   create: SemesterCreateWithoutStudentsInput!
-}
-
-input SemesterUpsertWithWhereUniqueNestedInput {
-  where: SemesterWhereUniqueInput!
-  update: SemesterUpdateDataInput!
-  create: SemesterCreateInput!
 }
 
 input SemesterWhereInput {
@@ -5554,16 +5432,16 @@ input StudentWhereUniqueInput {
 
 type Subscription {
   admin(where: AdminSubscriptionWhereInput): AdminSubscriptionPayload
+  semester(where: SemesterSubscriptionWhereInput): SemesterSubscriptionPayload
   bookList(where: BookListSubscriptionWhereInput): BookListSubscriptionPayload
   book(where: BookSubscriptionWhereInput): BookSubscriptionPayload
   dayInWeek(where: DayInWeekSubscriptionWhereInput): DayInWeekSubscriptionPayload
-  semester(where: SemesterSubscriptionWhereInput): SemesterSubscriptionPayload
   routine(where: RoutineSubscriptionWhereInput): RoutineSubscriptionPayload
   teacher(where: TeacherSubscriptionWhereInput): TeacherSubscriptionPayload
-  class(where: ClassSubscriptionWhereInput): ClassSubscriptionPayload
-  student(where: StudentSubscriptionWhereInput): StudentSubscriptionPayload
   session(where: SessionSubscriptionWhereInput): SessionSubscriptionPayload
+  class(where: ClassSubscriptionWhereInput): ClassSubscriptionPayload
   period(where: PeriodSubscriptionWhereInput): PeriodSubscriptionPayload
+  student(where: StudentSubscriptionWhereInput): StudentSubscriptionPayload
   department(where: DepartmentSubscriptionWhereInput): DepartmentSubscriptionPayload
 }
 

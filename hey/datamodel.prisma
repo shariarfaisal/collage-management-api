@@ -5,13 +5,13 @@ type Admin{
   email: String! @unique
   username: String! @unique
   password: String!
-  departments: [Department!]! @relation(name: "InstituteToDepartment",onDelete: CASCADE)
-  students: [Student!]! @relation(name: "InstituteToStudent",onDelete: CASCADE)
-  sessions: [Session!]! @relation(name: "InstituteToSession",onDelete: CASCADE)
-  teachers: [Teacher!]! @relation(name: "InstituteToTeacher",onDelete: CASCADE)
-  classes: [Class!]! @relation(name: "InstituteToClass",onDelete: CASCADE)
-  routines: [Routine!]! @relation(name: "InstituteToRoutine",onDelete: CASCADE)
-  periods: [Period!]! @relation(name: "InstituteToPeriod",onDelete: CASCADE)
+  departments: [Department!]! @relation(name: "InstituteToDepartment")
+  students: [Student!]! @relation(name: "InstituteToStudent")
+  sessions: [Session!]! @relation(name: "InstituteToSession")
+  teachers: [Teacher!]! @relation(name: "InstituteToTeacher")
+  classes: [Class!]! @relation(name: "InstituteToClass")
+  routines: [Routine!]! @relation(name: "InstituteToRoutine")
+  periods: [Period!]! @relation(name: "InstituteToPeriod")
 }
 
 enum ShiftTypes{
@@ -23,7 +23,6 @@ type Department{
   id: ID! @id
   name: String!
   students: [Student!]! @relation(name: "DepartmentToStudent",onDelete: CASCADE)
-  semesters: [Semester!]! @relation(name: "DepartmentToSemester",onDelete: CASCADE)
   bookLists: [BookList!]! @relation(name: "DepartmentToBookList",onDelete: CASCADE)
   routines: [Routine!]! @relation(name: "DepartmentToRoutine",onDelete: CASCADE)
   classes: [Class!]! @relation(name: "DepartmentToClass",onDelete: CASCADE)
@@ -82,7 +81,7 @@ type BookList{
 type Book{
   id: ID! @id
   name: String!
-  code: String! @unique
+  code: String!
   bookList: BookList! @relation(name: "BookListToBook",onDelete: SET_NULL)
   classes: [Class!]! @relation(name: "BookToClass",onDelete: CASCADE)
 }
@@ -121,7 +120,7 @@ type Class{
   id: ID! @id
   day: DayInWeek! @relation(name: "DayInWeekToClass",onDelete: SET_NULL)
   semester: Semester! @relation(name: "SemesterToClass",onDelete: SET_NULL)
-  period: Period! @relation(name: "ClassToPeriod",onDelete: CASCADE)
+  period: Period! @relation(name: "ClassToPeriod",onDelete: SET_NULL)
   mentor: Teacher! @relation(name: "TeacherToClass",onDelete: SET_NULL)
   department: Department! @relation(name: "DepartmentToClass",onDelete: SET_NULL)
   subject: Book! @relation(name: "BookToClass",onDelete: SET_NULL)

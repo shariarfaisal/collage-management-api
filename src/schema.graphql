@@ -24,6 +24,8 @@ type Query{
   department(id: ID!): Department!
   bookLists: [BookList!]!
   bookList(id: ID!): BookList!
+  periods: [Period!]!
+  period(id: ID!): Period!
 }
 
 type Mutation{
@@ -43,10 +45,10 @@ type Mutation{
   createClass(data: CreateInputClass): Class!
   createPeriod(data: CreateInputPeriod): Period!
 
-  updateAdmin(id: ID!,data: UpdateInputAdmin): Admin!
+  updateAdmin(data: UpdateInputAdmin): Admin!
   updateDepartment(id: ID!,data: UpdateInputDepartment): Department!
-  updateTeacher(id: ID!,data: UpdateInputTeacher): Teacher!
-  updateStudent(id: ID!,data: UpdateInputStudent): Student!
+  updateTeacher(data: UpdateInputTeacher): Teacher!
+  updateStudent(data: UpdateInputStudent): Student!
   updateSession(id: ID!,data: UpdateInputSession): Session!
   updateaSemester(id: ID!,data: UpdateInputSemester): Semester!
   updateBookList(id: ID!,data: UpdateInputBookList): BookList!
@@ -55,6 +57,19 @@ type Mutation{
   updateBook(id: ID!,data: UpdateInputBook): Book!
   updateClass(id: ID!,data: UpdateInputClass): Class!
   updatePeriod(id: ID!,data: UpdateInputPeriod): Period!
+
+  deleteAdmin: Admin!
+  deleteDepartment(id: ID!): Department!
+  deleteTeacher: Teacher!
+  deleteStudent: Student
+  deleteSession(id: ID!): Session!
+  deleteSemester(id: ID!): Semester!
+  deleteBookList(id: ID!): BookList!
+  deleteBook(id: ID!): Book!
+  deleteRoutine(id: ID!): Routine!
+  deleteDayInWeek(id: ID!): DayInWeek!
+  deleteClass(id: ID!): Class!
+  deletePeriod(id: ID!): Period!
 }
 
 type AdminAuthPayload{
@@ -92,7 +107,6 @@ type Admin{
   name: String!
   email: String!
   username: String!
-  password: String!
   departments: [Department!]!
   students: [Student!]!
   sessions: [Session!]!
@@ -111,7 +125,6 @@ type Department{
   id: ID!
   name: String!
   students: [Student!]!
-  semesters: [Semester!]!
   bookLists: [BookList!]!
   routines: [Routine!]!
   classes: [Class!]!
@@ -183,7 +196,6 @@ type Teacher{
   address: String!
   position: String!
   phone: String!
-  password: String!
   classes: [Class!]!
 }
 

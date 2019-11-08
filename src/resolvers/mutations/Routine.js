@@ -1,5 +1,8 @@
+import getAdminId from '../../utils/getAdminId'
+
 const Routine = {
   async createRoutine(parent,args,{ prisma,req },info){
+    const adminId = getAdminId(req)
     const { title, semester, session, department, shift } = args.data
     const routine = await prisma.query.routines({
       where:{
@@ -19,6 +22,17 @@ const Routine = {
         department:{ connect:{ id: department }},
         shift
       }
+    },info)
+  },
+  async deleteRoutine(parent,{id},{ prisma,req },info){
+    const adminId = getAdminId(req)
+    return prisma.mutation.deleteRoutine({ where:{ id }},info)
+  },
+  async updateRoutine(parent,{ id, data },{ prisma,req },info){
+    const adminId = getAdminId(req)
+    return prisma.mutation.updateRoutine({
+      data,
+      where:{ id }
     },info)
   }
 }

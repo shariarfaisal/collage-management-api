@@ -1,6 +1,8 @@
+import getAdminId from '../../utils/getAdminId'
+
 const BookList = {
   async createBookList(parent,args,{ prisma,req },info){
-    const {department,semester,probidan} = args.data 
+    const {department,semester,probidan} = args.data
     const bookListExists = await prisma.query.bookLists({
       where:{
         department:{ id: department },
@@ -17,9 +19,13 @@ const BookList = {
         probidan
       }
     },info)
-
-    console.log(bookList);
     return bookList
+  },
+  async deleteBookList(parent,{id},{ prisma,req },info){
+    const adminId = getAdminId(req)
+    return prisma.mutation.deleteBookList({
+      where:{ id }
+    },info)
   }
 }
 

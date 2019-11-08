@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-
+import getAdminId from '../../utils/getAdminId'
 
 const Admin = {
   async createAdmin(parent,args,{ prisma,req },info){
@@ -39,6 +39,33 @@ const Admin = {
       token: jwt.sign({id: admin.id},'secret'),
       admin
     }
+  },
+  async updateAdmin(parent,{data},{ prisma, req },info){
+    const id = getAdminId(req)
+    const admin = await prisma.query.admin({ where:{ id } })
+    if(!admin) throw new Error("Unable to update!")
+    if(data.name && data.name !== admin.name){
+      const nameExists = await prisma.exists.Admin({ name: data.name })
+      if(nameExists) throw new Error("This name already exists!")
+    }
+    if(data.username && data.username !== admin.username){
+      const usernameExists = await prisma.exists.Admin({ username: data.username })
+      if(usernameExists) throw new Error("Username taken!")
+    }
+    if(data.email && data.email !== admin.email){
+      const emailExists = await prisma.exists.Admin({ email: data.email })
+      if(emailExists) throw new Error("Email taken!")
+    }
+    if(data.password){
+      if(data.password.length < 6) throw new Error("Password should not be less than 6 character!")
+      data.password = await bcrypt.hash(data.password,10)
+    }
+
+    return prisma.mutation.updateAdmin({ data, where:{ id } },info)
+  },
+  async deleteAdmin(parent,args,{ prisma, req },info){
+    const id = getAdminId(req)
+    return prisma.mutation.deleteAdmin({ where:{ id }},info)
   }
 
 
