@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 
 const getAdminId = (req,required=true) => {
-  const header = req.request.headers.admin
+  const header = req.request ? req.request.headers.admin : req.connection.context.admin 
 
   if(header){
     try {

@@ -6,6 +6,10 @@ input CreateInputAdmin{
   password: String!
 }
 
+input CreateInputInstitute{
+  name: String!
+}
+
 input CreateInputDepartment{
   name: String!
 }
@@ -22,8 +26,8 @@ input CreateInputTeacher{
 input CreateInputStudent{
   name: String!
   email: String!
-  roll: Int!
-  reg: Int!
+  roll: String!
+  reg: String!
   phone: String!
   shift: String!
   address: String!
@@ -82,7 +86,9 @@ input CreateInputClass{
   subject: ID!
 }
 
-
+input UpdateInputInstitute{
+  name: String!
+}
 input UpdateInputAdmin{
   name: String
   email: String
@@ -106,8 +112,8 @@ input UpdateInputTeacher{
 input UpdateInputStudent{
   name: String
   email: String
-  roll: Int
-  reg: Int
+  roll: String
+  reg: String
   phone: String
   address: String
   shift: String

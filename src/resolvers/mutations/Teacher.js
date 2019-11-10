@@ -8,7 +8,7 @@ const Teacher = {
     const { name, email, address, position, phone, password } = args.data
     const emailExists = await prisma.exists.Teacher({ email })
     if(emailExists) throw new Error("Email taken!")
-    if(password.length < 6) throw new Error("Password should be less than 6 character!")
+    if(password.length < 6) throw new Error("Password should not be less than 6 character!")
     const hashPwd = await bcrypt.hash(password,10)
 
     const teacher = await prisma.mutation.createTeacher({

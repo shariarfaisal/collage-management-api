@@ -10,6 +10,7 @@ import dayInWeek from './queries/dayInWeek'
 import book from './queries/book'
 import classQuery from './queries/class'
 import period from './queries/period'
+import info from './queries/info'
 
 
 const Query = {
@@ -23,7 +24,8 @@ const Query = {
   ...book,
   ...classQuery,
   ...period,
-  // ...teacher
+  ...teacher,
+  ...info
 }
 
 export default Query

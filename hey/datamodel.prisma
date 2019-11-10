@@ -5,13 +5,6 @@ type Admin{
   email: String! @unique
   username: String! @unique
   password: String!
-  departments: [Department!]! @relation(name: "InstituteToDepartment")
-  students: [Student!]! @relation(name: "InstituteToStudent")
-  sessions: [Session!]! @relation(name: "InstituteToSession")
-  teachers: [Teacher!]! @relation(name: "InstituteToTeacher")
-  classes: [Class!]! @relation(name: "InstituteToClass")
-  routines: [Routine!]! @relation(name: "InstituteToRoutine")
-  periods: [Period!]! @relation(name: "InstituteToPeriod")
 }
 
 enum ShiftTypes{
@@ -39,8 +32,8 @@ type Student{
   id: ID! @id
   name: String!
   email: String! @unique
-  roll: Int! @unique
-  reg: Int! @unique
+  roll: String! @unique
+  reg: String! @unique
   address: String!
   session: Session! @relation(name: "SessionToStudent",onDelete: SET_NULL)
   phone: String!

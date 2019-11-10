@@ -4,7 +4,8 @@ const Department = {
   async createDepartment(parent,args,{ prisma,req },info){
     const adminId = getAdminId(req)
     const { name } = args.data
-
+    const dep = await prisma.exists.Department({ name })
+    if(dep) throw new Error("Department already exists!")
     return prisma.mutation.createDepartment({
       data: { name }
     },info)

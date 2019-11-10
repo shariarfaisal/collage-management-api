@@ -2,6 +2,7 @@
 
 
 type Query{
+  info: Info!
   admins: [Admin!]!
   admin: Admin!
   students: [Student!]!
@@ -29,6 +30,7 @@ type Query{
 }
 
 type Mutation{
+
   createAdmin(data: CreateInputAdmin): AdminAuthPayload!
   loginAdmin(data: LoginInputAdmin): AdminAuthPayload!
   createDepartment(data: CreateInputDepartment): Department!
@@ -44,6 +46,7 @@ type Mutation{
   createBook(data: CreateInputBook): Book!
   createClass(data: CreateInputClass): Class!
   createPeriod(data: CreateInputPeriod): Period!
+
 
   updateAdmin(data: UpdateInputAdmin): Admin!
   updateDepartment(id: ID!,data: UpdateInputDepartment): Department!
@@ -71,6 +74,96 @@ type Mutation{
   deleteClass(id: ID!): Class!
   deletePeriod(id: ID!): Period!
 }
+
+type Subscription{
+  admin: AdminSubPayload!
+  department: DepartmentSubPayload!
+  teacher: TeacherSubPayload!
+  student: StudentSubPayload!
+  session: SessionSubPayload!
+  semester: SemesterSubPayload!
+  bookList: BookListSubPayload!
+  book: BookSubPayload!
+  routine: RoutineSubPayload!
+  dayInWeek: DayInWeekSubPaylaod!
+  class: ClassSubPayload!
+  period: PeriodSubPayload!
+}
+
+enum MutationType{
+  CREATED
+  UPDATED
+  DELETED
+}
+
+type AdminSubPayload{
+  mutation: MutationType
+  node: Admin!
+}
+
+type DepartmentSubPayload{
+  mutation: MutationType
+  node: Department!
+}
+
+type TeacherSubPayload{
+  mutation: MutationType
+  node: Teacher!
+}
+
+type StudentSubPayload{
+  mutation: MutationType
+  node: Department!
+}
+
+type SemesterSubPayload{
+  mutation: MutationType
+  node: Semester!
+}
+
+type BookListSubPayload{
+  mutation: MutationType
+  node: BookList!
+}
+
+type BookSubPayload{
+  mutation: MutationType
+  node: Book!
+}
+
+type RoutineSubPayload{
+  mutation: MutationType
+  node: Routine!
+}
+
+type DayInWeekSubPaylaod{
+  mutation: MutationType
+  node: DayInWeek!
+}
+
+type ClassSubPayload{
+  mutation: MutationType
+  node: Class!
+}
+
+type PeriodSubPayload{
+  mutation: MutationType
+  node: Period!
+}
+
+type SessionSubPayload{
+  mutation: MutationType
+  node: Session!
+}
+
+
+
+
+
+
+
+
+
 
 type AdminAuthPayload{
   token: String!
@@ -102,18 +195,18 @@ input LoginInputStudent{
   password: String!
 }
 
+type Info{
+  departments: [Department!]
+  sessions: [Session!]
+  semesters: [Semester!]
+}
+
+
 type Admin{
   id: ID!
   name: String!
   email: String!
   username: String!
-  departments: [Department!]!
-  students: [Student!]!
-  sessions: [Session!]!
-  teachers: [Teacher!]!
-  classes: [Class!]!
-  routines: [Routine!]!
-  periods: [Period!]!
 }
 
 enum ShiftTypes{
@@ -124,33 +217,32 @@ enum ShiftTypes{
 type Department{
   id: ID!
   name: String!
-  students: [Student!]!
-  bookLists: [BookList!]!
-  routines: [Routine!]!
-  classes: [Class!]!
+  students: [Student!]
+  bookLists: [BookList!]
+  routines: [Routine!]
+  classes: [Class!]
 }
 
 
 type Session{
   id: ID!
   year: String!
-  students: [Student!]!
-  routines: [Routine!]!
+  students: [Student!]
+  routines: [Routine!]
 }
 
 type Student{
   id: ID!
   name: String!
-  email: String!
-  roll: Int!
-  reg: Int!
-  address: String!
-  session: Session!
-  phone: String!
-  shift: ShiftTypes!
-  department: Department!
-  semester: Semester!
-  password: String!
+  email: String
+  roll: String
+  reg: String
+  address: String
+  session: Session
+  phone: String
+  shift: ShiftTypes
+  department: Department
+  semester: Semester
 }
 
 enum SemesterTypes{
@@ -168,9 +260,9 @@ type Semester{
   id: ID!
   name: SemesterTypes!
   students: [Student!]
-  bookLists: [BookList!]!
-  routines: [Routine!]!
-  classes:[Class!]!
+  bookLists: [BookList!]
+  routines: [Routine!]
+  classes:[Class!]
 }
 
 type BookList{
@@ -185,14 +277,14 @@ type Book{
   id: ID!
   name: String!
   code: String!
-  bookList: BookList!
-  classes: [Class!]!
+  bookList: BookList
+  classes: [Class!]
 }
 
 type Teacher{
   id: ID!
   name: String!
-  email: String!
+  email: String
   address: String!
   position: String!
   phone: String!

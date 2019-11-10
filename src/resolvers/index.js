@@ -12,6 +12,8 @@ import Period from './types/Period'
 import Book from './types/Book'
 import BookList from './types/BookList'
 import Routine from './types/Routine'
+import Info from './types/Info'
+import Subscription from './Subscription'
 
 const resolvers = {
   Query,
@@ -25,8 +27,9 @@ const resolvers = {
   Period,
   Book,
   BookList,
-  Routine
-
+  Routine,
+  Info,
+  Subscription
 }
 
 export const fragmentReplacements = extractFragmentReplacements(resolvers)

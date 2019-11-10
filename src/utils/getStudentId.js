@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 
 const getStudentId = (req,required=true) => {
-  const header = req.request.headers.student
+  const header = req.request ? req.request.headers.student : req.connection.context.student
 
   if(header){
     try {
