@@ -13,7 +13,7 @@ import period from './queries/period'
 import info from './queries/info'
 import notice from './queries/notice'
 import note from './queries/note'
-// import attendenceDay from './queries/attendenceDay'
+import attendenceDay from './queries/attendenceDay'
 
 
 const Query = {
@@ -32,7 +32,7 @@ const Query = {
   ...notice,
   ...note,
   ...session,
-  // ...attendenceDay,
+  ...attendenceDay,
 }
 
 export default Query

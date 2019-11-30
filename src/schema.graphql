@@ -1,9 +1,9 @@
-#import CreateInputAdmin, CreateInputDepartment, CreateInputTeacher, CreateInputStudent, CreateInputSession, CreateInputSemester, CreateInputBookList, CreateInputRoutine, CreateInputBook, CreateInputClass, CreateInputPeriod,CreateInputNote, CreateInputDayInWeek,CreateInputNotice,UpdateInputNote,UpdateInputAdmin,UpdateInputDepartment,UpdateInputTeacher,UpdateInputStudent,UpdateInputSession,UpdateInputSemester,UpdateInputBookList,UpdateInputRoutine,UpdateInputBook,UpdateInputClass,UpdateInputPeriod,UpdateInputDayInWeek,UpdateInputNotice from './createInputs.graphql'
+#import CreateInputAdmin, CreateInputDepartment, CreateInputTeacher, CreateInputStudent, CreateInputSession, CreateInputSemester, CreateInputBookList, CreateInputRoutine, CreateInputBook, CreateInputClass, CreateInputPeriod,CreateInputNote,CreateInputAttendenceDay, CreateInputDayInWeek,CreateInputNotice,UpdateInputAttendenceDay,UpdateInputNote,UpdateInputAdmin,UpdateInputDepartment,UpdateInputTeacher,UpdateInputStudent,UpdateInputSession,UpdateInputSemester,UpdateInputBookList,UpdateInputRoutine,UpdateInputBook,UpdateInputClass,UpdateInputPeriod,UpdateInputDayInWeek,UpdateInputNotice from './createInputs.graphql'
 #import StudentOrderByInput from './generated/prisma.graphql'
 
 type Query{
-  #attendenceDays(query: String,first: Int,skip: Int,orderBy: String): [AttendenceDay!]!
-  #attendenceDay(id: ID!): Attendence!
+  attendenceDays(query: String,first: Int,skip: Int,orderBy: String): [AttendenceDay!]!
+  attendenceDay(id: ID!): Attendence!
   info: Info!
   notices(query: String,first: Int,skip: Int,orderBy: String): [Notice!]!
   notice(id: ID!): Notice!
@@ -39,6 +39,7 @@ type Query{
 
 type Mutation{
 
+  createAttendenceDay(data: CreateInputAttendenceDay): AttendenceDay!
   createAdmin(data: CreateInputAdmin): AdminAuthPayload!
   createNotice(data: CreateInputNotice): Notice!
   loginAdmin(data: LoginInputAdmin): AdminAuthPayload!
@@ -57,7 +58,7 @@ type Mutation{
   createClass(data: CreateInputClass): Class!
   createPeriod(data: CreateInputPeriod): Period!
 
-
+  updateAttendenceDay(id: ID!,data: UpdateInputAttendenceDay): AttendenceDay!
   updateNote(id: ID!,data: UpdateInputNote): Note!
   updateAdmin(data: UpdateInputAdmin): Admin!
   updateNotice(id: ID!,data: UpdateInputNotice): Notice!
@@ -74,7 +75,7 @@ type Mutation{
   updatePeriod(id: ID!,data: UpdateInputPeriod): Period!
 
 
-
+  deleteAttendenceDay(id: ID!): AttendenceDay!
   deleteNote(id: ID!): Note!
   deleteAdmin: Admin!
   deleteNotice: Notice!
