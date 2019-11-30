@@ -7,9 +7,37 @@ type Admin{
   password: String!
 }
 
+type Teacher{
+  id: ID! @id
+  name: String!
+  email: String! @unique
+  address: String!
+  position: String!
+  phone: String!
+  password: String!
+  classes: [Class!]! @relation(name: "TeacherToClass",onDelete: CASCADE)
+}
+
+type Note{
+  id: ID! @id
+  title: String!
+  text: String!
+  author: Student! @relation(name: "StudentToNote",onDelete: SET_NULL)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Notice{
+  id: ID! @id
+  title: String!
+  text: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
 enum ShiftTypes{
   MORNING
-  EVENING
+  DAY
 }
 
 type Department{
@@ -19,6 +47,8 @@ type Department{
   bookLists: [BookList!]! @relation(name: "DepartmentToBookList",onDelete: CASCADE)
   routines: [Routine!]! @relation(name: "DepartmentToRoutine",onDelete: CASCADE)
   classes: [Class!]! @relation(name: "DepartmentToClass",onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Session{
@@ -26,6 +56,8 @@ type Session{
   year: String! @unique
   students: [Student!]! @relation(name: "SessionToStudent",onDelete: CASCADE)
   routines: [Routine!]! @relation(name: "SessionToRoutine",onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Student{
@@ -41,6 +73,10 @@ type Student{
   department: Department! @relation(name: "DepartmentToStudent",onDelete: SET_NULL)
   semester: Semester! @relation(name: "SemesterToStudent",onDelete: SET_NULL)
   password: String!
+  notes: [Note!]! @relation(name: "StudentToNote",onDelete: CASCADE)
+  attendences: [Attendence!]! @relation(name: "StudentToAttendence",onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 enum SemesterTypes{
@@ -61,6 +97,8 @@ type Semester{
   routines: [Routine!]! @relation(name: "SemesterToRoutine",onDelete: CASCADE)
   classes:[Class!]! @relation(name: "SemesterToClass",onDelete: CASCADE)
   bookLists: [BookList!]! @relation(name: "SemesterToBookList",onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type BookList{
@@ -68,7 +106,9 @@ type BookList{
   department: Department! @relation(name: "DepartmentToBookList",onDelete: SET_NULL)
   semester: Semester! @relation(name: "SemesterToBookList",onDelete: SET_NULL)
   probidan: String!
-  books:[Book!]! @relation(name: "BookListToBook",onDelete: SET_NULL)
+  books:[Book!]! @relation(name: "BookListToBook",onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Book{
@@ -77,18 +117,10 @@ type Book{
   code: String!
   bookList: BookList! @relation(name: "BookListToBook",onDelete: SET_NULL)
   classes: [Class!]! @relation(name: "BookToClass",onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
-type Teacher{
-  id: ID! @id
-  name: String!
-  email: String! @unique
-  address: String!
-  position: String!
-  phone: String!
-  password: String!
-  classes: [Class!]! @relation(name: "TeacherToClass",onDelete: CASCADE)
-}
 
 type Routine{
   id: ID! @id
@@ -98,14 +130,18 @@ type Routine{
   department: Department! @relation(name: "DepartmentToRoutine",onDelete: SET_NULL)
   shift: ShiftTypes!
   days: [DayInWeek!]! @relation(name: "RoutineToDayInWeek",onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type DayInWeek{
   id: ID! @id
   routine: Routine! @relation(name: "RoutineToDayInWeek",onDelete: SET_NULL)
   dayValue: Int!
-  day: DayTypes! @unique
+  day: DayTypes!
   classes: [Class!]! @relation(name: "DayInWeekToClass",onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 
@@ -117,6 +153,9 @@ type Class{
   mentor: Teacher! @relation(name: "TeacherToClass",onDelete: SET_NULL)
   department: Department! @relation(name: "DepartmentToClass",onDelete: SET_NULL)
   subject: Book! @relation(name: "BookToClass",onDelete: SET_NULL)
+  attentenceClasses: [AttendenceClass!]! @relation(name: "ClassToAttendenceClass",onDelete: SET_NULL)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 
@@ -125,6 +164,35 @@ type Period{
   time: Int!
   startedAt: String!
   endAt: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+
+type AttendenceDay{
+  id: ID! @id
+  date: String! @unique
+  classes: [AttendenceClass!]! @relation(name: "AttendenceDayToAttendenceClass",onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type AttendenceClass{
+  id: ID! @id
+  day: AttendenceDay! @relation(name: "AttendenceDayToAttendenceClass",onDelete: SET_NULL)
+  class: Class! @relation(name: "ClassToAttendenceClass",onDelete: CASCADE)
+  attendences: [Attendence!]! @relation(name: "AttendenceClassToAttendence",onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Attendence{
+  id: ID! @id
+  class: AttendenceClass! @relation(name: "AttendenceClassToAttendence",onDelete: SET_NULL)
+  student: Student! @relation(name: "StudentToAttendence",onDelete: SET_NULL)
+  present: Boolean!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 enum DayTypes{

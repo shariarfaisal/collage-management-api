@@ -11,6 +11,9 @@ import book from './queries/book'
 import classQuery from './queries/class'
 import period from './queries/period'
 import info from './queries/info'
+import notice from './queries/notice'
+import note from './queries/note'
+// import attendenceDay from './queries/attendenceDay'
 
 
 const Query = {
@@ -25,7 +28,11 @@ const Query = {
   ...classQuery,
   ...period,
   ...teacher,
-  ...info
+  ...info,
+  ...notice,
+  ...note,
+  ...session,
+  // ...attendenceDay,
 }
 
 export default Query

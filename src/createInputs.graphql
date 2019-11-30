@@ -1,9 +1,22 @@
+input CreateInputAttendenceDay{
+  date: String!
+}
+
+input CreateInputNote{
+  title: String!
+  text: String!
+}
 
 input CreateInputAdmin{
   name: String!
   email: String!
   username: String!
   password: String!
+}
+
+input CreateInputNotice{
+  title: String!
+  text: String!
 }
 
 input CreateInputInstitute{
@@ -84,6 +97,15 @@ input CreateInputClass{
   mentor: ID!
   department: ID!
   subject: ID!
+}
+
+input UpdateInputAttendenceDay{
+  date: String
+}
+
+input UpdateInputNote{
+  title: String
+  text: String
 }
 
 input UpdateInputInstitute{
@@ -171,4 +193,9 @@ input UpdateInputClass{
   mentor: ID
   department: ID
   subject: ID
+}
+
+input UpdateInputNotice{
+  title: String
+  text: String
 }

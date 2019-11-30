@@ -1,12 +1,19 @@
-#import CreateInputAdmin, CreateInputDepartment, CreateInputTeacher, CreateInputStudent, CreateInputSession, CreateInputSemester, CreateInputBookList, CreateInputRoutine, CreateInputBook, CreateInputClass, CreateInputPeriod, CreateInputDayInWeek,UpdateInputAdmin,UpdateInputDepartment,UpdateInputTeacher,UpdateInputStudent,UpdateInputSession,UpdateInputSemester,UpdateInputBookList,UpdateInputRoutine,UpdateInputBook,UpdateInputClass,UpdateInputPeriod,UpdateInputDayInWeek from './createInputs.graphql'
-
+#import CreateInputAdmin, CreateInputDepartment, CreateInputTeacher, CreateInputStudent, CreateInputSession, CreateInputSemester, CreateInputBookList, CreateInputRoutine, CreateInputBook, CreateInputClass, CreateInputPeriod,CreateInputNote, CreateInputDayInWeek,CreateInputNotice,UpdateInputNote,UpdateInputAdmin,UpdateInputDepartment,UpdateInputTeacher,UpdateInputStudent,UpdateInputSession,UpdateInputSemester,UpdateInputBookList,UpdateInputRoutine,UpdateInputBook,UpdateInputClass,UpdateInputPeriod,UpdateInputDayInWeek,UpdateInputNotice from './createInputs.graphql'
+#import StudentOrderByInput from './generated/prisma.graphql'
 
 type Query{
+  #attendenceDays(query: String,first: Int,skip: Int,orderBy: String): [AttendenceDay!]!
+  #attendenceDay(id: ID!): Attendence!
   info: Info!
+  notices(query: String,first: Int,skip: Int,orderBy: String): [Notice!]!
+  notice(id: ID!): Notice!
+  note(id: ID!): Note!
+  notes(query: String): [Note!]!
   admins: [Admin!]!
   admin: Admin!
-  students: [Student!]!
+  students(query: String,department: ID,semester: ID,first: Int,skip: Int,orderBy: String,session: ID): [Student!]!
   student(id: ID!): Student!
+  studentMe: Student!
   semesters: [Semester!]!
   semester(id: ID!): Semester!
   sessions: [Session!]!
@@ -15,7 +22,8 @@ type Query{
   book(id: ID!): Book!
   teachers: [Teacher!]!
   teacher(id: ID!): Teacher!
-  routines: [Routine!]!
+  teacherMe: Teacher!
+  routines(query: String,department: String,semester: String,first: Int,skip: Int,orderBy: String,session: String,shift: String): [Routine!]!
   routine(id: ID!): Routine!
   dayInWeeks: [DayInWeek!]!
   dayInWeek(id: ID!): DayInWeek!
@@ -32,11 +40,13 @@ type Query{
 type Mutation{
 
   createAdmin(data: CreateInputAdmin): AdminAuthPayload!
+  createNotice(data: CreateInputNotice): Notice!
   loginAdmin(data: LoginInputAdmin): AdminAuthPayload!
   createDepartment(data: CreateInputDepartment): Department!
   createTeacher(data: CreateInputTeacher): TeacherAuthPayload!
   loginTeacher(data: LoginInputTeacher): TeacherAuthPayload!
   createStudent(data: CreateInputStudent): StudentAuthPayload!
+  createNote(data: CreateInputNote): Note!
   loginStudent(data: LoginInputStudent): StudentAuthPayload!
   createSession(data: CreateInputSession): Session!
   createSemester(data: CreateInputSemester): Semester!
@@ -48,7 +58,9 @@ type Mutation{
   createPeriod(data: CreateInputPeriod): Period!
 
 
+  updateNote(id: ID!,data: UpdateInputNote): Note!
   updateAdmin(data: UpdateInputAdmin): Admin!
+  updateNotice(id: ID!,data: UpdateInputNotice): Notice!
   updateDepartment(id: ID!,data: UpdateInputDepartment): Department!
   updateTeacher(data: UpdateInputTeacher): Teacher!
   updateStudent(data: UpdateInputStudent): Student!
@@ -61,7 +73,11 @@ type Mutation{
   updateClass(id: ID!,data: UpdateInputClass): Class!
   updatePeriod(id: ID!,data: UpdateInputPeriod): Period!
 
+
+
+  deleteNote(id: ID!): Note!
   deleteAdmin: Admin!
+  deleteNotice: Notice!
   deleteDepartment(id: ID!): Department!
   deleteTeacher: Teacher!
   deleteStudent: Student
@@ -157,14 +173,6 @@ type SessionSubPayload{
 }
 
 
-
-
-
-
-
-
-
-
 type AdminAuthPayload{
   token: String!
   admin: Admin!
@@ -201,6 +209,15 @@ type Info{
   semesters: [Semester!]
 }
 
+type Note{
+  id: ID!
+  title: String!
+  text: String!
+  author: Student!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 
 type Admin{
   id: ID!
@@ -209,9 +226,17 @@ type Admin{
   username: String!
 }
 
+type Notice{
+  id: ID!
+  title: String!
+  text: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 enum ShiftTypes{
   MORNING
-  EVENING
+  DAY
 }
 
 type Department{
@@ -221,6 +246,8 @@ type Department{
   bookLists: [BookList!]
   routines: [Routine!]
   classes: [Class!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 
@@ -229,6 +256,8 @@ type Session{
   year: String!
   students: [Student!]
   routines: [Routine!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type Student{
@@ -243,6 +272,8 @@ type Student{
   shift: ShiftTypes
   department: Department
   semester: Semester
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 enum SemesterTypes{
@@ -263,6 +294,8 @@ type Semester{
   bookLists: [BookList!]
   routines: [Routine!]
   classes:[Class!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type BookList{
@@ -271,6 +304,8 @@ type BookList{
   probidan: String!
   semester: Semester!
   books:[Book!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type Book{
@@ -279,6 +314,8 @@ type Book{
   code: String!
   bookList: BookList
   classes: [Class!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type Teacher{
@@ -299,6 +336,8 @@ type Routine{
   semester: Semester!
   department: Department!
   days: [DayInWeek!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type DayInWeek{
@@ -307,6 +346,8 @@ type DayInWeek{
   dayValue: Int!
   day: DayTypes!
   classes: [Class!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 
@@ -318,6 +359,8 @@ type Class{
   mentor: Teacher!
   department: Department!
   subject: Book!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 
@@ -326,6 +369,8 @@ type Period{
   time: Int!
   startedAt: String!
   endAt: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 enum DayTypes{
@@ -336,4 +381,31 @@ enum DayTypes{
   WEDNESDAY
   THURSDAY
   FRIDAY
+}
+
+
+type AttendenceDay{
+  id: ID!
+  date: String!
+  classes: [AttendenceClass!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type AttendenceClass{
+  id: ID!
+  day: ID!
+  class: ID!
+  attendences: [Attendence!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Attendence{
+  id: ID!
+  class: ID!
+  student: ID!
+  present: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }

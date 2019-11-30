@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sun Nov 10 2019 01:30:12 GMT+0600 (+06)
+# timestamp: Wed Nov 27 2019 12:08:37 GMT+0600 (+06)
 
 type Admin implements Node {
   id: ID!
@@ -330,6 +330,18 @@ type AggregateAdmin {
   count: Int!
 }
 
+type AggregateAttendence {
+  count: Int!
+}
+
+type AggregateAttendenceClass {
+  count: Int!
+}
+
+type AggregateAttendenceDay {
+  count: Int!
+}
+
 type AggregateBook {
   count: Int!
 }
@@ -347,6 +359,14 @@ type AggregateDayInWeek {
 }
 
 type AggregateDepartment {
+  count: Int!
+}
+
+type AggregateNote {
+  count: Int!
+}
+
+type AggregateNotice {
   count: Int!
 }
 
@@ -374,6 +394,1059 @@ type AggregateTeacher {
   count: Int!
 }
 
+type Attendence implements Node {
+  id: ID!
+  class: AttendenceClass!
+  student: Student!
+  present: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type AttendenceClass implements Node {
+  id: ID!
+  day: AttendenceDay!
+  class: Class!
+  attendences(where: AttendenceWhereInput, orderBy: AttendenceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attendence!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type AttendenceClassConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [AttendenceClassEdge]!
+  aggregate: AggregateAttendenceClass!
+}
+
+input AttendenceClassCreateInput {
+  id: ID
+  day: AttendenceDayCreateOneWithoutClassesInput!
+  class: ClassCreateOneWithoutAttentenceClassesInput!
+  attendences: AttendenceCreateManyWithoutClassInput
+}
+
+input AttendenceClassCreateManyWithoutClassInput {
+  create: [AttendenceClassCreateWithoutClassInput!]
+  connect: [AttendenceClassWhereUniqueInput!]
+}
+
+input AttendenceClassCreateManyWithoutDayInput {
+  create: [AttendenceClassCreateWithoutDayInput!]
+  connect: [AttendenceClassWhereUniqueInput!]
+}
+
+input AttendenceClassCreateOneWithoutAttendencesInput {
+  create: AttendenceClassCreateWithoutAttendencesInput
+  connect: AttendenceClassWhereUniqueInput
+}
+
+input AttendenceClassCreateWithoutAttendencesInput {
+  id: ID
+  day: AttendenceDayCreateOneWithoutClassesInput!
+  class: ClassCreateOneWithoutAttentenceClassesInput!
+}
+
+input AttendenceClassCreateWithoutClassInput {
+  id: ID
+  day: AttendenceDayCreateOneWithoutClassesInput!
+  attendences: AttendenceCreateManyWithoutClassInput
+}
+
+input AttendenceClassCreateWithoutDayInput {
+  id: ID
+  class: ClassCreateOneWithoutAttentenceClassesInput!
+  attendences: AttendenceCreateManyWithoutClassInput
+}
+
+"""An edge in a connection."""
+type AttendenceClassEdge {
+  """The item at the end of the edge."""
+  node: AttendenceClass!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum AttendenceClassOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type AttendenceClassPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input AttendenceClassScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AttendenceClassScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AttendenceClassScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AttendenceClassScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+}
+
+type AttendenceClassSubscriptionPayload {
+  mutation: MutationType!
+  node: AttendenceClass
+  updatedFields: [String!]
+  previousValues: AttendenceClassPreviousValues
+}
+
+input AttendenceClassSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AttendenceClassSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AttendenceClassSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AttendenceClassSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: AttendenceClassWhereInput
+}
+
+input AttendenceClassUpdateInput {
+  day: AttendenceDayUpdateOneRequiredWithoutClassesInput
+  class: ClassUpdateOneRequiredWithoutAttentenceClassesInput
+  attendences: AttendenceUpdateManyWithoutClassInput
+}
+
+input AttendenceClassUpdateManyWithoutClassInput {
+  create: [AttendenceClassCreateWithoutClassInput!]
+  connect: [AttendenceClassWhereUniqueInput!]
+  set: [AttendenceClassWhereUniqueInput!]
+  disconnect: [AttendenceClassWhereUniqueInput!]
+  delete: [AttendenceClassWhereUniqueInput!]
+  update: [AttendenceClassUpdateWithWhereUniqueWithoutClassInput!]
+  deleteMany: [AttendenceClassScalarWhereInput!]
+  upsert: [AttendenceClassUpsertWithWhereUniqueWithoutClassInput!]
+}
+
+input AttendenceClassUpdateManyWithoutDayInput {
+  create: [AttendenceClassCreateWithoutDayInput!]
+  connect: [AttendenceClassWhereUniqueInput!]
+  set: [AttendenceClassWhereUniqueInput!]
+  disconnect: [AttendenceClassWhereUniqueInput!]
+  delete: [AttendenceClassWhereUniqueInput!]
+  update: [AttendenceClassUpdateWithWhereUniqueWithoutDayInput!]
+  deleteMany: [AttendenceClassScalarWhereInput!]
+  upsert: [AttendenceClassUpsertWithWhereUniqueWithoutDayInput!]
+}
+
+input AttendenceClassUpdateOneRequiredWithoutAttendencesInput {
+  create: AttendenceClassCreateWithoutAttendencesInput
+  connect: AttendenceClassWhereUniqueInput
+  update: AttendenceClassUpdateWithoutAttendencesDataInput
+  upsert: AttendenceClassUpsertWithoutAttendencesInput
+}
+
+input AttendenceClassUpdateWithoutAttendencesDataInput {
+  day: AttendenceDayUpdateOneRequiredWithoutClassesInput
+  class: ClassUpdateOneRequiredWithoutAttentenceClassesInput
+}
+
+input AttendenceClassUpdateWithoutClassDataInput {
+  day: AttendenceDayUpdateOneRequiredWithoutClassesInput
+  attendences: AttendenceUpdateManyWithoutClassInput
+}
+
+input AttendenceClassUpdateWithoutDayDataInput {
+  class: ClassUpdateOneRequiredWithoutAttentenceClassesInput
+  attendences: AttendenceUpdateManyWithoutClassInput
+}
+
+input AttendenceClassUpdateWithWhereUniqueWithoutClassInput {
+  where: AttendenceClassWhereUniqueInput!
+  data: AttendenceClassUpdateWithoutClassDataInput!
+}
+
+input AttendenceClassUpdateWithWhereUniqueWithoutDayInput {
+  where: AttendenceClassWhereUniqueInput!
+  data: AttendenceClassUpdateWithoutDayDataInput!
+}
+
+input AttendenceClassUpsertWithoutAttendencesInput {
+  update: AttendenceClassUpdateWithoutAttendencesDataInput!
+  create: AttendenceClassCreateWithoutAttendencesInput!
+}
+
+input AttendenceClassUpsertWithWhereUniqueWithoutClassInput {
+  where: AttendenceClassWhereUniqueInput!
+  update: AttendenceClassUpdateWithoutClassDataInput!
+  create: AttendenceClassCreateWithoutClassInput!
+}
+
+input AttendenceClassUpsertWithWhereUniqueWithoutDayInput {
+  where: AttendenceClassWhereUniqueInput!
+  update: AttendenceClassUpdateWithoutDayDataInput!
+  create: AttendenceClassCreateWithoutDayInput!
+}
+
+input AttendenceClassWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AttendenceClassWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AttendenceClassWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AttendenceClassWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  day: AttendenceDayWhereInput
+  class: ClassWhereInput
+  attendences_every: AttendenceWhereInput
+  attendences_some: AttendenceWhereInput
+  attendences_none: AttendenceWhereInput
+}
+
+input AttendenceClassWhereUniqueInput {
+  id: ID
+}
+
+"""A connection to a list of items."""
+type AttendenceConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [AttendenceEdge]!
+  aggregate: AggregateAttendence!
+}
+
+input AttendenceCreateInput {
+  id: ID
+  present: Boolean!
+  class: AttendenceClassCreateOneWithoutAttendencesInput!
+  student: StudentCreateOneWithoutAttendencesInput!
+}
+
+input AttendenceCreateManyWithoutClassInput {
+  create: [AttendenceCreateWithoutClassInput!]
+  connect: [AttendenceWhereUniqueInput!]
+}
+
+input AttendenceCreateManyWithoutStudentInput {
+  create: [AttendenceCreateWithoutStudentInput!]
+  connect: [AttendenceWhereUniqueInput!]
+}
+
+input AttendenceCreateWithoutClassInput {
+  id: ID
+  present: Boolean!
+  student: StudentCreateOneWithoutAttendencesInput!
+}
+
+input AttendenceCreateWithoutStudentInput {
+  id: ID
+  present: Boolean!
+  class: AttendenceClassCreateOneWithoutAttendencesInput!
+}
+
+type AttendenceDay implements Node {
+  id: ID!
+  date: String!
+  classes(where: AttendenceClassWhereInput, orderBy: AttendenceClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AttendenceClass!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type AttendenceDayConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [AttendenceDayEdge]!
+  aggregate: AggregateAttendenceDay!
+}
+
+input AttendenceDayCreateInput {
+  id: ID
+  date: String!
+  classes: AttendenceClassCreateManyWithoutDayInput
+}
+
+input AttendenceDayCreateOneWithoutClassesInput {
+  create: AttendenceDayCreateWithoutClassesInput
+  connect: AttendenceDayWhereUniqueInput
+}
+
+input AttendenceDayCreateWithoutClassesInput {
+  id: ID
+  date: String!
+}
+
+"""An edge in a connection."""
+type AttendenceDayEdge {
+  """The item at the end of the edge."""
+  node: AttendenceDay!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum AttendenceDayOrderByInput {
+  id_ASC
+  id_DESC
+  date_ASC
+  date_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type AttendenceDayPreviousValues {
+  id: ID!
+  date: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type AttendenceDaySubscriptionPayload {
+  mutation: MutationType!
+  node: AttendenceDay
+  updatedFields: [String!]
+  previousValues: AttendenceDayPreviousValues
+}
+
+input AttendenceDaySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AttendenceDaySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AttendenceDaySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AttendenceDaySubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: AttendenceDayWhereInput
+}
+
+input AttendenceDayUpdateInput {
+  date: String
+  classes: AttendenceClassUpdateManyWithoutDayInput
+}
+
+input AttendenceDayUpdateManyMutationInput {
+  date: String
+}
+
+input AttendenceDayUpdateOneRequiredWithoutClassesInput {
+  create: AttendenceDayCreateWithoutClassesInput
+  connect: AttendenceDayWhereUniqueInput
+  update: AttendenceDayUpdateWithoutClassesDataInput
+  upsert: AttendenceDayUpsertWithoutClassesInput
+}
+
+input AttendenceDayUpdateWithoutClassesDataInput {
+  date: String
+}
+
+input AttendenceDayUpsertWithoutClassesInput {
+  update: AttendenceDayUpdateWithoutClassesDataInput!
+  create: AttendenceDayCreateWithoutClassesInput!
+}
+
+input AttendenceDayWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AttendenceDayWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AttendenceDayWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AttendenceDayWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  date: String
+
+  """All values that are not equal to given value."""
+  date_not: String
+
+  """All values that are contained in given list."""
+  date_in: [String!]
+
+  """All values that are not contained in given list."""
+  date_not_in: [String!]
+
+  """All values less than the given value."""
+  date_lt: String
+
+  """All values less than or equal the given value."""
+  date_lte: String
+
+  """All values greater than the given value."""
+  date_gt: String
+
+  """All values greater than or equal the given value."""
+  date_gte: String
+
+  """All values containing the given string."""
+  date_contains: String
+
+  """All values not containing the given string."""
+  date_not_contains: String
+
+  """All values starting with the given string."""
+  date_starts_with: String
+
+  """All values not starting with the given string."""
+  date_not_starts_with: String
+
+  """All values ending with the given string."""
+  date_ends_with: String
+
+  """All values not ending with the given string."""
+  date_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  classes_every: AttendenceClassWhereInput
+  classes_some: AttendenceClassWhereInput
+  classes_none: AttendenceClassWhereInput
+}
+
+input AttendenceDayWhereUniqueInput {
+  id: ID
+  date: String
+}
+
+"""An edge in a connection."""
+type AttendenceEdge {
+  """The item at the end of the edge."""
+  node: Attendence!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum AttendenceOrderByInput {
+  id_ASC
+  id_DESC
+  present_ASC
+  present_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type AttendencePreviousValues {
+  id: ID!
+  present: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input AttendenceScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AttendenceScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AttendenceScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AttendenceScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  present: Boolean
+
+  """All values that are not equal to given value."""
+  present_not: Boolean
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+}
+
+type AttendenceSubscriptionPayload {
+  mutation: MutationType!
+  node: Attendence
+  updatedFields: [String!]
+  previousValues: AttendencePreviousValues
+}
+
+input AttendenceSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AttendenceSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AttendenceSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AttendenceSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: AttendenceWhereInput
+}
+
+input AttendenceUpdateInput {
+  present: Boolean
+  class: AttendenceClassUpdateOneRequiredWithoutAttendencesInput
+  student: StudentUpdateOneRequiredWithoutAttendencesInput
+}
+
+input AttendenceUpdateManyDataInput {
+  present: Boolean
+}
+
+input AttendenceUpdateManyMutationInput {
+  present: Boolean
+}
+
+input AttendenceUpdateManyWithoutClassInput {
+  create: [AttendenceCreateWithoutClassInput!]
+  connect: [AttendenceWhereUniqueInput!]
+  set: [AttendenceWhereUniqueInput!]
+  disconnect: [AttendenceWhereUniqueInput!]
+  delete: [AttendenceWhereUniqueInput!]
+  update: [AttendenceUpdateWithWhereUniqueWithoutClassInput!]
+  updateMany: [AttendenceUpdateManyWithWhereNestedInput!]
+  deleteMany: [AttendenceScalarWhereInput!]
+  upsert: [AttendenceUpsertWithWhereUniqueWithoutClassInput!]
+}
+
+input AttendenceUpdateManyWithoutStudentInput {
+  create: [AttendenceCreateWithoutStudentInput!]
+  connect: [AttendenceWhereUniqueInput!]
+  set: [AttendenceWhereUniqueInput!]
+  disconnect: [AttendenceWhereUniqueInput!]
+  delete: [AttendenceWhereUniqueInput!]
+  update: [AttendenceUpdateWithWhereUniqueWithoutStudentInput!]
+  updateMany: [AttendenceUpdateManyWithWhereNestedInput!]
+  deleteMany: [AttendenceScalarWhereInput!]
+  upsert: [AttendenceUpsertWithWhereUniqueWithoutStudentInput!]
+}
+
+input AttendenceUpdateManyWithWhereNestedInput {
+  where: AttendenceScalarWhereInput!
+  data: AttendenceUpdateManyDataInput!
+}
+
+input AttendenceUpdateWithoutClassDataInput {
+  present: Boolean
+  student: StudentUpdateOneRequiredWithoutAttendencesInput
+}
+
+input AttendenceUpdateWithoutStudentDataInput {
+  present: Boolean
+  class: AttendenceClassUpdateOneRequiredWithoutAttendencesInput
+}
+
+input AttendenceUpdateWithWhereUniqueWithoutClassInput {
+  where: AttendenceWhereUniqueInput!
+  data: AttendenceUpdateWithoutClassDataInput!
+}
+
+input AttendenceUpdateWithWhereUniqueWithoutStudentInput {
+  where: AttendenceWhereUniqueInput!
+  data: AttendenceUpdateWithoutStudentDataInput!
+}
+
+input AttendenceUpsertWithWhereUniqueWithoutClassInput {
+  where: AttendenceWhereUniqueInput!
+  update: AttendenceUpdateWithoutClassDataInput!
+  create: AttendenceCreateWithoutClassInput!
+}
+
+input AttendenceUpsertWithWhereUniqueWithoutStudentInput {
+  where: AttendenceWhereUniqueInput!
+  update: AttendenceUpdateWithoutStudentDataInput!
+  create: AttendenceCreateWithoutStudentInput!
+}
+
+input AttendenceWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AttendenceWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AttendenceWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AttendenceWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  present: Boolean
+
+  """All values that are not equal to given value."""
+  present_not: Boolean
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  class: AttendenceClassWhereInput
+  student: StudentWhereInput
+}
+
+input AttendenceWhereUniqueInput {
+  id: ID
+}
+
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
@@ -385,6 +1458,8 @@ type Book implements Node {
   code: String!
   bookList: BookList!
   classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -444,6 +1519,8 @@ type BookList implements Node {
   semester: Semester!
   probidan: String!
   books(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Book!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -514,11 +1591,17 @@ enum BookListOrderByInput {
   id_DESC
   probidan_ASC
   probidan_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type BookListPreviousValues {
   id: ID!
   probidan: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input BookListScalarWhereInput {
@@ -610,6 +1693,50 @@ input BookListScalarWhereInput {
 
   """All values not ending with the given string."""
   probidan_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
 }
 
 type BookListSubscriptionPayload {
@@ -834,6 +1961,50 @@ input BookListWhereInput {
 
   """All values not ending with the given string."""
   probidan_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   department: DepartmentWhereInput
   semester: SemesterWhereInput
   books_every: BookWhereInput
@@ -852,12 +2023,18 @@ enum BookOrderByInput {
   name_DESC
   code_ASC
   code_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type BookPreviousValues {
   id: ID!
   name: String!
   code: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input BookScalarWhereInput {
@@ -989,6 +2166,50 @@ input BookScalarWhereInput {
 
   """All values not ending with the given string."""
   code_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
 }
 
 type BookSubscriptionPayload {
@@ -1226,6 +2447,50 @@ input BookWhereInput {
 
   """All values not ending with the given string."""
   code_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   bookList: BookListWhereInput
   classes_every: ClassWhereInput
   classes_some: ClassWhereInput
@@ -1244,6 +2509,9 @@ type Class implements Node {
   mentor: Teacher!
   department: Department!
   subject: Book!
+  attentenceClasses(where: AttendenceClassWhereInput, orderBy: AttendenceClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AttendenceClass!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -1264,6 +2532,7 @@ input ClassCreateInput {
   mentor: TeacherCreateOneWithoutClassesInput!
   department: DepartmentCreateOneWithoutClassesInput!
   subject: BookCreateOneWithoutClassesInput!
+  attentenceClasses: AttendenceClassCreateManyWithoutClassInput
 }
 
 input ClassCreateManyWithoutDayInput {
@@ -1291,6 +2560,21 @@ input ClassCreateManyWithoutSubjectInput {
   connect: [ClassWhereUniqueInput!]
 }
 
+input ClassCreateOneWithoutAttentenceClassesInput {
+  create: ClassCreateWithoutAttentenceClassesInput
+  connect: ClassWhereUniqueInput
+}
+
+input ClassCreateWithoutAttentenceClassesInput {
+  id: ID
+  day: DayInWeekCreateOneWithoutClassesInput!
+  semester: SemesterCreateOneWithoutClassesInput!
+  period: PeriodCreateOneInput!
+  mentor: TeacherCreateOneWithoutClassesInput!
+  department: DepartmentCreateOneWithoutClassesInput!
+  subject: BookCreateOneWithoutClassesInput!
+}
+
 input ClassCreateWithoutDayInput {
   id: ID
   semester: SemesterCreateOneWithoutClassesInput!
@@ -1298,6 +2582,7 @@ input ClassCreateWithoutDayInput {
   mentor: TeacherCreateOneWithoutClassesInput!
   department: DepartmentCreateOneWithoutClassesInput!
   subject: BookCreateOneWithoutClassesInput!
+  attentenceClasses: AttendenceClassCreateManyWithoutClassInput
 }
 
 input ClassCreateWithoutDepartmentInput {
@@ -1307,6 +2592,7 @@ input ClassCreateWithoutDepartmentInput {
   period: PeriodCreateOneInput!
   mentor: TeacherCreateOneWithoutClassesInput!
   subject: BookCreateOneWithoutClassesInput!
+  attentenceClasses: AttendenceClassCreateManyWithoutClassInput
 }
 
 input ClassCreateWithoutMentorInput {
@@ -1316,6 +2602,7 @@ input ClassCreateWithoutMentorInput {
   period: PeriodCreateOneInput!
   department: DepartmentCreateOneWithoutClassesInput!
   subject: BookCreateOneWithoutClassesInput!
+  attentenceClasses: AttendenceClassCreateManyWithoutClassInput
 }
 
 input ClassCreateWithoutSemesterInput {
@@ -1325,6 +2612,7 @@ input ClassCreateWithoutSemesterInput {
   mentor: TeacherCreateOneWithoutClassesInput!
   department: DepartmentCreateOneWithoutClassesInput!
   subject: BookCreateOneWithoutClassesInput!
+  attentenceClasses: AttendenceClassCreateManyWithoutClassInput
 }
 
 input ClassCreateWithoutSubjectInput {
@@ -1334,6 +2622,7 @@ input ClassCreateWithoutSubjectInput {
   period: PeriodCreateOneInput!
   mentor: TeacherCreateOneWithoutClassesInput!
   department: DepartmentCreateOneWithoutClassesInput!
+  attentenceClasses: AttendenceClassCreateManyWithoutClassInput
 }
 
 """An edge in a connection."""
@@ -1348,10 +2637,16 @@ type ClassEdge {
 enum ClassOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type ClassPreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input ClassScalarWhereInput {
@@ -1403,6 +2698,50 @@ input ClassScalarWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
 }
 
 type ClassSubscriptionPayload {
@@ -1449,6 +2788,7 @@ input ClassUpdateInput {
   mentor: TeacherUpdateOneRequiredWithoutClassesInput
   department: DepartmentUpdateOneRequiredWithoutClassesInput
   subject: BookUpdateOneRequiredWithoutClassesInput
+  attentenceClasses: AttendenceClassUpdateManyWithoutClassInput
 }
 
 input ClassUpdateManyWithoutDayInput {
@@ -1506,12 +2846,29 @@ input ClassUpdateManyWithoutSubjectInput {
   upsert: [ClassUpsertWithWhereUniqueWithoutSubjectInput!]
 }
 
+input ClassUpdateOneRequiredWithoutAttentenceClassesInput {
+  create: ClassCreateWithoutAttentenceClassesInput
+  connect: ClassWhereUniqueInput
+  update: ClassUpdateWithoutAttentenceClassesDataInput
+  upsert: ClassUpsertWithoutAttentenceClassesInput
+}
+
+input ClassUpdateWithoutAttentenceClassesDataInput {
+  day: DayInWeekUpdateOneRequiredWithoutClassesInput
+  semester: SemesterUpdateOneRequiredWithoutClassesInput
+  period: PeriodUpdateOneRequiredInput
+  mentor: TeacherUpdateOneRequiredWithoutClassesInput
+  department: DepartmentUpdateOneRequiredWithoutClassesInput
+  subject: BookUpdateOneRequiredWithoutClassesInput
+}
+
 input ClassUpdateWithoutDayDataInput {
   semester: SemesterUpdateOneRequiredWithoutClassesInput
   period: PeriodUpdateOneRequiredInput
   mentor: TeacherUpdateOneRequiredWithoutClassesInput
   department: DepartmentUpdateOneRequiredWithoutClassesInput
   subject: BookUpdateOneRequiredWithoutClassesInput
+  attentenceClasses: AttendenceClassUpdateManyWithoutClassInput
 }
 
 input ClassUpdateWithoutDepartmentDataInput {
@@ -1520,6 +2877,7 @@ input ClassUpdateWithoutDepartmentDataInput {
   period: PeriodUpdateOneRequiredInput
   mentor: TeacherUpdateOneRequiredWithoutClassesInput
   subject: BookUpdateOneRequiredWithoutClassesInput
+  attentenceClasses: AttendenceClassUpdateManyWithoutClassInput
 }
 
 input ClassUpdateWithoutMentorDataInput {
@@ -1528,6 +2886,7 @@ input ClassUpdateWithoutMentorDataInput {
   period: PeriodUpdateOneRequiredInput
   department: DepartmentUpdateOneRequiredWithoutClassesInput
   subject: BookUpdateOneRequiredWithoutClassesInput
+  attentenceClasses: AttendenceClassUpdateManyWithoutClassInput
 }
 
 input ClassUpdateWithoutSemesterDataInput {
@@ -1536,6 +2895,7 @@ input ClassUpdateWithoutSemesterDataInput {
   mentor: TeacherUpdateOneRequiredWithoutClassesInput
   department: DepartmentUpdateOneRequiredWithoutClassesInput
   subject: BookUpdateOneRequiredWithoutClassesInput
+  attentenceClasses: AttendenceClassUpdateManyWithoutClassInput
 }
 
 input ClassUpdateWithoutSubjectDataInput {
@@ -1544,6 +2904,7 @@ input ClassUpdateWithoutSubjectDataInput {
   period: PeriodUpdateOneRequiredInput
   mentor: TeacherUpdateOneRequiredWithoutClassesInput
   department: DepartmentUpdateOneRequiredWithoutClassesInput
+  attentenceClasses: AttendenceClassUpdateManyWithoutClassInput
 }
 
 input ClassUpdateWithWhereUniqueWithoutDayInput {
@@ -1569,6 +2930,11 @@ input ClassUpdateWithWhereUniqueWithoutSemesterInput {
 input ClassUpdateWithWhereUniqueWithoutSubjectInput {
   where: ClassWhereUniqueInput!
   data: ClassUpdateWithoutSubjectDataInput!
+}
+
+input ClassUpsertWithoutAttentenceClassesInput {
+  update: ClassUpdateWithoutAttentenceClassesDataInput!
+  create: ClassCreateWithoutAttentenceClassesInput!
 }
 
 input ClassUpsertWithWhereUniqueWithoutDayInput {
@@ -1650,17 +3016,66 @@ input ClassWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   day: DayInWeekWhereInput
   semester: SemesterWhereInput
   period: PeriodWhereInput
   mentor: TeacherWhereInput
   department: DepartmentWhereInput
   subject: BookWhereInput
+  attentenceClasses_every: AttendenceClassWhereInput
+  attentenceClasses_some: AttendenceClassWhereInput
+  attentenceClasses_none: AttendenceClassWhereInput
 }
 
 input ClassWhereUniqueInput {
   id: ID
 }
+
+scalar DateTime
 
 type DayInWeek implements Node {
   id: ID!
@@ -1668,6 +3083,8 @@ type DayInWeek implements Node {
   dayValue: Int!
   day: DayTypes!
   classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -1728,12 +3145,18 @@ enum DayInWeekOrderByInput {
   dayValue_DESC
   day_ASC
   day_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type DayInWeekPreviousValues {
   id: ID!
   dayValue: Int!
   day: DayTypes!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input DayInWeekScalarWhereInput {
@@ -1817,6 +3240,50 @@ input DayInWeekScalarWhereInput {
 
   """All values that are not contained in given list."""
   day_not_in: [DayTypes!]
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
 }
 
 type DayInWeekSubscriptionPayload {
@@ -2006,6 +3473,50 @@ input DayInWeekWhereInput {
 
   """All values that are not contained in given list."""
   day_not_in: [DayTypes!]
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   routine: RoutineWhereInput
   classes_every: ClassWhereInput
   classes_some: ClassWhereInput
@@ -2014,7 +3525,6 @@ input DayInWeekWhereInput {
 
 input DayInWeekWhereUniqueInput {
   id: ID
-  day: DayTypes
 }
 
 enum DayTypes {
@@ -2034,6 +3544,8 @@ type Department implements Node {
   bookLists(where: BookListWhereInput, orderBy: BookListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BookList!]
   routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine!]
   classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -2121,11 +3633,17 @@ enum DepartmentOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type DepartmentPreviousValues {
   id: ID!
   name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type DepartmentSubscriptionPayload {
@@ -2342,6 +3860,50 @@ input DepartmentWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   students_every: StudentWhereInput
   students_some: StudentWhereInput
   students_none: StudentWhereInput
@@ -2371,75 +3933,104 @@ scalar Long
 
 type Mutation {
   createAdmin(data: AdminCreateInput!): Admin!
+  createTeacher(data: TeacherCreateInput!): Teacher!
+  createNote(data: NoteCreateInput!): Note!
+  createNotice(data: NoticeCreateInput!): Notice!
   createDepartment(data: DepartmentCreateInput!): Department!
   createSession(data: SessionCreateInput!): Session!
   createStudent(data: StudentCreateInput!): Student!
   createSemester(data: SemesterCreateInput!): Semester!
   createBookList(data: BookListCreateInput!): BookList!
   createBook(data: BookCreateInput!): Book!
-  createTeacher(data: TeacherCreateInput!): Teacher!
   createRoutine(data: RoutineCreateInput!): Routine!
   createDayInWeek(data: DayInWeekCreateInput!): DayInWeek!
   createClass(data: ClassCreateInput!): Class!
+  createAttendenceDay(data: AttendenceDayCreateInput!): AttendenceDay!
+  createAttendenceClass(data: AttendenceClassCreateInput!): AttendenceClass!
+  createAttendence(data: AttendenceCreateInput!): Attendence!
   createPeriod(data: PeriodCreateInput!): Period!
   updateAdmin(data: AdminUpdateInput!, where: AdminWhereUniqueInput!): Admin
+  updateTeacher(data: TeacherUpdateInput!, where: TeacherWhereUniqueInput!): Teacher
+  updateNote(data: NoteUpdateInput!, where: NoteWhereUniqueInput!): Note
+  updateNotice(data: NoticeUpdateInput!, where: NoticeWhereUniqueInput!): Notice
   updateDepartment(data: DepartmentUpdateInput!, where: DepartmentWhereUniqueInput!): Department
   updateSession(data: SessionUpdateInput!, where: SessionWhereUniqueInput!): Session
   updateStudent(data: StudentUpdateInput!, where: StudentWhereUniqueInput!): Student
   updateSemester(data: SemesterUpdateInput!, where: SemesterWhereUniqueInput!): Semester
   updateBookList(data: BookListUpdateInput!, where: BookListWhereUniqueInput!): BookList
   updateBook(data: BookUpdateInput!, where: BookWhereUniqueInput!): Book
-  updateTeacher(data: TeacherUpdateInput!, where: TeacherWhereUniqueInput!): Teacher
   updateRoutine(data: RoutineUpdateInput!, where: RoutineWhereUniqueInput!): Routine
   updateDayInWeek(data: DayInWeekUpdateInput!, where: DayInWeekWhereUniqueInput!): DayInWeek
   updateClass(data: ClassUpdateInput!, where: ClassWhereUniqueInput!): Class
+  updateAttendenceDay(data: AttendenceDayUpdateInput!, where: AttendenceDayWhereUniqueInput!): AttendenceDay
+  updateAttendenceClass(data: AttendenceClassUpdateInput!, where: AttendenceClassWhereUniqueInput!): AttendenceClass
+  updateAttendence(data: AttendenceUpdateInput!, where: AttendenceWhereUniqueInput!): Attendence
   updatePeriod(data: PeriodUpdateInput!, where: PeriodWhereUniqueInput!): Period
   deleteAdmin(where: AdminWhereUniqueInput!): Admin
+  deleteTeacher(where: TeacherWhereUniqueInput!): Teacher
+  deleteNote(where: NoteWhereUniqueInput!): Note
+  deleteNotice(where: NoticeWhereUniqueInput!): Notice
   deleteDepartment(where: DepartmentWhereUniqueInput!): Department
   deleteSession(where: SessionWhereUniqueInput!): Session
   deleteStudent(where: StudentWhereUniqueInput!): Student
   deleteSemester(where: SemesterWhereUniqueInput!): Semester
   deleteBookList(where: BookListWhereUniqueInput!): BookList
   deleteBook(where: BookWhereUniqueInput!): Book
-  deleteTeacher(where: TeacherWhereUniqueInput!): Teacher
   deleteRoutine(where: RoutineWhereUniqueInput!): Routine
   deleteDayInWeek(where: DayInWeekWhereUniqueInput!): DayInWeek
   deleteClass(where: ClassWhereUniqueInput!): Class
+  deleteAttendenceDay(where: AttendenceDayWhereUniqueInput!): AttendenceDay
+  deleteAttendenceClass(where: AttendenceClassWhereUniqueInput!): AttendenceClass
+  deleteAttendence(where: AttendenceWhereUniqueInput!): Attendence
   deletePeriod(where: PeriodWhereUniqueInput!): Period
   upsertAdmin(where: AdminWhereUniqueInput!, create: AdminCreateInput!, update: AdminUpdateInput!): Admin!
+  upsertTeacher(where: TeacherWhereUniqueInput!, create: TeacherCreateInput!, update: TeacherUpdateInput!): Teacher!
+  upsertNote(where: NoteWhereUniqueInput!, create: NoteCreateInput!, update: NoteUpdateInput!): Note!
+  upsertNotice(where: NoticeWhereUniqueInput!, create: NoticeCreateInput!, update: NoticeUpdateInput!): Notice!
   upsertDepartment(where: DepartmentWhereUniqueInput!, create: DepartmentCreateInput!, update: DepartmentUpdateInput!): Department!
   upsertSession(where: SessionWhereUniqueInput!, create: SessionCreateInput!, update: SessionUpdateInput!): Session!
   upsertStudent(where: StudentWhereUniqueInput!, create: StudentCreateInput!, update: StudentUpdateInput!): Student!
   upsertSemester(where: SemesterWhereUniqueInput!, create: SemesterCreateInput!, update: SemesterUpdateInput!): Semester!
   upsertBookList(where: BookListWhereUniqueInput!, create: BookListCreateInput!, update: BookListUpdateInput!): BookList!
   upsertBook(where: BookWhereUniqueInput!, create: BookCreateInput!, update: BookUpdateInput!): Book!
-  upsertTeacher(where: TeacherWhereUniqueInput!, create: TeacherCreateInput!, update: TeacherUpdateInput!): Teacher!
   upsertRoutine(where: RoutineWhereUniqueInput!, create: RoutineCreateInput!, update: RoutineUpdateInput!): Routine!
   upsertDayInWeek(where: DayInWeekWhereUniqueInput!, create: DayInWeekCreateInput!, update: DayInWeekUpdateInput!): DayInWeek!
   upsertClass(where: ClassWhereUniqueInput!, create: ClassCreateInput!, update: ClassUpdateInput!): Class!
+  upsertAttendenceDay(where: AttendenceDayWhereUniqueInput!, create: AttendenceDayCreateInput!, update: AttendenceDayUpdateInput!): AttendenceDay!
+  upsertAttendenceClass(where: AttendenceClassWhereUniqueInput!, create: AttendenceClassCreateInput!, update: AttendenceClassUpdateInput!): AttendenceClass!
+  upsertAttendence(where: AttendenceWhereUniqueInput!, create: AttendenceCreateInput!, update: AttendenceUpdateInput!): Attendence!
   upsertPeriod(where: PeriodWhereUniqueInput!, create: PeriodCreateInput!, update: PeriodUpdateInput!): Period!
   updateManyAdmins(data: AdminUpdateManyMutationInput!, where: AdminWhereInput): BatchPayload!
+  updateManyTeachers(data: TeacherUpdateManyMutationInput!, where: TeacherWhereInput): BatchPayload!
+  updateManyNotes(data: NoteUpdateManyMutationInput!, where: NoteWhereInput): BatchPayload!
+  updateManyNotices(data: NoticeUpdateManyMutationInput!, where: NoticeWhereInput): BatchPayload!
   updateManyDepartments(data: DepartmentUpdateManyMutationInput!, where: DepartmentWhereInput): BatchPayload!
   updateManySessions(data: SessionUpdateManyMutationInput!, where: SessionWhereInput): BatchPayload!
   updateManyStudents(data: StudentUpdateManyMutationInput!, where: StudentWhereInput): BatchPayload!
   updateManySemesters(data: SemesterUpdateManyMutationInput!, where: SemesterWhereInput): BatchPayload!
   updateManyBookLists(data: BookListUpdateManyMutationInput!, where: BookListWhereInput): BatchPayload!
   updateManyBooks(data: BookUpdateManyMutationInput!, where: BookWhereInput): BatchPayload!
-  updateManyTeachers(data: TeacherUpdateManyMutationInput!, where: TeacherWhereInput): BatchPayload!
   updateManyRoutines(data: RoutineUpdateManyMutationInput!, where: RoutineWhereInput): BatchPayload!
   updateManyDayInWeeks(data: DayInWeekUpdateManyMutationInput!, where: DayInWeekWhereInput): BatchPayload!
+  updateManyAttendenceDays(data: AttendenceDayUpdateManyMutationInput!, where: AttendenceDayWhereInput): BatchPayload!
+  updateManyAttendences(data: AttendenceUpdateManyMutationInput!, where: AttendenceWhereInput): BatchPayload!
   updateManyPeriods(data: PeriodUpdateManyMutationInput!, where: PeriodWhereInput): BatchPayload!
   deleteManyAdmins(where: AdminWhereInput): BatchPayload!
+  deleteManyTeachers(where: TeacherWhereInput): BatchPayload!
+  deleteManyNotes(where: NoteWhereInput): BatchPayload!
+  deleteManyNotices(where: NoticeWhereInput): BatchPayload!
   deleteManyDepartments(where: DepartmentWhereInput): BatchPayload!
   deleteManySessions(where: SessionWhereInput): BatchPayload!
   deleteManyStudents(where: StudentWhereInput): BatchPayload!
   deleteManySemesters(where: SemesterWhereInput): BatchPayload!
   deleteManyBookLists(where: BookListWhereInput): BatchPayload!
   deleteManyBooks(where: BookWhereInput): BatchPayload!
-  deleteManyTeachers(where: TeacherWhereInput): BatchPayload!
   deleteManyRoutines(where: RoutineWhereInput): BatchPayload!
   deleteManyDayInWeeks(where: DayInWeekWhereInput): BatchPayload!
   deleteManyClasses(where: ClassWhereInput): BatchPayload!
+  deleteManyAttendenceDays(where: AttendenceDayWhereInput): BatchPayload!
+  deleteManyAttendenceClasses(where: AttendenceClassWhereInput): BatchPayload!
+  deleteManyAttendences(where: AttendenceWhereInput): BatchPayload!
   deleteManyPeriods(where: PeriodWhereInput): BatchPayload!
   executeRaw(database: PrismaDatabase, query: String!): Json!
 }
@@ -2454,6 +4045,794 @@ enum MutationType {
 interface Node {
   """The id of the object."""
   id: ID!
+}
+
+type Note implements Node {
+  id: ID!
+  title: String!
+  text: String!
+  author: Student!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type NoteConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [NoteEdge]!
+  aggregate: AggregateNote!
+}
+
+input NoteCreateInput {
+  id: ID
+  title: String!
+  text: String!
+  author: StudentCreateOneWithoutNotesInput!
+}
+
+input NoteCreateManyWithoutAuthorInput {
+  create: [NoteCreateWithoutAuthorInput!]
+  connect: [NoteWhereUniqueInput!]
+}
+
+input NoteCreateWithoutAuthorInput {
+  id: ID
+  title: String!
+  text: String!
+}
+
+"""An edge in a connection."""
+type NoteEdge {
+  """The item at the end of the edge."""
+  node: Note!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum NoteOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  text_ASC
+  text_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type NotePreviousValues {
+  id: ID!
+  title: String!
+  text: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input NoteScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [NoteScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [NoteScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [NoteScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  text: String
+
+  """All values that are not equal to given value."""
+  text_not: String
+
+  """All values that are contained in given list."""
+  text_in: [String!]
+
+  """All values that are not contained in given list."""
+  text_not_in: [String!]
+
+  """All values less than the given value."""
+  text_lt: String
+
+  """All values less than or equal the given value."""
+  text_lte: String
+
+  """All values greater than the given value."""
+  text_gt: String
+
+  """All values greater than or equal the given value."""
+  text_gte: String
+
+  """All values containing the given string."""
+  text_contains: String
+
+  """All values not containing the given string."""
+  text_not_contains: String
+
+  """All values starting with the given string."""
+  text_starts_with: String
+
+  """All values not starting with the given string."""
+  text_not_starts_with: String
+
+  """All values ending with the given string."""
+  text_ends_with: String
+
+  """All values not ending with the given string."""
+  text_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+}
+
+type NoteSubscriptionPayload {
+  mutation: MutationType!
+  node: Note
+  updatedFields: [String!]
+  previousValues: NotePreviousValues
+}
+
+input NoteSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [NoteSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [NoteSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [NoteSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: NoteWhereInput
+}
+
+input NoteUpdateInput {
+  title: String
+  text: String
+  author: StudentUpdateOneRequiredWithoutNotesInput
+}
+
+input NoteUpdateManyDataInput {
+  title: String
+  text: String
+}
+
+input NoteUpdateManyMutationInput {
+  title: String
+  text: String
+}
+
+input NoteUpdateManyWithoutAuthorInput {
+  create: [NoteCreateWithoutAuthorInput!]
+  connect: [NoteWhereUniqueInput!]
+  set: [NoteWhereUniqueInput!]
+  disconnect: [NoteWhereUniqueInput!]
+  delete: [NoteWhereUniqueInput!]
+  update: [NoteUpdateWithWhereUniqueWithoutAuthorInput!]
+  updateMany: [NoteUpdateManyWithWhereNestedInput!]
+  deleteMany: [NoteScalarWhereInput!]
+  upsert: [NoteUpsertWithWhereUniqueWithoutAuthorInput!]
+}
+
+input NoteUpdateManyWithWhereNestedInput {
+  where: NoteScalarWhereInput!
+  data: NoteUpdateManyDataInput!
+}
+
+input NoteUpdateWithoutAuthorDataInput {
+  title: String
+  text: String
+}
+
+input NoteUpdateWithWhereUniqueWithoutAuthorInput {
+  where: NoteWhereUniqueInput!
+  data: NoteUpdateWithoutAuthorDataInput!
+}
+
+input NoteUpsertWithWhereUniqueWithoutAuthorInput {
+  where: NoteWhereUniqueInput!
+  update: NoteUpdateWithoutAuthorDataInput!
+  create: NoteCreateWithoutAuthorInput!
+}
+
+input NoteWhereInput {
+  """Logical AND on all given filters."""
+  AND: [NoteWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [NoteWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [NoteWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  text: String
+
+  """All values that are not equal to given value."""
+  text_not: String
+
+  """All values that are contained in given list."""
+  text_in: [String!]
+
+  """All values that are not contained in given list."""
+  text_not_in: [String!]
+
+  """All values less than the given value."""
+  text_lt: String
+
+  """All values less than or equal the given value."""
+  text_lte: String
+
+  """All values greater than the given value."""
+  text_gt: String
+
+  """All values greater than or equal the given value."""
+  text_gte: String
+
+  """All values containing the given string."""
+  text_contains: String
+
+  """All values not containing the given string."""
+  text_not_contains: String
+
+  """All values starting with the given string."""
+  text_starts_with: String
+
+  """All values not starting with the given string."""
+  text_not_starts_with: String
+
+  """All values ending with the given string."""
+  text_ends_with: String
+
+  """All values not ending with the given string."""
+  text_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  author: StudentWhereInput
+}
+
+input NoteWhereUniqueInput {
+  id: ID
+}
+
+type Notice implements Node {
+  id: ID!
+  title: String!
+  text: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type NoticeConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [NoticeEdge]!
+  aggregate: AggregateNotice!
+}
+
+input NoticeCreateInput {
+  id: ID
+  title: String!
+  text: String!
+}
+
+"""An edge in a connection."""
+type NoticeEdge {
+  """The item at the end of the edge."""
+  node: Notice!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum NoticeOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  text_ASC
+  text_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type NoticePreviousValues {
+  id: ID!
+  title: String!
+  text: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type NoticeSubscriptionPayload {
+  mutation: MutationType!
+  node: Notice
+  updatedFields: [String!]
+  previousValues: NoticePreviousValues
+}
+
+input NoticeSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [NoticeSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [NoticeSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [NoticeSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: NoticeWhereInput
+}
+
+input NoticeUpdateInput {
+  title: String
+  text: String
+}
+
+input NoticeUpdateManyMutationInput {
+  title: String
+  text: String
+}
+
+input NoticeWhereInput {
+  """Logical AND on all given filters."""
+  AND: [NoticeWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [NoticeWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [NoticeWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  text: String
+
+  """All values that are not equal to given value."""
+  text_not: String
+
+  """All values that are contained in given list."""
+  text_in: [String!]
+
+  """All values that are not contained in given list."""
+  text_not_in: [String!]
+
+  """All values less than the given value."""
+  text_lt: String
+
+  """All values less than or equal the given value."""
+  text_lte: String
+
+  """All values greater than the given value."""
+  text_gt: String
+
+  """All values greater than or equal the given value."""
+  text_gte: String
+
+  """All values containing the given string."""
+  text_contains: String
+
+  """All values not containing the given string."""
+  text_not_contains: String
+
+  """All values starting with the given string."""
+  text_starts_with: String
+
+  """All values not starting with the given string."""
+  text_not_starts_with: String
+
+  """All values ending with the given string."""
+  text_ends_with: String
+
+  """All values not ending with the given string."""
+  text_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+}
+
+input NoticeWhereUniqueInput {
+  id: ID
 }
 
 """Information about pagination in a connection."""
@@ -2476,6 +4855,8 @@ type Period implements Node {
   time: Int!
   startedAt: String!
   endAt: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -2518,6 +4899,10 @@ enum PeriodOrderByInput {
   startedAt_DESC
   endAt_ASC
   endAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type PeriodPreviousValues {
@@ -2525,6 +4910,8 @@ type PeriodPreviousValues {
   time: Int!
   startedAt: String!
   endAt: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type PeriodSubscriptionPayload {
@@ -2745,6 +5132,50 @@ input PeriodWhereInput {
 
   """All values not ending with the given string."""
   endAt_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
 }
 
 input PeriodWhereUniqueInput {
@@ -2757,40 +5188,55 @@ enum PrismaDatabase {
 
 type Query {
   admins(where: AdminWhereInput, orderBy: AdminOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Admin]!
+  teachers(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Teacher]!
+  notes(where: NoteWhereInput, orderBy: NoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Note]!
+  notices(where: NoticeWhereInput, orderBy: NoticeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notice]!
   departments(where: DepartmentWhereInput, orderBy: DepartmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Department]!
   sessions(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Session]!
   students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student]!
   semesters(where: SemesterWhereInput, orderBy: SemesterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Semester]!
   bookLists(where: BookListWhereInput, orderBy: BookListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BookList]!
   books(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Book]!
-  teachers(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Teacher]!
   routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine]!
   dayInWeeks(where: DayInWeekWhereInput, orderBy: DayInWeekOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DayInWeek]!
   classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class]!
+  attendenceDays(where: AttendenceDayWhereInput, orderBy: AttendenceDayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AttendenceDay]!
+  attendenceClasses(where: AttendenceClassWhereInput, orderBy: AttendenceClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AttendenceClass]!
+  attendences(where: AttendenceWhereInput, orderBy: AttendenceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attendence]!
   periods(where: PeriodWhereInput, orderBy: PeriodOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Period]!
   admin(where: AdminWhereUniqueInput!): Admin
+  teacher(where: TeacherWhereUniqueInput!): Teacher
+  note(where: NoteWhereUniqueInput!): Note
+  notice(where: NoticeWhereUniqueInput!): Notice
   department(where: DepartmentWhereUniqueInput!): Department
   session(where: SessionWhereUniqueInput!): Session
   student(where: StudentWhereUniqueInput!): Student
   semester(where: SemesterWhereUniqueInput!): Semester
   bookList(where: BookListWhereUniqueInput!): BookList
   book(where: BookWhereUniqueInput!): Book
-  teacher(where: TeacherWhereUniqueInput!): Teacher
   routine(where: RoutineWhereUniqueInput!): Routine
   dayInWeek(where: DayInWeekWhereUniqueInput!): DayInWeek
   class(where: ClassWhereUniqueInput!): Class
+  attendenceDay(where: AttendenceDayWhereUniqueInput!): AttendenceDay
+  attendenceClass(where: AttendenceClassWhereUniqueInput!): AttendenceClass
+  attendence(where: AttendenceWhereUniqueInput!): Attendence
   period(where: PeriodWhereUniqueInput!): Period
   adminsConnection(where: AdminWhereInput, orderBy: AdminOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AdminConnection!
+  teachersConnection(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeacherConnection!
+  notesConnection(where: NoteWhereInput, orderBy: NoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): NoteConnection!
+  noticesConnection(where: NoticeWhereInput, orderBy: NoticeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): NoticeConnection!
   departmentsConnection(where: DepartmentWhereInput, orderBy: DepartmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DepartmentConnection!
   sessionsConnection(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SessionConnection!
   studentsConnection(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StudentConnection!
   semestersConnection(where: SemesterWhereInput, orderBy: SemesterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SemesterConnection!
   bookListsConnection(where: BookListWhereInput, orderBy: BookListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BookListConnection!
   booksConnection(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BookConnection!
-  teachersConnection(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeacherConnection!
   routinesConnection(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoutineConnection!
   dayInWeeksConnection(where: DayInWeekWhereInput, orderBy: DayInWeekOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DayInWeekConnection!
   classesConnection(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ClassConnection!
+  attendenceDaysConnection(where: AttendenceDayWhereInput, orderBy: AttendenceDayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AttendenceDayConnection!
+  attendenceClassesConnection(where: AttendenceClassWhereInput, orderBy: AttendenceClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AttendenceClassConnection!
+  attendencesConnection(where: AttendenceWhereInput, orderBy: AttendenceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AttendenceConnection!
   periodsConnection(where: PeriodWhereInput, orderBy: PeriodOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PeriodConnection!
 
   """Fetches an object given its ID"""
@@ -2808,6 +5254,8 @@ type Routine implements Node {
   department: Department!
   shift: ShiftTypes!
   days(where: DayInWeekWhereInput, orderBy: DayInWeekOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DayInWeek!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -2902,12 +5350,18 @@ enum RoutineOrderByInput {
   title_DESC
   shift_ASC
   shift_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type RoutinePreviousValues {
   id: ID!
   title: String!
   shift: ShiftTypes!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input RoutineScalarWhereInput {
@@ -3009,6 +5463,50 @@ input RoutineScalarWhereInput {
 
   """All values that are not contained in given list."""
   shift_not_in: [ShiftTypes!]
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
 }
 
 type RoutineSubscriptionPayload {
@@ -3284,6 +5782,50 @@ input RoutineWhereInput {
 
   """All values that are not contained in given list."""
   shift_not_in: [ShiftTypes!]
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   session: SessionWhereInput
   semester: SemesterWhereInput
   department: DepartmentWhereInput
@@ -3303,6 +5845,8 @@ type Semester implements Node {
   routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine!]
   classes(where: ClassWhereInput, orderBy: ClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Class!]
   bookLists(where: BookListWhereInput, orderBy: BookListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BookList!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -3390,11 +5934,17 @@ enum SemesterOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type SemesterPreviousValues {
   id: ID!
   name: SemesterTypes!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type SemesterSubscriptionPayload {
@@ -3592,6 +6142,50 @@ input SemesterWhereInput {
 
   """All values that are not contained in given list."""
   name_not_in: [SemesterTypes!]
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   students_every: StudentWhereInput
   students_some: StudentWhereInput
   students_none: StudentWhereInput
@@ -3616,6 +6210,8 @@ type Session implements Node {
   year: String!
   students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student!]
   routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -3671,11 +6267,17 @@ enum SessionOrderByInput {
   id_DESC
   year_ASC
   year_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type SessionPreviousValues {
   id: ID!
   year: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type SessionSubscriptionPayload {
@@ -3848,6 +6450,50 @@ input SessionWhereInput {
 
   """All values not ending with the given string."""
   year_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   students_every: StudentWhereInput
   students_some: StudentWhereInput
   students_none: StudentWhereInput
@@ -3863,7 +6509,7 @@ input SessionWhereUniqueInput {
 
 enum ShiftTypes {
   MORNING
-  EVENING
+  DAY
 }
 
 type Student implements Node {
@@ -3879,6 +6525,10 @@ type Student implements Node {
   department: Department!
   semester: Semester!
   password: String!
+  notes(where: NoteWhereInput, orderBy: NoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Note!]
+  attendences(where: AttendenceWhereInput, orderBy: AttendenceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attendence!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -3904,6 +6554,8 @@ input StudentCreateInput {
   session: SessionCreateOneWithoutStudentsInput!
   department: DepartmentCreateOneWithoutStudentsInput!
   semester: SemesterCreateOneWithoutStudentsInput!
+  notes: NoteCreateManyWithoutAuthorInput
+  attendences: AttendenceCreateManyWithoutStudentInput
 }
 
 input StudentCreateManyWithoutDepartmentInput {
@@ -3921,6 +6573,32 @@ input StudentCreateManyWithoutSessionInput {
   connect: [StudentWhereUniqueInput!]
 }
 
+input StudentCreateOneWithoutAttendencesInput {
+  create: StudentCreateWithoutAttendencesInput
+  connect: StudentWhereUniqueInput
+}
+
+input StudentCreateOneWithoutNotesInput {
+  create: StudentCreateWithoutNotesInput
+  connect: StudentWhereUniqueInput
+}
+
+input StudentCreateWithoutAttendencesInput {
+  id: ID
+  name: String!
+  email: String!
+  roll: String!
+  reg: String!
+  address: String!
+  phone: String!
+  shift: ShiftTypes!
+  password: String!
+  session: SessionCreateOneWithoutStudentsInput!
+  department: DepartmentCreateOneWithoutStudentsInput!
+  semester: SemesterCreateOneWithoutStudentsInput!
+  notes: NoteCreateManyWithoutAuthorInput
+}
+
 input StudentCreateWithoutDepartmentInput {
   id: ID
   name: String!
@@ -3933,6 +6611,24 @@ input StudentCreateWithoutDepartmentInput {
   password: String!
   session: SessionCreateOneWithoutStudentsInput!
   semester: SemesterCreateOneWithoutStudentsInput!
+  notes: NoteCreateManyWithoutAuthorInput
+  attendences: AttendenceCreateManyWithoutStudentInput
+}
+
+input StudentCreateWithoutNotesInput {
+  id: ID
+  name: String!
+  email: String!
+  roll: String!
+  reg: String!
+  address: String!
+  phone: String!
+  shift: ShiftTypes!
+  password: String!
+  session: SessionCreateOneWithoutStudentsInput!
+  department: DepartmentCreateOneWithoutStudentsInput!
+  semester: SemesterCreateOneWithoutStudentsInput!
+  attendences: AttendenceCreateManyWithoutStudentInput
 }
 
 input StudentCreateWithoutSemesterInput {
@@ -3947,6 +6643,8 @@ input StudentCreateWithoutSemesterInput {
   password: String!
   session: SessionCreateOneWithoutStudentsInput!
   department: DepartmentCreateOneWithoutStudentsInput!
+  notes: NoteCreateManyWithoutAuthorInput
+  attendences: AttendenceCreateManyWithoutStudentInput
 }
 
 input StudentCreateWithoutSessionInput {
@@ -3961,6 +6659,8 @@ input StudentCreateWithoutSessionInput {
   password: String!
   department: DepartmentCreateOneWithoutStudentsInput!
   semester: SemesterCreateOneWithoutStudentsInput!
+  notes: NoteCreateManyWithoutAuthorInput
+  attendences: AttendenceCreateManyWithoutStudentInput
 }
 
 """An edge in a connection."""
@@ -3991,6 +6691,10 @@ enum StudentOrderByInput {
   shift_DESC
   password_ASC
   password_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type StudentPreviousValues {
@@ -4003,6 +6707,8 @@ type StudentPreviousValues {
   phone: String!
   shift: ShiftTypes!
   password: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input StudentScalarWhereInput {
@@ -4344,6 +7050,50 @@ input StudentScalarWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
 }
 
 type StudentSubscriptionPayload {
@@ -4395,6 +7145,8 @@ input StudentUpdateInput {
   session: SessionUpdateOneRequiredWithoutStudentsInput
   department: DepartmentUpdateOneRequiredWithoutStudentsInput
   semester: SemesterUpdateOneRequiredWithoutStudentsInput
+  notes: NoteUpdateManyWithoutAuthorInput
+  attendences: AttendenceUpdateManyWithoutStudentInput
 }
 
 input StudentUpdateManyDataInput {
@@ -4460,6 +7212,35 @@ input StudentUpdateManyWithWhereNestedInput {
   data: StudentUpdateManyDataInput!
 }
 
+input StudentUpdateOneRequiredWithoutAttendencesInput {
+  create: StudentCreateWithoutAttendencesInput
+  connect: StudentWhereUniqueInput
+  update: StudentUpdateWithoutAttendencesDataInput
+  upsert: StudentUpsertWithoutAttendencesInput
+}
+
+input StudentUpdateOneRequiredWithoutNotesInput {
+  create: StudentCreateWithoutNotesInput
+  connect: StudentWhereUniqueInput
+  update: StudentUpdateWithoutNotesDataInput
+  upsert: StudentUpsertWithoutNotesInput
+}
+
+input StudentUpdateWithoutAttendencesDataInput {
+  name: String
+  email: String
+  roll: String
+  reg: String
+  address: String
+  phone: String
+  shift: ShiftTypes
+  password: String
+  session: SessionUpdateOneRequiredWithoutStudentsInput
+  department: DepartmentUpdateOneRequiredWithoutStudentsInput
+  semester: SemesterUpdateOneRequiredWithoutStudentsInput
+  notes: NoteUpdateManyWithoutAuthorInput
+}
+
 input StudentUpdateWithoutDepartmentDataInput {
   name: String
   email: String
@@ -4471,6 +7252,23 @@ input StudentUpdateWithoutDepartmentDataInput {
   password: String
   session: SessionUpdateOneRequiredWithoutStudentsInput
   semester: SemesterUpdateOneRequiredWithoutStudentsInput
+  notes: NoteUpdateManyWithoutAuthorInput
+  attendences: AttendenceUpdateManyWithoutStudentInput
+}
+
+input StudentUpdateWithoutNotesDataInput {
+  name: String
+  email: String
+  roll: String
+  reg: String
+  address: String
+  phone: String
+  shift: ShiftTypes
+  password: String
+  session: SessionUpdateOneRequiredWithoutStudentsInput
+  department: DepartmentUpdateOneRequiredWithoutStudentsInput
+  semester: SemesterUpdateOneRequiredWithoutStudentsInput
+  attendences: AttendenceUpdateManyWithoutStudentInput
 }
 
 input StudentUpdateWithoutSemesterDataInput {
@@ -4484,6 +7282,8 @@ input StudentUpdateWithoutSemesterDataInput {
   password: String
   session: SessionUpdateOneRequiredWithoutStudentsInput
   department: DepartmentUpdateOneRequiredWithoutStudentsInput
+  notes: NoteUpdateManyWithoutAuthorInput
+  attendences: AttendenceUpdateManyWithoutStudentInput
 }
 
 input StudentUpdateWithoutSessionDataInput {
@@ -4497,6 +7297,8 @@ input StudentUpdateWithoutSessionDataInput {
   password: String
   department: DepartmentUpdateOneRequiredWithoutStudentsInput
   semester: SemesterUpdateOneRequiredWithoutStudentsInput
+  notes: NoteUpdateManyWithoutAuthorInput
+  attendences: AttendenceUpdateManyWithoutStudentInput
 }
 
 input StudentUpdateWithWhereUniqueWithoutDepartmentInput {
@@ -4512,6 +7314,16 @@ input StudentUpdateWithWhereUniqueWithoutSemesterInput {
 input StudentUpdateWithWhereUniqueWithoutSessionInput {
   where: StudentWhereUniqueInput!
   data: StudentUpdateWithoutSessionDataInput!
+}
+
+input StudentUpsertWithoutAttendencesInput {
+  update: StudentUpdateWithoutAttendencesDataInput!
+  create: StudentCreateWithoutAttendencesInput!
+}
+
+input StudentUpsertWithoutNotesInput {
+  update: StudentUpdateWithoutNotesDataInput!
+  create: StudentCreateWithoutNotesInput!
 }
 
 input StudentUpsertWithWhereUniqueWithoutDepartmentInput {
@@ -4871,9 +7683,59 @@ input StudentWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   session: SessionWhereInput
   department: DepartmentWhereInput
   semester: SemesterWhereInput
+  notes_every: NoteWhereInput
+  notes_some: NoteWhereInput
+  notes_none: NoteWhereInput
+  attendences_every: AttendenceWhereInput
+  attendences_some: AttendenceWhereInput
+  attendences_none: AttendenceWhereInput
 }
 
 input StudentWhereUniqueInput {
@@ -4885,16 +7747,21 @@ input StudentWhereUniqueInput {
 
 type Subscription {
   admin(where: AdminSubscriptionWhereInput): AdminSubscriptionPayload
+  teacher(where: TeacherSubscriptionWhereInput): TeacherSubscriptionPayload
+  note(where: NoteSubscriptionWhereInput): NoteSubscriptionPayload
+  notice(where: NoticeSubscriptionWhereInput): NoticeSubscriptionPayload
   department(where: DepartmentSubscriptionWhereInput): DepartmentSubscriptionPayload
   session(where: SessionSubscriptionWhereInput): SessionSubscriptionPayload
   student(where: StudentSubscriptionWhereInput): StudentSubscriptionPayload
   semester(where: SemesterSubscriptionWhereInput): SemesterSubscriptionPayload
   bookList(where: BookListSubscriptionWhereInput): BookListSubscriptionPayload
   book(where: BookSubscriptionWhereInput): BookSubscriptionPayload
-  teacher(where: TeacherSubscriptionWhereInput): TeacherSubscriptionPayload
   routine(where: RoutineSubscriptionWhereInput): RoutineSubscriptionPayload
   dayInWeek(where: DayInWeekSubscriptionWhereInput): DayInWeekSubscriptionPayload
   class(where: ClassSubscriptionWhereInput): ClassSubscriptionPayload
+  attendenceDay(where: AttendenceDaySubscriptionWhereInput): AttendenceDaySubscriptionPayload
+  attendenceClass(where: AttendenceClassSubscriptionWhereInput): AttendenceClassSubscriptionPayload
+  attendence(where: AttendenceSubscriptionWhereInput): AttendenceSubscriptionPayload
   period(where: PeriodSubscriptionWhereInput): PeriodSubscriptionPayload
 }
 
