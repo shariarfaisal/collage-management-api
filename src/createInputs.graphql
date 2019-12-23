@@ -1,3 +1,14 @@
+input CreateInputAttendenceClass{
+  class: ID!
+  date: String!
+}
+
+input CreateAttendenceInput{
+  class: ID!
+  student: ID!
+  present: Boolean!
+}
+
 input CreateInputAttendenceDay{
   date: String!
 }

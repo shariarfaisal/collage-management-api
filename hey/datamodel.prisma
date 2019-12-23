@@ -153,7 +153,7 @@ type Class{
   mentor: Teacher! @relation(name: "TeacherToClass",onDelete: SET_NULL)
   department: Department! @relation(name: "DepartmentToClass",onDelete: SET_NULL)
   subject: Book! @relation(name: "BookToClass",onDelete: SET_NULL)
-  attentenceClasses: [AttendenceClass!]! @relation(name: "ClassToAttendenceClass",onDelete: SET_NULL)
+  attendenceClasses: [AttendenceClass!]! @relation(name: "ClassToAttendenceClass",onDelete: SET_NULL)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

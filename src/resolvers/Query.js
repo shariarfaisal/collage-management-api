@@ -14,6 +14,8 @@ import info from './queries/info'
 import notice from './queries/notice'
 import note from './queries/note'
 import attendenceDay from './queries/attendenceDay'
+import attendence from './queries/attendence'
+import attendenceClass from './queries/attendenceClass'
 
 
 const Query = {
@@ -33,6 +35,8 @@ const Query = {
   ...note,
   ...session,
   ...attendenceDay,
+  ...attendence,
+  ...attendenceClass,
 }
 
 export default Query

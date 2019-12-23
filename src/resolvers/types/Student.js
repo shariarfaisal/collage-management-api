@@ -36,5 +36,20 @@ export default {
       return null
     }
     return parent.address
+  },
+  bookLists:{
+    fragment:'fragment depId on Student{ department{ id } semester{ id }}',
+    resolve(parent,args,{ prisma, req },info){
+      return prisma.query.bookLists({
+        where:{
+          department:{
+            id: parent.department.id
+          },
+          semester:{
+            id: parent.semester.id
+          }
+        }
+      },info)
+    }
   }
 }

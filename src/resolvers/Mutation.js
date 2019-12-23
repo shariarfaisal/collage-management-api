@@ -13,6 +13,8 @@ import DayInWeek from './mutations/DayInWeek'
 import Notice from './mutations/Notice'
 import Note from './mutations/Note'
 import AttendenceDay from './mutations/AttendenceDay'
+import AttendenceClass from './mutations/AttendenceClass'
+import Attendence from './mutations/Attendence'
 
 const Mutation = {
   ...Admin,
@@ -30,6 +32,8 @@ const Mutation = {
   ...Notice,
   ...Note,
   ...AttendenceDay,
+  ...AttendenceClass,
+  ...Attendence,
 }
 
 export default Mutation

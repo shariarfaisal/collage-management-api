@@ -12,7 +12,8 @@ const server = new GraphQLServer({
       prisma,
       req
     }
-  }
+  },
+  fragmentReplacements
 })
 
 server.start(()=> {

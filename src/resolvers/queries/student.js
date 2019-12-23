@@ -26,10 +26,12 @@ const student = {
     if(args.semester){
       ops.semester = { id: args.semester}
     }
+    if(args.shift){
+      ops.shift = args.shift
+    }
     if(Object.keys(args).length !== 0){
       opArgs.where = ops
     }
-    console.log(opArgs.where);
     const students = await prisma.query.students(opArgs,info)
     return students
   },

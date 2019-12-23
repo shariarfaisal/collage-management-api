@@ -1,17 +1,24 @@
 import getAdminId from '../../utils/getAdminId'
 
 export default {
-  createAttendenceDay(parent,args,{ prisma, req},info){
+  async createAttendenceDay(parent,args,{ prisma, req},info){
     const adminId = getAdminId(req)
     const { date } = args.data
-
+    console.log(date);
+    const exists = await prisma.exists.AttendenceDay({ date })
+    if(exists){
+      throw new Error('Date already exists!')
+    }
     return prisma.mutation.createAttendenceDay({
-      data:{ data }
+      data:{ date }
     },info)
   },
-  updateAttendenceDay(parent,args,{ prisma,req },info){
+  async updateAttendenceDay(parent,args,{ prisma,req },info){
     const adminId = getAdminId(req)
-
+    const exists = await prisma.exists.AttendenceDay({ date: args.data.date })
+    if(exists){
+      throw new Error('Date already exists!')
+    }
     return prisma.mutation.updateAttendenceDay({
       data: args.data,
       where: { id: args.id }

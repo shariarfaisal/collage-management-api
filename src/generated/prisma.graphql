@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Wed Nov 27 2019 12:08:37 GMT+0600 (+06)
+# timestamp: Tue Dec 03 2019 23:21:52 GMT+0600 (+06)
 
 type Admin implements Node {
   id: ID!
@@ -425,7 +425,7 @@ type AttendenceClassConnection {
 input AttendenceClassCreateInput {
   id: ID
   day: AttendenceDayCreateOneWithoutClassesInput!
-  class: ClassCreateOneWithoutAttentenceClassesInput!
+  class: ClassCreateOneWithoutAttendenceClassesInput!
   attendences: AttendenceCreateManyWithoutClassInput
 }
 
@@ -447,7 +447,7 @@ input AttendenceClassCreateOneWithoutAttendencesInput {
 input AttendenceClassCreateWithoutAttendencesInput {
   id: ID
   day: AttendenceDayCreateOneWithoutClassesInput!
-  class: ClassCreateOneWithoutAttentenceClassesInput!
+  class: ClassCreateOneWithoutAttendenceClassesInput!
 }
 
 input AttendenceClassCreateWithoutClassInput {
@@ -458,7 +458,7 @@ input AttendenceClassCreateWithoutClassInput {
 
 input AttendenceClassCreateWithoutDayInput {
   id: ID
-  class: ClassCreateOneWithoutAttentenceClassesInput!
+  class: ClassCreateOneWithoutAttendenceClassesInput!
   attendences: AttendenceCreateManyWithoutClassInput
 }
 
@@ -620,7 +620,7 @@ input AttendenceClassSubscriptionWhereInput {
 
 input AttendenceClassUpdateInput {
   day: AttendenceDayUpdateOneRequiredWithoutClassesInput
-  class: ClassUpdateOneRequiredWithoutAttentenceClassesInput
+  class: ClassUpdateOneRequiredWithoutAttendenceClassesInput
   attendences: AttendenceUpdateManyWithoutClassInput
 }
 
@@ -655,7 +655,7 @@ input AttendenceClassUpdateOneRequiredWithoutAttendencesInput {
 
 input AttendenceClassUpdateWithoutAttendencesDataInput {
   day: AttendenceDayUpdateOneRequiredWithoutClassesInput
-  class: ClassUpdateOneRequiredWithoutAttentenceClassesInput
+  class: ClassUpdateOneRequiredWithoutAttendenceClassesInput
 }
 
 input AttendenceClassUpdateWithoutClassDataInput {
@@ -664,7 +664,7 @@ input AttendenceClassUpdateWithoutClassDataInput {
 }
 
 input AttendenceClassUpdateWithoutDayDataInput {
-  class: ClassUpdateOneRequiredWithoutAttentenceClassesInput
+  class: ClassUpdateOneRequiredWithoutAttendenceClassesInput
   attendences: AttendenceUpdateManyWithoutClassInput
 }
 
@@ -2509,7 +2509,7 @@ type Class implements Node {
   mentor: Teacher!
   department: Department!
   subject: Book!
-  attentenceClasses(where: AttendenceClassWhereInput, orderBy: AttendenceClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AttendenceClass!]
+  attendenceClasses(where: AttendenceClassWhereInput, orderBy: AttendenceClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AttendenceClass!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -2532,7 +2532,7 @@ input ClassCreateInput {
   mentor: TeacherCreateOneWithoutClassesInput!
   department: DepartmentCreateOneWithoutClassesInput!
   subject: BookCreateOneWithoutClassesInput!
-  attentenceClasses: AttendenceClassCreateManyWithoutClassInput
+  attendenceClasses: AttendenceClassCreateManyWithoutClassInput
 }
 
 input ClassCreateManyWithoutDayInput {
@@ -2560,12 +2560,12 @@ input ClassCreateManyWithoutSubjectInput {
   connect: [ClassWhereUniqueInput!]
 }
 
-input ClassCreateOneWithoutAttentenceClassesInput {
-  create: ClassCreateWithoutAttentenceClassesInput
+input ClassCreateOneWithoutAttendenceClassesInput {
+  create: ClassCreateWithoutAttendenceClassesInput
   connect: ClassWhereUniqueInput
 }
 
-input ClassCreateWithoutAttentenceClassesInput {
+input ClassCreateWithoutAttendenceClassesInput {
   id: ID
   day: DayInWeekCreateOneWithoutClassesInput!
   semester: SemesterCreateOneWithoutClassesInput!
@@ -2582,7 +2582,7 @@ input ClassCreateWithoutDayInput {
   mentor: TeacherCreateOneWithoutClassesInput!
   department: DepartmentCreateOneWithoutClassesInput!
   subject: BookCreateOneWithoutClassesInput!
-  attentenceClasses: AttendenceClassCreateManyWithoutClassInput
+  attendenceClasses: AttendenceClassCreateManyWithoutClassInput
 }
 
 input ClassCreateWithoutDepartmentInput {
@@ -2592,7 +2592,7 @@ input ClassCreateWithoutDepartmentInput {
   period: PeriodCreateOneInput!
   mentor: TeacherCreateOneWithoutClassesInput!
   subject: BookCreateOneWithoutClassesInput!
-  attentenceClasses: AttendenceClassCreateManyWithoutClassInput
+  attendenceClasses: AttendenceClassCreateManyWithoutClassInput
 }
 
 input ClassCreateWithoutMentorInput {
@@ -2602,7 +2602,7 @@ input ClassCreateWithoutMentorInput {
   period: PeriodCreateOneInput!
   department: DepartmentCreateOneWithoutClassesInput!
   subject: BookCreateOneWithoutClassesInput!
-  attentenceClasses: AttendenceClassCreateManyWithoutClassInput
+  attendenceClasses: AttendenceClassCreateManyWithoutClassInput
 }
 
 input ClassCreateWithoutSemesterInput {
@@ -2612,7 +2612,7 @@ input ClassCreateWithoutSemesterInput {
   mentor: TeacherCreateOneWithoutClassesInput!
   department: DepartmentCreateOneWithoutClassesInput!
   subject: BookCreateOneWithoutClassesInput!
-  attentenceClasses: AttendenceClassCreateManyWithoutClassInput
+  attendenceClasses: AttendenceClassCreateManyWithoutClassInput
 }
 
 input ClassCreateWithoutSubjectInput {
@@ -2622,7 +2622,7 @@ input ClassCreateWithoutSubjectInput {
   period: PeriodCreateOneInput!
   mentor: TeacherCreateOneWithoutClassesInput!
   department: DepartmentCreateOneWithoutClassesInput!
-  attentenceClasses: AttendenceClassCreateManyWithoutClassInput
+  attendenceClasses: AttendenceClassCreateManyWithoutClassInput
 }
 
 """An edge in a connection."""
@@ -2788,7 +2788,7 @@ input ClassUpdateInput {
   mentor: TeacherUpdateOneRequiredWithoutClassesInput
   department: DepartmentUpdateOneRequiredWithoutClassesInput
   subject: BookUpdateOneRequiredWithoutClassesInput
-  attentenceClasses: AttendenceClassUpdateManyWithoutClassInput
+  attendenceClasses: AttendenceClassUpdateManyWithoutClassInput
 }
 
 input ClassUpdateManyWithoutDayInput {
@@ -2846,14 +2846,14 @@ input ClassUpdateManyWithoutSubjectInput {
   upsert: [ClassUpsertWithWhereUniqueWithoutSubjectInput!]
 }
 
-input ClassUpdateOneRequiredWithoutAttentenceClassesInput {
-  create: ClassCreateWithoutAttentenceClassesInput
+input ClassUpdateOneRequiredWithoutAttendenceClassesInput {
+  create: ClassCreateWithoutAttendenceClassesInput
   connect: ClassWhereUniqueInput
-  update: ClassUpdateWithoutAttentenceClassesDataInput
-  upsert: ClassUpsertWithoutAttentenceClassesInput
+  update: ClassUpdateWithoutAttendenceClassesDataInput
+  upsert: ClassUpsertWithoutAttendenceClassesInput
 }
 
-input ClassUpdateWithoutAttentenceClassesDataInput {
+input ClassUpdateWithoutAttendenceClassesDataInput {
   day: DayInWeekUpdateOneRequiredWithoutClassesInput
   semester: SemesterUpdateOneRequiredWithoutClassesInput
   period: PeriodUpdateOneRequiredInput
@@ -2868,7 +2868,7 @@ input ClassUpdateWithoutDayDataInput {
   mentor: TeacherUpdateOneRequiredWithoutClassesInput
   department: DepartmentUpdateOneRequiredWithoutClassesInput
   subject: BookUpdateOneRequiredWithoutClassesInput
-  attentenceClasses: AttendenceClassUpdateManyWithoutClassInput
+  attendenceClasses: AttendenceClassUpdateManyWithoutClassInput
 }
 
 input ClassUpdateWithoutDepartmentDataInput {
@@ -2877,7 +2877,7 @@ input ClassUpdateWithoutDepartmentDataInput {
   period: PeriodUpdateOneRequiredInput
   mentor: TeacherUpdateOneRequiredWithoutClassesInput
   subject: BookUpdateOneRequiredWithoutClassesInput
-  attentenceClasses: AttendenceClassUpdateManyWithoutClassInput
+  attendenceClasses: AttendenceClassUpdateManyWithoutClassInput
 }
 
 input ClassUpdateWithoutMentorDataInput {
@@ -2886,7 +2886,7 @@ input ClassUpdateWithoutMentorDataInput {
   period: PeriodUpdateOneRequiredInput
   department: DepartmentUpdateOneRequiredWithoutClassesInput
   subject: BookUpdateOneRequiredWithoutClassesInput
-  attentenceClasses: AttendenceClassUpdateManyWithoutClassInput
+  attendenceClasses: AttendenceClassUpdateManyWithoutClassInput
 }
 
 input ClassUpdateWithoutSemesterDataInput {
@@ -2895,7 +2895,7 @@ input ClassUpdateWithoutSemesterDataInput {
   mentor: TeacherUpdateOneRequiredWithoutClassesInput
   department: DepartmentUpdateOneRequiredWithoutClassesInput
   subject: BookUpdateOneRequiredWithoutClassesInput
-  attentenceClasses: AttendenceClassUpdateManyWithoutClassInput
+  attendenceClasses: AttendenceClassUpdateManyWithoutClassInput
 }
 
 input ClassUpdateWithoutSubjectDataInput {
@@ -2904,7 +2904,7 @@ input ClassUpdateWithoutSubjectDataInput {
   period: PeriodUpdateOneRequiredInput
   mentor: TeacherUpdateOneRequiredWithoutClassesInput
   department: DepartmentUpdateOneRequiredWithoutClassesInput
-  attentenceClasses: AttendenceClassUpdateManyWithoutClassInput
+  attendenceClasses: AttendenceClassUpdateManyWithoutClassInput
 }
 
 input ClassUpdateWithWhereUniqueWithoutDayInput {
@@ -2932,9 +2932,9 @@ input ClassUpdateWithWhereUniqueWithoutSubjectInput {
   data: ClassUpdateWithoutSubjectDataInput!
 }
 
-input ClassUpsertWithoutAttentenceClassesInput {
-  update: ClassUpdateWithoutAttentenceClassesDataInput!
-  create: ClassCreateWithoutAttentenceClassesInput!
+input ClassUpsertWithoutAttendenceClassesInput {
+  update: ClassUpdateWithoutAttendenceClassesDataInput!
+  create: ClassCreateWithoutAttendenceClassesInput!
 }
 
 input ClassUpsertWithWhereUniqueWithoutDayInput {
@@ -3066,9 +3066,9 @@ input ClassWhereInput {
   mentor: TeacherWhereInput
   department: DepartmentWhereInput
   subject: BookWhereInput
-  attentenceClasses_every: AttendenceClassWhereInput
-  attentenceClasses_some: AttendenceClassWhereInput
-  attentenceClasses_none: AttendenceClassWhereInput
+  attendenceClasses_every: AttendenceClassWhereInput
+  attendenceClasses_some: AttendenceClassWhereInput
+  attendenceClasses_none: AttendenceClassWhereInput
 }
 
 input ClassWhereUniqueInput {

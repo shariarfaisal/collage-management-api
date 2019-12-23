@@ -1,9 +1,14 @@
-#import CreateInputAdmin, CreateInputDepartment, CreateInputTeacher, CreateInputStudent, CreateInputSession, CreateInputSemester, CreateInputBookList, CreateInputRoutine, CreateInputBook, CreateInputClass, CreateInputPeriod,CreateInputNote,CreateInputAttendenceDay, CreateInputDayInWeek,CreateInputNotice,UpdateInputAttendenceDay,UpdateInputNote,UpdateInputAdmin,UpdateInputDepartment,UpdateInputTeacher,UpdateInputStudent,UpdateInputSession,UpdateInputSemester,UpdateInputBookList,UpdateInputRoutine,UpdateInputBook,UpdateInputClass,UpdateInputPeriod,UpdateInputDayInWeek,UpdateInputNotice from './createInputs.graphql'
+#import CreateInputAdmin, CreateInputDepartment, CreateInputTeacher, CreateInputStudent, CreateInputSession, CreateInputSemester, CreateInputBookList, CreateInputRoutine, CreateInputBook, CreateInputClass, CreateInputPeriod,CreateInputNote,CreateInputAttendenceDay,CreateInputAttendenceClass,CreateAttendenceInput, CreateInputDayInWeek,CreateInputNotice,UpdateInputAttendenceDay,UpdateInputNote,UpdateInputAdmin,UpdateInputDepartment,UpdateInputTeacher,UpdateInputStudent,UpdateInputSession,UpdateInputSemester,UpdateInputBookList,UpdateInputRoutine,UpdateInputBook,UpdateInputClass,UpdateInputPeriod,UpdateInputDayInWeek,UpdateInputNotice from './createInputs.graphql'
 #import StudentOrderByInput from './generated/prisma.graphql'
 
 type Query{
+  attendences(class: ID,student: ID,semester: ID,present: Boolean,first: Int,skip: Int,orderBy: String): [Attendence!]!
+  attendence(id: ID!): Attendence!
+  attendenceClasses: [AttendenceClass!]!
+  attendenceClass(id: ID!): AttendenceClass!
   attendenceDays(query: String,first: Int,skip: Int,orderBy: String): [AttendenceDay!]!
-  attendenceDay(id: ID!): Attendence!
+  attendenceDay(id: ID!): AttendenceDay!
+  attendenceDayWithDate(date: String!): AttendenceDay!
   info: Info!
   notices(query: String,first: Int,skip: Int,orderBy: String): [Notice!]!
   notice(id: ID!): Notice!
@@ -11,7 +16,7 @@ type Query{
   notes(query: String): [Note!]!
   admins: [Admin!]!
   admin: Admin!
-  students(query: String,department: ID,semester: ID,first: Int,skip: Int,orderBy: String,session: ID): [Student!]!
+  students(query: String,department: ID,semester: ID,shift: String,first: Int,skip: Int,orderBy: String,session: ID): [Student!]!
   student(id: ID!): Student!
   studentMe: Student!
   semesters: [Semester!]!
@@ -39,6 +44,7 @@ type Query{
 
 type Mutation{
 
+  createAttendenceClass(data: CreateInputAttendenceClass): AttendenceClass!
   createAttendenceDay(data: CreateInputAttendenceDay): AttendenceDay!
   createAdmin(data: CreateInputAdmin): AdminAuthPayload!
   createNotice(data: CreateInputNotice): Notice!
@@ -57,6 +63,7 @@ type Mutation{
   createBook(data: CreateInputBook): Book!
   createClass(data: CreateInputClass): Class!
   createPeriod(data: CreateInputPeriod): Period!
+  createAttendence(data: CreateAttendenceInput): Attendence!
 
   updateAttendenceDay(id: ID!,data: UpdateInputAttendenceDay): AttendenceDay!
   updateNote(id: ID!,data: UpdateInputNote): Note!
@@ -223,8 +230,8 @@ type Note{
 type Admin{
   id: ID!
   name: String!
-  email: String!
-  username: String!
+  email: String
+  username: String
 }
 
 type Notice{
@@ -273,6 +280,8 @@ type Student{
   shift: ShiftTypes
   department: Department
   semester: Semester
+  bookLists: [BookList!]!
+  attendences: [Attendence!]!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -360,6 +369,7 @@ type Class{
   mentor: Teacher!
   department: Department!
   subject: Book!
+  attendenceClasses: [AttendenceClass!]!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -395,8 +405,8 @@ type AttendenceDay{
 
 type AttendenceClass{
   id: ID!
-  day: ID!
-  class: ID!
+  day: AttendenceDay!
+  class: Class!
   attendences: [Attendence!]!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -404,8 +414,8 @@ type AttendenceClass{
 
 type Attendence{
   id: ID!
-  class: ID!
-  student: ID!
+  class: AttendenceClass!
+  student: Student!
   present: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
