@@ -9,10 +9,10 @@ const Note = {
       data: { title, text, author:{ connect:{ id } } }
     },info)
   },
-  updateNote(parent,{data},{ prisma,req },info){
-    const id = getStudentId(req)
+  updateNote(parent,{data,id},{ prisma,req },info){
+    const studentID = getStudentId(req)
 
-    return prisma.mutation.updateNote({ data, where:{ id: data.id }},info)
+    return prisma.mutation.updateNote({ data, where:{ id }},info)
   },
   deleteNote(parent,args,{ prisma,req },info){
     const id = getStudentId(req)

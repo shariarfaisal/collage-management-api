@@ -20,23 +20,26 @@ const Book = {
       data:{ name, code, bookList:{ connect:{ id: bookList } }}
     },info)
   },
-  // async updateBook(parent,{ id, data },{ prisma, req },info){
-  //   const { name,code } = data
-  //   const adminId = getAdminId(req)
-  //   const book = await prisma.query.book({ where:{ id } })
-  //   if(!book) throw new Error("Unable to update!")
-  //
-  //   if(name && name !== book.name){
-  //     const bookName = await prisma.query.
-  //   }
-  //   if(code && code !== book.code){
-  //     const codeExists = await prisma.exists.Book({ code })
-  //     if(codeExists) throw new Error("Book already exists!")
-  //   }
-  //   return prisma.mutation.updateBook({
-  //     data:
-  //   })
-  // },
+  async updateBook(parent,{ id, data },{ prisma, req },info){
+    const adminId = getAdminId(req)
+    const exists = await prisma.query.book({ where:{ id } })
+    if(!exists) throw new Error("Unable to update!")
+
+    if(data.code && data.code !== exists.code){
+      const books = await prisma.query.books({
+        where:{AND: [{ code: data.code },{bookList:{ id: data.bookList }}]}
+      })
+      if(books.length !== 0) throw new Error("Book already exists!")
+    }
+
+    const dta = {}
+    if(data.name) dta.name = data.name
+    if(data.code) dta.code = data.code
+    return prisma.mutation.updateBook({
+      data:dta,
+      where:{ id }
+    },info)
+  },
   async deleteBook(parent,{id},{ prisma,req },info){
     const adminId = getAdminId(req)
     return prisma.mutation.deleteBook({where:{ id }},info)

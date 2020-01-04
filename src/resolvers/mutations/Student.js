@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import getStudentId from '../../utils/getStudentId'
+import getAdminId from '../../utils/getAdminId'
 
 
 const Student = {
@@ -60,10 +61,6 @@ const Student = {
       if(regExists) throw new Error("Regestration no already exists!")
     }
 
-    if(data.password && data.password.length < 6){
-      data.password = await bcrypt.hash(data.password,10)
-    }
-
     if(data.session){
       data.session = {
         connect:{ id: data.session }
@@ -81,9 +78,28 @@ const Student = {
       where:{ id }
     },info)
   },
-  async deleteStudent(parent,args,{ prisma,req },info){
-    const id = getStudentId(req)
+  async deleteStudent(parent,{ id },{ prisma,req },info){
+    const admin = getAdminId(req)
     return prisma.mutation.deleteStudent({ where:{ id }},info)
+  },
+  async updateStudentPassword(parent,args,{ prisma, req },info){
+    const id = getStudentId(req)
+    const { oldPassword, newPassword } = args
+    const student = await prisma.query.student({where:{ id }})
+    if(!student){
+      throw new Error("Something wrong!")
+    }
+    const passwordMatch = await bcrypt.compare(oldPassword,student.password)
+    if(!passwordMatch){
+      throw new Error("Old Password doesn't match!")
+    }
+    if(newPassword.length < 6) throw new Error("Password should be minimum 6 character!")
+    const password = await bcrypt.hash(newPassword,10)
+
+    return prisma.mutation.updateStudent({
+      where:{ id },
+      data: { password }
+    },info)
   }
 
 }

@@ -9,6 +9,14 @@ const attendence = {
       orderBy: args.orderBy
     }
     const ops = {}
+    if(args.query){
+      ops.class = {
+        day:{ date_contains: args.query }
+      }
+    }
+    if(args.day){
+      ops.class = { day:{ id: args.day }}
+    }
     if(args.class){
       ops.class = { id: args.class }
     }

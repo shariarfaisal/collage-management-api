@@ -139,7 +139,6 @@ input UpdateInputTeacher{
   address: String
   position: String
   phone: String
-  password: String!
 }
 
 input UpdateInputStudent{
@@ -150,7 +149,6 @@ input UpdateInputStudent{
   phone: String
   address: String
   shift: String
-  password: String!
   session: ID
   department: ID
   semester: ID

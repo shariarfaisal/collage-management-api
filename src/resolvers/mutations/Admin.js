@@ -66,6 +66,25 @@ const Admin = {
   async deleteAdmin(parent,args,{ prisma, req },info){
     const id = getAdminId(req)
     return prisma.mutation.deleteAdmin({ where:{ id }},info)
+  },
+  async updateAdminPassword(parent,args,{ prisma, req },info){
+    const id = getAdminId(req)
+    const { oldPassword, newPassword } = args
+    const admin = await prisma.query.admin({where:{ id }})
+    if(!admin){
+      throw new Error("Something wrong!")
+    }
+    const passwordMatch = await bcrypt.compare(oldPassword,admin.password)
+    if(!passwordMatch){
+      throw new Error("Old Password doesn't match!")
+    }
+    if(newPassword.length < 6) throw new Error("Password should be minimum 6 character!")
+    const password = await bcrypt.hash(newPassword,10)
+
+    return prisma.mutation.updateAdmin({
+      where:{ id },
+      data: { password }
+    },info)
   }
 
 

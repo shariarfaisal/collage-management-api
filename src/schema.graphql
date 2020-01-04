@@ -2,7 +2,7 @@
 #import StudentOrderByInput from './generated/prisma.graphql'
 
 type Query{
-  attendences(class: ID,student: ID,semester: ID,present: Boolean,first: Int,skip: Int,orderBy: String): [Attendence!]!
+  attendences(query: String,day: ID,class: ID,student: ID,semester: ID,present: Boolean,first: Int,skip: Int,orderBy: String): [Attendence!]!
   attendence(id: ID!): Attendence!
   attendenceClasses: [AttendenceClass!]!
   attendenceClass(id: ID!): AttendenceClass!
@@ -13,7 +13,7 @@ type Query{
   notices(query: String,first: Int,skip: Int,orderBy: String): [Notice!]!
   notice(id: ID!): Notice!
   note(id: ID!): Note!
-  notes(query: String): [Note!]!
+  notes(query: String,first: Int,skip: Int,orderBy: String): [Note!]!
   admins: [Admin!]!
   admin: Admin!
   students(query: String,department: ID,semester: ID,shift: String,first: Int,skip: Int,orderBy: String,session: ID): [Student!]!
@@ -68,10 +68,13 @@ type Mutation{
   updateAttendenceDay(id: ID!,data: UpdateInputAttendenceDay): AttendenceDay!
   updateNote(id: ID!,data: UpdateInputNote): Note!
   updateAdmin(data: UpdateInputAdmin): Admin!
+  updateAdminPassword(oldPassword: String!,newPassword: String): Admin!
   updateNotice(id: ID!,data: UpdateInputNotice): Notice!
   updateDepartment(id: ID!,data: UpdateInputDepartment): Department!
   updateTeacher(data: UpdateInputTeacher): Teacher!
+  updateTeacherPassword(oldPassword: String!,newPassword: String!): Teacher!
   updateStudent(data: UpdateInputStudent): Student!
+  updateStudentPassword(oldPassword: String!,newPassword: String): Student!
   updateSession(id: ID!,data: UpdateInputSession): Session!
   updateaSemester(id: ID!,data: UpdateInputSemester): Semester!
   updateBookList(id: ID!,data: UpdateInputBookList): BookList!
@@ -85,10 +88,10 @@ type Mutation{
   deleteAttendenceDay(id: ID!): AttendenceDay!
   deleteNote(id: ID!): Note!
   deleteAdmin: Admin!
-  deleteNotice: Notice!
+  deleteNotice(id: ID!): Notice!
   deleteDepartment(id: ID!): Department!
-  deleteTeacher: Teacher!
-  deleteStudent: Student
+  deleteTeacher(id: ID!): Teacher!
+  deleteStudent(id: ID!): Student!
   deleteSession(id: ID!): Session!
   deleteSemester(id: ID!): Semester!
   deleteBookList(id: ID!): BookList!

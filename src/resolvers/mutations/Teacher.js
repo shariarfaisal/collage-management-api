@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import getTeacherId from '../../utils/getTeacherId'
+import getAdminId from '../../utils/getAdminId'
 
 
 const Teacher = {
@@ -46,19 +47,33 @@ const Teacher = {
       if(checkPhone) throw new Error("Phone already exists!")
     }
 
-    if(data.password){
-      if(data.password.length < 6) throw new Error("Password should not be less than 6 character!")
-      data.password = await bcrypt.hash(data.password,10)
-    }
-
     return prisma.mutation.updateTeacher({
       data,
       where:{ id }
     },info)
   },
-  async deleteTeacher(parent,args,{ prisma,req },info){
-    const id = getTeacherId(req)
+  async deleteTeacher(parent,{ id },{ prisma,req },info){
+    const admin = getAdminId(req)
     return prisma.mutation.deleteTeacher({ where:{ id }},info)
+  },
+  async updateTeacherPassword(parent,args,{ prisma, req },info){
+    const id = getTeacherId(req)
+    const { oldPassword, newPassword } = args
+    const teacher = await prisma.query.teacher({where:{ id }})
+    if(!teacher){
+      throw new Error("Something wrong!")
+    }
+    const passwordMatch = await bcrypt.compare(oldPassword,teacher.password)
+    if(!passwordMatch){
+      throw new Error("Old Password doesn't match!")
+    }
+    if(newPassword.length < 6) throw new Error("Password should be minimum 6 character!")
+    const password = await bcrypt.hash(newPassword,10)
+
+    return prisma.mutation.updateTeacher({
+      where:{ id },
+      data: { password }
+    },info)
   }
 
 }

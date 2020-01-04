@@ -1,8 +1,8 @@
-import checkUserValidation from '../../utils/checkUserValidation'
+import getAdminId from '../../utils/getAdminId'
 
 export default {
   createNotice(parent,args,{ prisma, req },info){
-    const checkAuth = checkUserValidation(req)
+    const checkAuth = getAdminId(req)
     const { title, text } = args.data
 
     return prisma.mutation.createNotice({
@@ -10,7 +10,7 @@ export default {
     },info)
   },
   async updateNotice(parent,args,{ prisma,req },info){
-    const checkAuth = checkUserValidation(req)
+    const checkAuth = getAdminId(req)
     const exists = await prisma.exists.Notice({ id: args.id })
     return prisma.mutation.updateNotice({
       data: args.data,
@@ -18,5 +18,10 @@ export default {
         id: args.id
       }
     },info)
+  },
+  deleteNotice(parent,{ id },{ prisma, req},info){
+    const checkAuth = getAdminId(req)
+    console.log(id);
+    return prisma.mutation.deleteNotice({ where:{ id }},info)
   }
 }

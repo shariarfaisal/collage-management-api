@@ -5,10 +5,14 @@ const note = {
   notes(parent,args,{ prisma,req },info){
     const id = getStudentId(req)
     const opArgs = {
+      first: args.first,
+      skip: args.skip,
+      orderBy: args.orderBy,
       where:{
         author:{ id }
       }
     }
+
     if(args.query){
       opArgs.where.OR = [
         {title_contains: args.query},
