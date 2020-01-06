@@ -6,7 +6,7 @@ const getTeacherId = (req,required=true) => {
   if(header){
     try {
       const token = header.replace('Bearer ','')
-      const { id } = jwt.verify(token,'secret')
+      const { id } = jwt.verify(token,process.env.JWT_SECRET)
       return id
     } catch (e) {
       throw new Error("Authentication failed!")

@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 
 const checkUserValidation = (req,required=true) => {
 
-  const adminHeader = req.request ? req.request.headers.admin : req.connection.context.admin 
+  const adminHeader = req.request ? req.request.headers.admin : req.connection.context.admin
   const studentHeader = req.request ? req.request.headers.student : req.connection.context.student
   const teacherHeader = req.request ? req.request.headers.teacher : req.connection.context.teacher
 
@@ -16,7 +16,7 @@ const checkUserValidation = (req,required=true) => {
       }else {
         token = teacherHeader.replace('Bearer ','')
       }
-      const { id } = jwt.verify(token,'secret')
+      const { id } = jwt.verify(token,process.env.JWT_SECRET)
       return id
 
     } catch (e) {

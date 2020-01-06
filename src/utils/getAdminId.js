@@ -1,12 +1,12 @@
 import jwt from 'jsonwebtoken'
 
 const getAdminId = (req,required=true) => {
-  const header = req.request ? req.request.headers.admin : req.connection.context.admin 
+  const header = req.request ? req.request.headers.admin : req.connection.context.admin
 
   if(header){
     try {
       const token = header.replace('Bearer ','')
-      const { id } = jwt.verify(token,'secret')
+      const { id } = jwt.verify(token,process.env.JWT_SECRET)
       return id
     } catch (e) {
       throw new Error("Authentication failed!")
