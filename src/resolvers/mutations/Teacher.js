@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import getTeacherId from '../../utils/getTeacherId'
 import getAdminId from '../../utils/getAdminId'
-
+import getToken from '../utils/getToken'
 
 const Teacher = {
   async createTeacher(parent,args,{ prisma,req },info){
@@ -17,7 +17,7 @@ const Teacher = {
     })
 
     return{
-      token: jwt.sign({ id: teacher.id },'secret'),
+      token: getToken({ id: teacher.id }),
       teacher
     }
   },
@@ -28,7 +28,7 @@ const Teacher = {
     const pwdCheck = await bcrypt.compare(password,teacher.password)
     if(!pwdCheck) throw new Error("Unable to login!")
     return {
-      token: jwt.sign({id:teacher.id},'secret'),
+      token: getToken({ id: teacher.id }),
       teacher
     }
   },

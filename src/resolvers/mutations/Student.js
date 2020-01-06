@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import getStudentId from '../../utils/getStudentId'
 import getAdminId from '../../utils/getAdminId'
-
+import getToken from '../utils/getToken'
 
 const Student = {
   async createStudent(parent,args,{ prisma,req },info){
@@ -22,7 +22,7 @@ const Student = {
     })
 
     return {
-      token: jwt.sign({ id: student.id },'secret'),
+      token: getToken({ id: teacher.id }),
       student
     }
   },
@@ -37,7 +37,7 @@ const Student = {
       throw new Error("Unable to login!")
     }
     return{
-      token: jwt.sign({id:student.id},'secret'),
+      token: getToken({ id: teacher.id }),
       student
     }
   },

@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import getAdminId from '../../utils/getAdminId'
+import getToken from '../utils/getToken'
 
 const Admin = {
   async createAdmin(parent,args,{ prisma,req },info){
@@ -23,7 +24,7 @@ const Admin = {
     })
 
     return {
-      token: jwt.sign({id: user.id},'secret'),
+      token: getToken({id: user.id}),
       admin: user
     }
   },
@@ -36,7 +37,7 @@ const Admin = {
     const passwordMatch = await bcrypt.compare(password,admin.password)
     if(!passwordMatch) throw new Error("Unable to login!")
     return {
-      token: jwt.sign({id: admin.id},'secret'),
+      token: getToken({id: admin.id}),
       admin
     }
   },
